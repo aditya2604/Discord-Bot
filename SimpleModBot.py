@@ -25,9 +25,11 @@ client = discord.Client(description=desc)
 @client.event
 async def on_message(message: discord.Message):
     Channel = message.channel
-    if message.author.bot:
+    username = message.author.name
+    
+    if (username == "ProfanityBot"):
         return
-   
+    
     if any([word in message.content.casefold() for word in config['words2']]):
         if (random.randint(1, 2) == 1):
             await Channel.send('{} {}'.format(message.author.mention, config['response2']))
@@ -66,7 +68,8 @@ async def on_message(message: discord.Message):
 
     if any([word in message.content.casefold() for word in config['words7']]):
         wordList = config['words7']
-        wordPosBool = ([word in message.content.casefold() for word in config['words7']])
+        wordPosBool = ([word in message.content.casefold()
+                        for word in config['words7']])
         lengthOfList = len(wordList)
         for x in range(0, lengthOfList):
             if (wordPosBool[x] == True):
@@ -76,15 +79,15 @@ async def on_message(message: discord.Message):
                     await Channel.send('{} {}'.format(Word, config['response7']))
                     return
                 elif (randNum == 2):
-                      await Channel.send('{}'.format("https://tenor.com/view/touchdown-bruh-really-gif-12484222"))
-                      return
+                    await Channel.send('{}'.format("https://tenor.com/view/touchdown-bruh-really-gif-12484222"))
+                    return
                 else:
                     await Channel.send('{}'.format("https://tenor.com/view/bruh-gif-5156041"))
-                    return   
-             
+                    return
+
     if any([word in message.content.casefold() for word in config['words8']]):
         if (random.randint(1, 2) == 1):
-            await Channel.send('{}'.format(config['response8'])) 
+            await Channel.send('{}'.format(config['response8']))
             return
         else:
             await Channel.send('{}'.format("https://tenor.com/view/what-do-you-mean-what-really-whatever-gif-12124162"))
@@ -92,7 +95,8 @@ async def on_message(message: discord.Message):
 
     if any([word in message.content.casefold() for word in config['words9']]):
         wordList = config['words9']
-        wordPosBool = ([word in message.content.casefold() for word in config['words9']])
+        wordPosBool = ([word in message.content.casefold()
+                        for word in config['words9']])
         lengthOfList = len(wordList)
         for x in range(0, lengthOfList):
             if (wordPosBool[x] == True):
@@ -107,6 +111,19 @@ async def on_message(message: discord.Message):
     if any([word in message.content.casefold() for word in config['words11']]):
         await Channel.send('{}'.format("https://media.tenor.com/images/05de333b038141f6b8208c7ce8f8613c/tenor.gif"))
         return
+
+    username = message.author.name
+    if any([username in config['usernames']]):
+        if (random.randint(1, 2) == 1):
+            await Channel.send('{} {}{}'.format("I am superior to", username, "."))
+            return
+        else: 
+            if (random.randint(1, 2) == 1):
+                await Channel.send('{} {}{}'.format("I will take", username, "\'s toes and put 'em in my toe jar."))
+                return
+            else:
+                await Channel.send('{} {}'.format(message.author.mention, "is stoopid."))
+                return
 
 @client.event
 async def on_ready():
