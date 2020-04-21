@@ -136,9 +136,22 @@ async def on_ready():
     perms.administrator = True
     url = discord.utils.oauth_url(app_info.id, perms)
     print('To invite me to a server, use this link\n{}'.format(url))
-    activity = discord.Game(name="consensually with MostestDankest's toes.")
-    await client.change_presence(status=discord.Status.online, activity=activity)
 
+    #GAMEactivity
+    #game = discord.Game(name="Game")
+    #await client.change_presence(activity=game, status=discord.Status.idle)
+
+    #STREAMactivity
+    #stream = discord.Streaming(name="Twitch", url="https://www.twitch.tv/dankmemerdiscord") 
+    #await client.change_presence(activity=stream, status=discord.Status.idle)
+
+    #WATCHactivity
+    #watch = discord.Activity(type=discord.ActivityType.watching, name="video")
+    #await client.change_presence(activity=watch, status=discord.Status.idle)
+
+    #LISTENINGactivity
+    #listen = discord.Activity(type=discord.ActivityType.listening, name="music")
+    #await client.change_presence(activity=listen, status=discord.Status.idle)
 
 if __name__ == '__main__':
     try:
