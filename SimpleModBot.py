@@ -22,7 +22,6 @@ Simple moderation bot.
 """
 client = discord.Client(description=desc)
 
-
 @client.event
 async def on_message(message: discord.Message):
     channel = message.channel
