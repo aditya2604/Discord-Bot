@@ -86,10 +86,8 @@ async def on_message(message: discord.Message):
         for x in range(0, lengthOfList):
             if (wordPosBool[x] == True):
                 Word = wordList[x]
-                randNum = random.randint(1, 3)
-                if (randNum == 1):
-                    await channel.send('{} {}'.format(Word, config['response7']))
-                    return
+                await channel.send('{} {}'.format(Word, config['response7']))
+                return
                 #elif (randNum == 2):
                     #await channel.send('{}'.format("https://tenor.com/view/touchdown-bruh-really-gif-12484222"))
                     #return
