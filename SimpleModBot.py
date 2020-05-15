@@ -90,12 +90,12 @@ async def on_message(message: discord.Message):
                 if (randNum == 1):
                     await channel.send('{} {}'.format(Word, config['response7']))
                     return
-                elif (randNum == 2):
-                    await channel.send('{}'.format("https://tenor.com/view/touchdown-bruh-really-gif-12484222"))
-                    return
-                else:
-                    await channel.send('{}'.format("https://tenor.com/view/bruh-gif-5156041"))
-                    return
+                #elif (randNum == 2):
+                    #await channel.send('{}'.format("https://tenor.com/view/touchdown-bruh-really-gif-12484222"))
+                    #return
+                #else:
+                    #await channel.send('{}'.format("https://tenor.com/view/bruh-gif-5156041"))
+                    #return
 
     if any([word in message.content.casefold() for word in config['words8']]):
         if (random.randint(1, 2) == 1):
