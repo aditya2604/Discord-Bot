@@ -70,6 +70,9 @@ async def on_message(message: discord.Message):
         if (random.randint(1, 2) == 1):
             await channel.send('{} {}'.format(config['response5'], message.author.mention))
             return
+        elif (random.randint(1, 2) == 1):
+            await channel.send('{}'.format("https://tenor.com/view/6ix9ine-big-mad-gooba-snitch-he-is-back-gif-17173480"))
+            return
         else:
             await channel.send('{} {}'.format(config['response5.5'], message.author.mention))
             return
