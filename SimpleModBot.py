@@ -139,12 +139,12 @@ async def on_ready():
     print('To invite me to a server, use this link\n{}'.format(url))
 
     #GAMEactivity
-    #game = discord.Game(name="Fortnite", start=startTime, end=endTime, state="In Game")
-    #await client.change_presence(activity=game, status=discord.Status.idle)
+    game = discord.Game(name="2020 on veteran difficulty", state="In Game")
+    await client.change_presence(activity=game, status=discord.Status.dnd)
 
     #STREAMactivity
-    stream = discord.Streaming(platform="YouTube", name="Learn The Alphabet with Ugandan Pasta Senpai", url="https://www.youtube.com/watch?v=D6EmT8FwAgo", details="Learn The Alphabet with Ugandan Pasta Senpai") 
-    await client.change_presence(activity=stream)
+    #stream = discord.Streaming(platform="YouTube", name="Learn The Alphabet with Ugandan Pasta Senpai", url="https://www.youtube.com/watch?v=D6EmT8FwAgo", details="Learn The Alphabet with Ugandan Pasta Senpai") 
+    #await client.change_presence(activity=stream)
 
     #WATCHactivity
     #watch = discord.Activity(type=discord.ActivityType.watching, name="video")
