@@ -122,8 +122,11 @@ async def on_message(message: discord.Message):
         return
 
     if any([word in message.content.casefold() for word in config['words11']]):
-        await channel.send('{}'.format("https://media.tenor.com/images/05de333b038141f6b8208c7ce8f8613c/tenor.gif"))
-        return
+        if (random.randint(1, 2) == 1):
+            await channel.send('{}'.format("https://media.tenor.com/images/05de333b038141f6b8208c7ce8f8613c/tenor.gif"))
+            return
+        else: 
+            return
 
 
 @client.event
