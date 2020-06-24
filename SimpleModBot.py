@@ -103,8 +103,13 @@ async def on_message(message: discord.Message):
             await channel.send('{}'.format(config['response8']))
             return
         else:
-            await channel.send('{}'.format("https://tenor.com/view/what-do-you-mean-what-really-whatever-gif-12124162"))
-            return
+            if (random.randint(1, 2) == 1):
+                await channel.send('{}'.format("https://tenor.com/view/hi-sisters-hi-sisters-james-charles-james-gif-17577442"))
+                return
+            else:
+                await channel.send('{}'.format("https://tenor.com/view/hi-sisters-james-charles-gif-11600514"))
+                #await channel.send('{}'.format("https://tenor.com/view/what-do-you-mean-what-really-whatever-gif-12124162"))
+                return
 
     if any([word in message.content.casefold() for word in config['words9']]):
         wordList = config['words9']
@@ -142,7 +147,7 @@ async def on_ready():
     print('To invite me to a server, use this link\n{}'.format(url))
 
     #GAMEactivity
-    game = discord.Game(name="2020 on veteran difficulty", state="In Game")
+    game = discord.Game(name="2020 on Veteran Difficulty", state="In Game")
     await client.change_presence(activity=game, status=discord.Status.dnd)
 
     #STREAMactivity
