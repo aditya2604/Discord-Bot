@@ -27,7 +27,7 @@ async def on_message(message: discord.Message):
     channel = message.channel
     username = message.author.name
 
-    if (username == "ProfanityBot"):
+    if (username == "James Charles"):
         return
 
     if any([username in config['usernames']]):
