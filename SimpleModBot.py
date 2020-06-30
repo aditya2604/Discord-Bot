@@ -160,7 +160,7 @@ async def on_ready():
     print('To invite me to a server, use this link\n{}'.format(url))
 
     #GAMEactivity
-    game = discord.Game(name="2020 on Veteran Difficulty", state="In Game")
+    game = discord.Game(name="with the homies", state="In Game")
     await client.change_presence(activity=game, status=discord.Status.dnd)
 
     #STREAMactivity
