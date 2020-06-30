@@ -104,11 +104,10 @@ async def on_message(message: discord.Message):
             return
         else:
             if (random.randint(1, 2) == 1):
-                await channel.send('{}'.format("https://tenor.com/view/hi-sisters-hi-sisters-james-charles-james-gif-17577442"))
+                await channel.send('{}'.format("https://tenor.com/view/blueface-fixing-eye-brow-preparing-gif-13523555"))
                 return
             else:
-                await channel.send('{}'.format("https://tenor.com/view/hi-sisters-james-charles-gif-11600514"))
-                #await channel.send('{}'.format("https://tenor.com/view/what-do-you-mean-what-really-whatever-gif-12124162"))
+                await channel.send('{}'.format("https://tenor.com/view/yeah-aight-blueface-nod-nodding-gif-13272333"))
                 return
 
     if any([word in message.content.casefold() for word in config['words9']]):
@@ -133,6 +132,20 @@ async def on_message(message: discord.Message):
         else: 
             return
 
+    if any([word in message.content.casefold() for word in config['words12']]):
+        wordList = config['words12']
+        wordPosBool = ([word in message.content.casefold()
+                        for word in config['words12']])
+        lengthOfList = len(wordList)
+        for x in range(0, lengthOfList):
+            if (wordPosBool[x] == False):
+                Word = wordList[x]
+                if (random.randint(1, 2) == 1):
+                    await channel.send('{}'.format("https://tenor.com/view/buss-down-blueface-rap-gif-14646202"))
+                    return
+                else:
+                    await channel.send('{} {}{}'.format("On what,",Word,"?"))
+                    return
 
 @client.event
 async def on_ready():
