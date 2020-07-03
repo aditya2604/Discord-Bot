@@ -83,8 +83,7 @@ async def on_message(message: discord.Message):
 
     if any([word in message.content.casefold() for word in config['words7']]):
         wordList = config['words7']
-        wordPosBool = ([word in message.content.casefold()
-                        for word in config['words7']])
+        wordPosBool = ([word in message.content.casefold() for word in config['words7']])
         lengthOfList = len(wordList)
         for x in range(0, lengthOfList):
             if (wordPosBool[x] == True):
@@ -99,9 +98,11 @@ async def on_message(message: discord.Message):
                     #return
 
     if any([word in message.content.casefold() for word in config['words8']]):
-        if (random.randint(1, 2) == 1):
+        if (random.randint(1, 3) == 1):
             await channel.send('{}'.format(config['response8']))
             return
+        elif (random.randint(1, 3) == 2):
+            await channel.send('{}'.format("wat"))
         else:
             if (random.randint(1, 2) == 1):
                 await channel.send('{}'.format("https://tenor.com/view/blueface-fixing-eye-brow-preparing-gif-13523555"))
@@ -112,8 +113,7 @@ async def on_message(message: discord.Message):
 
     if any([word in message.content.casefold() for word in config['words9']]):
         wordList = config['words9']
-        wordPosBool = ([word in message.content.casefold()
-                        for word in config['words9']])
+        wordPosBool = ([word in message.content.casefold() for word in config['words9']])
         lengthOfList = len(wordList)
         for x in range(0, lengthOfList):
             if (wordPosBool[x] == True):
@@ -134,8 +134,7 @@ async def on_message(message: discord.Message):
 
     if any([word in message.content.casefold() for word in config['words12']]):
         wordList = config['words12']
-        wordPosBool = ([word in message.content.casefold()
-                        for word in config['words12']])
+        wordPosBool = ([word in message.content.casefold() for word in config['words12']])
         lengthOfList = len(wordList)
         for x in range(0, lengthOfList):
             if (wordPosBool[x] == False):
@@ -145,6 +144,20 @@ async def on_message(message: discord.Message):
                     return
                 else:
                     await channel.send('{} {}{}'.format("On what,",Word,"?"))
+                    return
+
+    if any([word in message.content.casefold() for word in config['words13']]):
+        wordList = config['words13']
+        wordPosBool = ([word in message.content.casefold() for word in config['words13']])
+        lengthOfList = len(wordList)
+        for x in range(0, lengthOfList):
+            if (wordPosBool[x] == True):
+                Word = wordList[x]
+                if (random.randint(1, 2) == 1):
+                    await channel.send('{} {} {}'.format("Don't", Word, "me"))
+                    return
+                else:
+                    await channel.send('{}'.format(Word))
                     return
 
 @client.event
