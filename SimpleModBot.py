@@ -54,9 +54,6 @@ async def on_message(message: discord.Message):
         if (random.randint(1, 2) == 1):
             await channel.send('{} {}'.format(message.author.mention, config['response']))
             return
-        else:
-            await channel.send('{}'.format("https://tenor.com/view/watch-your-profanity-funny-gif-5600117"))
-            return
 
     if any([word in message.content.casefold() for word in config['words3']]):
         await channel.send('{} {}'.format(message.author.mention, config['response3']))
@@ -69,9 +66,6 @@ async def on_message(message: discord.Message):
     if any([word in message.content.casefold() for word in config['words5']]):
         if (random.randint(1, 2) == 1):
             await channel.send('{} {}'.format(config['response5'], message.author.mention))
-            return
-        elif (random.randint(1, 2) == 1):
-            await channel.send('{}'.format("https://tenor.com/view/6ix9ine-big-mad-gooba-snitch-he-is-back-gif-17173480"))
             return
         else:
             await channel.send('{} {}'.format(config['response5.5'], message.author.mention))
@@ -101,15 +95,10 @@ async def on_message(message: discord.Message):
         if (random.randint(1, 3) == 1):
             await channel.send('{}'.format(config['response8']))
             return
-        elif (random.randint(1, 3) == 2):
-            await channel.send('{}'.format("wat"))
         else:
-            if (random.randint(1, 2) == 1):
-                await channel.send('{}'.format("https://tenor.com/view/blueface-fixing-eye-brow-preparing-gif-13523555"))
-                return
-            else:
-                await channel.send('{}'.format("https://tenor.com/view/yeah-aight-blueface-nod-nodding-gif-13272333"))
-                return
+            await channel.send('{}'.format("wat"))
+            return
+
 
     if any([word in message.content.casefold() for word in config['words9']]):
         wordList = config['words9']
@@ -122,15 +111,8 @@ async def on_message(message: discord.Message):
                 return
 
     if any([word in message.content.casefold() for word in config['words10']]):
-        await channel.send('{}'.format("https://tenor.com/view/whyareyougay-uganda-gay-gif-14399349"))
+        await channel.send('{}'.format("why are u gay"))
         return
-
-    if any([word in message.content.casefold() for word in config['words11']]):
-        if (random.randint(1, 2) == 1):
-            await channel.send('{}'.format("https://media.tenor.com/images/05de333b038141f6b8208c7ce8f8613c/tenor.gif"))
-            return
-        else: 
-            return
 
     if any([word in message.content.casefold() for word in config['words12']]):
         wordList = config['words12']
@@ -140,9 +122,6 @@ async def on_message(message: discord.Message):
             if (wordPosBool[x] == False):
                 Word = wordList[x]
                 if (random.randint(1, 2) == 1):
-                    await channel.send('{}'.format("https://tenor.com/view/buss-down-blueface-rap-gif-14646202"))
-                    return
-                else:
                     await channel.send('{} {}{}'.format("On what,",Word,"?"))
                     return
 
