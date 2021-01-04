@@ -138,6 +138,9 @@ async def on_message(message: discord.Message):
                 else:
                     await channel.send('{}'.format(Word))
                     return
+    
+    if any([word in message.content.casefold() for word in config['ok']]):
+        await channel.send('{}'.format("ok"))
 
 @client.event
 async def on_ready():
