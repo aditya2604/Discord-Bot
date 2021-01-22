@@ -162,7 +162,7 @@ async def on_ready():
 
     #LISTENINGactivity
     listen = discord.Activity(type=discord.ActivityType.listening, name="My Drip - Dixie D'Amelio")
-    await bot.change_presence(activity=listen, status=discord.Status.idle)
+    await bot.change_presence(activity=listen, status=discord.Status.online)
 
 if __name__ == '__main__':
     try:
