@@ -1,6 +1,7 @@
 import json
 import random
 from datetime import datetime
+from discord.ext import commands
 try:
     import discord
 except ImportError:
@@ -20,9 +21,14 @@ except FileNotFoundError:
 desc = """
 Simple moderation bot.
 """
-client = discord.Client(description=desc)
 
-@client.event
+bot = commands.Bot(command_prefix=',')
+@bot.command()
+async def say(ctx, *, arg):
+    channel = bot.get_channel(config['shrek_general'])
+    await channel.send(arg)
+
+@bot.event
 async def on_message(message: discord.Message):
     channel = message.channel
     username = message.author.name
@@ -141,13 +147,14 @@ async def on_message(message: discord.Message):
     
     if any([word in message.content.casefold() for word in config['ok']]):
         await channel.send('{}'.format("ok"))
+    await bot.process_commands(message)
 
-@client.event
+@bot.event
 async def on_ready():
-    app_info = await client.application_info()
-    client.owner = app_info.owner
-    print('Bot: {0.name}:{0.id}'.format(client.user))
-    print('Owner: {0.name}:{0.id}'.format(client.owner))
+    app_info = await bot.application_info()
+    bot.owner = app_info.owner
+    print('Bot: {0.name}:{0.id}'.format(bot.user))
+    print('Owner: {0.name}:{0.id}'.format(bot.owner))
     print('------------------')
     perms = discord.Permissions.none()
     perms.administrator = True
@@ -155,8 +162,8 @@ async def on_ready():
     print('To invite me to a server, use this link\n{}'.format(url))
 
     #GAMEactivity
-    game = discord.Game(name="with the homies", state="In Game")
-    await client.change_presence(activity=game, status=discord.Status.dnd)
+    game = discord.Game(name="wit joe mum", state="In Game")
+    await bot.change_presence(activity=game, status=discord.Status.dnd)
 
     #STREAMactivity
     #stream = discord.Streaming(platform="YouTube", name="Learn The Alphabet with Ugandan Pasta Senpai", url="https://www.youtube.com/watch?v=D6EmT8FwAgo", details="Learn The Alphabet with Ugandan Pasta Senpai") 
@@ -172,7 +179,7 @@ async def on_ready():
 
 if __name__ == '__main__':
     try:
-        client.run(config['discord_token'])
+        bot.run(config['discord_token'])
     except KeyError:
         print("config not yet filled out.")
     except discord.errors.LoginFailure as e:
