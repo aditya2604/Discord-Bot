@@ -34,7 +34,7 @@ async def on_message(message: discord.Message):
     username = message.author.name
     user_id = message.author.id
 
-    if (username == "Blueface"): 
+    if (username == "Kermit"): 
         return
 
     if (user_id == config['ayush_id'] or user_id == config['nitish_id'] or user_id == config['pranav_id'] or user_id == config['sid_id'] or user_id == config['steve_id'] or user_id == config['utkarsh_id']):
@@ -101,15 +101,6 @@ async def on_message(message: discord.Message):
                     #await channel.send('{}'.format("https://tenor.com/view/bruh-gif-5156041"))
                     #return
 
-    if any([word in message.content.casefold() for word in config['words8']]):
-        if (random.randint(1, 3) == 1):
-            await channel.send('{}'.format(config['response8']))
-            return
-        else:
-            await channel.send('{}'.format("wat"))
-            return
-
-
     if any([word in message.content.casefold() for word in config['words9']]):
         wordList = config['words9']
         wordPosBool = ([word in message.content.casefold() for word in config['words9']])
@@ -137,6 +128,7 @@ async def on_message(message: discord.Message):
     
     if any([word in message.content.casefold() for word in config['ok']]):
         await channel.send('{}'.format("ok"))
+        return
     await bot.process_commands(message)
 
 @bot.event
