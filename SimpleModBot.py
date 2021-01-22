@@ -53,7 +53,7 @@ async def on_message(message: discord.Message):
         emoji = random.choice(emojis)
     if (randrange(3) == 1):
         await message.add_reaction(emoji)
-        if (randrange(2) == 1):
+        if (randrange(3) == 1):
             emoji = random.choice(emojis)
             await message.add_reaction(emoji)
     await bot.process_commands(message)
