@@ -166,16 +166,16 @@ async def on_ready():
     # await bot.change_presence(activity=game, status=discord.Status.dnd)
 
     #STREAMactivity
-    stream = discord.Streaming(platform="YouTube", name="My Drip - Dixie D'Amelio", url="https://youtu.be/k6Kysmn0AO4", details="Dixie's New Banger") 
-    await bot.change_presence(activity=stream, status=discord.Status.idle)
+    # stream = discord.Streaming(platform="YouTube", name="My Drip - Dixie D'Amelio", url="https://youtu.be/k6Kysmn0AO4", details="My Drip - Dixie D'Amelio") 
+    # await bot.change_presence(activity=stream, status=discord.Status.idle)
 
     #WATCHactivity
     #watch = discord.Activity(type=discord.ActivityType.watching, name="video")
     #await client.change_presence(activity=watch, status=discord.Status.idle)
 
     #LISTENINGactivity
-    #listen = discord.Activity(type=discord.ActivityType.listening, name="music")
-    #await client.change_presence(activity=listen, status=discord.Status.idle)
+    listen = discord.Activity(type=discord.ActivityType.listening, name="My Drip - Dixie D'Amelio")
+    await bot.change_presence(activity=listen, status=discord.Status.idle)
 
 if __name__ == '__main__':
     try:
