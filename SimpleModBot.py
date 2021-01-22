@@ -32,8 +32,9 @@ async def say(ctx, *, arg):
 async def on_message(message: discord.Message):
     channel = message.channel
     username = message.author.name
+    user_id = message.author.id
 
-    if (username == "Blueface"):
+    if (username == "Blueface" or user_id == config['my_id'] or user_id == config['ayush_id'] or user_id == config['nitish_id'] or user_id == config['pranav_id'] or user_id == config['sid_id'] or user_id == config['steve_id'] or user_id == config['utkarsh_id']):
         return
 
     if any([username in config['usernames']]):
