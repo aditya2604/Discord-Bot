@@ -23,10 +23,17 @@ Simple moderation bot.
 """
 
 bot = commands.Bot(command_prefix=',')
+
+# clear command
+@bot.command()
+async def clear(ctx, amount : int):
+    await ctx.channel.purge(limit = amount)
+
+# text-through command
 @bot.command()
 async def say(ctx, arg1, *, arg):
-    channel1 = bot.get_channel(config[arg1])
-    await channel1.send(arg)
+    channel = bot.get_channel(config[arg1])
+    await channel.send(arg)
 
 @bot.event
 async def on_message(message: discord.Message):
@@ -36,7 +43,7 @@ async def on_message(message: discord.Message):
 
     if (user_id == config['bot_id'] or user_id == config['ayush_id'] or user_id == config['nitish_id'] or user_id == config['pranav_id'] or user_id == config['sid_id'] or user_id == config['steve_id'] or user_id == config['utkarsh_id']):
         return
-        
+
     await bot.process_commands(message)
 
 @bot.event
