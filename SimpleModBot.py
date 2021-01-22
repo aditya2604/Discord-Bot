@@ -1,5 +1,6 @@
 import json
 import random
+from random import randrange
 from datetime import datetime
 from discord.ext import commands
 try:
@@ -35,15 +36,26 @@ async def say(ctx, arg1, *, arg):
     channel = bot.get_channel(config[arg1])
     await channel.send(arg)
 
+emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓', '👲', '🥜']
+
 @bot.event
 async def on_message(message: discord.Message):
     channel = message.channel
     username = message.author.name
     user_id = message.author.id
 
-    if (user_id == config['bot_id'] or user_id == config['ayush_id'] or user_id == config['nitish_id'] or user_id == config['pranav_id'] or user_id == config['sid_id'] or user_id == config['steve_id'] or user_id == config['utkarsh_id']):
+    if (user_id == config['bot_id']):
         return
-
+        
+    emoji = random.choice(emojis)
+    last_emote = emoji
+    if (emoji == last_emote):
+        emoji = random.choice(emojis)
+    if (randrange(5) == 1):
+        await message.add_reaction(emoji)
+        if (randrange(2) == 1):
+            emoji = random.choice(emojis)
+            await message.add_reaction(emoji)
     await bot.process_commands(message)
 
 @bot.event
