@@ -25,8 +25,8 @@ Simple moderation bot.
 bot = commands.Bot(command_prefix=',')
 @bot.command()
 async def say(ctx, arg1, *, arg):
-    channel = bot.get_channel(config[arg1])
-    await channel.send(arg)
+    channel1 = bot.get_channel(config[arg1])
+    await channel1.send(arg)
 
 @bot.event
 async def on_message(message: discord.Message):
