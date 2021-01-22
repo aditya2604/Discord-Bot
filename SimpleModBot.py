@@ -126,9 +126,9 @@ async def on_message(message: discord.Message):
                     await channel.send('{} {}{}'.format("On what,",Word,"?"))
                     return
     
-    if any([word in message.content.casefold() for word in config['ok']]):
-        await channel.send('{}'.format("ok"))
-        return
+    # if any([word in message.content.casefold() for word in config['ok']]):
+    #     await channel.send('{}'.format("ok"))
+    #     return
     await bot.process_commands(message)
 
 @bot.event
