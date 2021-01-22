@@ -24,8 +24,8 @@ Simple moderation bot.
 
 bot = commands.Bot(command_prefix=',')
 @bot.command()
-async def say(ctx, *, arg):
-    channel = bot.get_channel(config['shrek_general'])
+async def say(ctx, arg1, *, arg):
+    channel = bot.get_channel(config[arg1])
     await channel.send(arg)
 
 @bot.event
@@ -34,7 +34,7 @@ async def on_message(message: discord.Message):
     username = message.author.name
     user_id = message.author.id
 
-    if (username == "Blueface" or user_id == config['my_id'] or user_id == config['ayush_id'] or user_id == config['nitish_id'] or user_id == config['pranav_id'] or user_id == config['sid_id'] or user_id == config['steve_id'] or user_id == config['utkarsh_id']):
+    if (username == "Blueface" or user_id == config['ayush_id'] or user_id == config['nitish_id'] or user_id == config['pranav_id'] or user_id == config['sid_id'] or user_id == config['steve_id'] or user_id == config['utkarsh_id']):
         return
 
     if any([username in config['usernames']]):
@@ -130,20 +130,6 @@ async def on_message(message: discord.Message):
                 Word = wordList[x]
                 if (random.randint(1, 2) == 1):
                     await channel.send('{} {}{}'.format("On what,",Word,"?"))
-                    return
-
-    if any([word in message.content.casefold() for word in config['words13']]):
-        wordList = config['words13']
-        wordPosBool = ([word in message.content.casefold() for word in config['words13']])
-        lengthOfList = len(wordList)
-        for x in range(0, lengthOfList):
-            if (wordPosBool[x] == True):
-                Word = wordList[x]
-                if (random.randint(1, 2) == 1):
-                    await channel.send('{} {} {}'.format("Don't", Word, "me"))
-                    return
-                else:
-                    await channel.send('{}'.format(Word))
                     return
     
     if any([word in message.content.casefold() for word in config['ok']]):
