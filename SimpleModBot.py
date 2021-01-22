@@ -34,97 +34,94 @@ async def on_message(message: discord.Message):
     username = message.author.name
     user_id = message.author.id
 
-    if (username == "Kermit"): 
+    if (user_id == config['bot_id'] or user_id == config['ayush_id'] or user_id == config['nitish_id'] or user_id == config['pranav_id'] or user_id == config['sid_id'] or user_id == config['steve_id'] or user_id == config['utkarsh_id']):
         return
 
-    if (user_id == config['ayush_id'] or user_id == config['nitish_id'] or user_id == config['pranav_id'] or user_id == config['sid_id'] or user_id == config['steve_id'] or user_id == config['utkarsh_id']):
-        return
+    # if any([username in config['usernames']]):
+    #     if (random.randint(1, 2) == 1):
+    #         await channel.send('{} {}{}'.format("I am superior to", username, "."))
+    #         return
+    #     else:
+    #         if (random.randint(1, 2) == 1):
+    #             await channel.send('{} {}{}'.format("I will take", username, "\'s toes and put 'em in my toe jar."))
+    #             return
+    #         else:
+    #             await channel.send('{} {}'.format(message.author.mention, "is stoopid."))
+    #             return
 
-    if any([username in config['usernames']]):
-        if (random.randint(1, 2) == 1):
-            await channel.send('{} {}{}'.format("I am superior to", username, "."))
-            return
-        else:
-            if (random.randint(1, 2) == 1):
-                await channel.send('{} {}{}'.format("I will take", username, "\'s toes and put 'em in my toe jar."))
-                return
-            else:
-                await channel.send('{} {}'.format(message.author.mention, "is stoopid."))
-                return
+    # if any([word in message.content.casefold() for word in config['words2']]):
+    #     if (random.randint(1, 2) == 1):
+    #         await channel.send('{} {}'.format(message.author.mention, config['response2']))
+    #         return
+    #     else:
+    #         await channel.send('{} {}'.format(message.author.mention, config['response2.5']))
+    #         return
 
-    if any([word in message.content.casefold() for word in config['words2']]):
-        if (random.randint(1, 2) == 1):
-            await channel.send('{} {}'.format(message.author.mention, config['response2']))
-            return
-        else:
-            await channel.send('{} {}'.format(message.author.mention, config['response2.5']))
-            return
+    # if any([word in message.content.casefold() for word in config['words']]):
+    #     if (random.randint(1, 2) == 1):
+    #         await channel.send('{} {}'.format(message.author.mention, config['response']))
+    #         return
 
-    if any([word in message.content.casefold() for word in config['words']]):
-        if (random.randint(1, 2) == 1):
-            await channel.send('{} {}'.format(message.author.mention, config['response']))
-            return
+    # if any([word in message.content.casefold() for word in config['words3']]):
+    #     await channel.send('{} {}'.format(message.author.mention, config['response3']))
+    #     return
 
-    if any([word in message.content.casefold() for word in config['words3']]):
-        await channel.send('{} {}'.format(message.author.mention, config['response3']))
-        return
+    # if any([word in message.content.casefold() for word in config['words4']]):
+    #     await channel.send('{} {}'.format(message.author.mention, config['response4']))
+    #     return
 
-    if any([word in message.content.casefold() for word in config['words4']]):
-        await channel.send('{} {}'.format(message.author.mention, config['response4']))
-        return
+    # if any([word in message.content.casefold() for word in config['words5']]):
+    #     if (random.randint(1, 2) == 1):
+    #         await channel.send('{} {}'.format(config['response5'], message.author.mention))
+    #         return
+    #     else:
+    #         await channel.send('{} {}'.format(config['response5.5'], message.author.mention))
+    #         return
 
-    if any([word in message.content.casefold() for word in config['words5']]):
-        if (random.randint(1, 2) == 1):
-            await channel.send('{} {}'.format(config['response5'], message.author.mention))
-            return
-        else:
-            await channel.send('{} {}'.format(config['response5.5'], message.author.mention))
-            return
+    # if any([word in message.content.casefold() for word in config['words6']]):
+    #     await channel.send('{}'.format(config['response6']))
+    #     return
 
-    if any([word in message.content.casefold() for word in config['words6']]):
-        await channel.send('{}'.format(config['response6']))
-        return
+    # if any([word in message.content.casefold() for word in config['words7']]):
+    #     wordList = config['words7']
+    #     wordPosBool = ([word in message.content.casefold() for word in config['words7']])
+    #     lengthOfList = len(wordList)
+    #     for x in range(0, lengthOfList):
+    #         if (wordPosBool[x] == True):
+    #             Word = wordList[x]
+    #             await channel.send('{} {}'.format(Word, config['response7']))
+    #             return
+    #             #elif (randNum == 2):
+    #                 #await channel.send('{}'.format("https://tenor.com/view/touchdown-bruh-really-gif-12484222"))
+    #                 #return
+    #             #else:
+    #                 #await channel.send('{}'.format("https://tenor.com/view/bruh-gif-5156041"))
+    #                 #return
 
-    if any([word in message.content.casefold() for word in config['words7']]):
-        wordList = config['words7']
-        wordPosBool = ([word in message.content.casefold() for word in config['words7']])
-        lengthOfList = len(wordList)
-        for x in range(0, lengthOfList):
-            if (wordPosBool[x] == True):
-                Word = wordList[x]
-                await channel.send('{} {}'.format(Word, config['response7']))
-                return
-                #elif (randNum == 2):
-                    #await channel.send('{}'.format("https://tenor.com/view/touchdown-bruh-really-gif-12484222"))
-                    #return
-                #else:
-                    #await channel.send('{}'.format("https://tenor.com/view/bruh-gif-5156041"))
-                    #return
+    # if any([word in message.content.casefold() for word in config['words9']]):
+    #     wordList = config['words9']
+    #     wordPosBool = ([word in message.content.casefold() for word in config['words9']])
+    #     lengthOfList = len(wordList)
+    #     for x in range(0, lengthOfList):
+    #         if (wordPosBool[x] == True):
+    #             Word = wordList[x]
+    #             await channel.send('{} {} {} {}'.format(message.author.mention, config['response9'], Word, config['response9.5']))
+    #             return
 
-    if any([word in message.content.casefold() for word in config['words9']]):
-        wordList = config['words9']
-        wordPosBool = ([word in message.content.casefold() for word in config['words9']])
-        lengthOfList = len(wordList)
-        for x in range(0, lengthOfList):
-            if (wordPosBool[x] == True):
-                Word = wordList[x]
-                await channel.send('{} {} {} {}'.format(message.author.mention, config['response9'], Word, config['response9.5']))
-                return
+    # if any([word in message.content.casefold() for word in config['words10']]):
+    #     await channel.send('{}'.format("why are u gay"))
+    #     return
 
-    if any([word in message.content.casefold() for word in config['words10']]):
-        await channel.send('{}'.format("why are u gay"))
-        return
-
-    if any([word in message.content.casefold() for word in config['words12']]):
-        wordList = config['words12']
-        wordPosBool = ([word in message.content.casefold() for word in config['words12']])
-        lengthOfList = len(wordList)
-        for x in range(0, lengthOfList):
-            if (wordPosBool[x] == False):
-                Word = wordList[x]
-                if (random.randint(1, 2) == 1):
-                    await channel.send('{} {}{}'.format("On what,",Word,"?"))
-                    return
+    # if any([word in message.content.casefold() for word in config['words12']]):
+    #     wordList = config['words12']
+    #     wordPosBool = ([word in message.content.casefold() for word in config['words12']])
+    #     lengthOfList = len(wordList)
+    #     for x in range(0, lengthOfList):
+    #         if (wordPosBool[x] == False):
+    #             Word = wordList[x]
+    #             if (random.randint(1, 2) == 1):
+    #                 await channel.send('{} {}{}'.format("On what,",Word,"?"))
+    #                 return
     
     # if any([word in message.content.casefold() for word in config['ok']]):
     #     await channel.send('{}'.format("ok"))
