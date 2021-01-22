@@ -167,7 +167,7 @@ async def on_ready():
 
     #STREAMactivity
     stream = discord.Streaming(platform="YouTube", name="My Drip - Dixie D'Amelio", url="https://youtu.be/k6Kysmn0AO4", details="Dixie's New Banger") 
-    await bot.change_presence(activity=stream)
+    await bot.change_presence(activity=stream, status=discord.Status.idle)
 
     #WATCHactivity
     #watch = discord.Activity(type=discord.ActivityType.watching, name="video")
