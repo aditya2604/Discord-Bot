@@ -51,7 +51,7 @@ async def on_message(message: discord.Message):
     last_emote = emoji
     if (emoji == last_emote):
         emoji = random.choice(emojis)
-    if (randrange(4) == 1):
+    if (randrange(5) == 1):
         await message.add_reaction(emoji)
         if (randrange(4) == 1):
             emoji = random.choice(emojis)
