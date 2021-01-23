@@ -38,9 +38,11 @@ async def say(ctx, arg1, *, arg):
     channel = bot.get_channel(config[arg1])
     await channel.send(arg)
 
+# poll command
 @bot.command()
 async def poll(ctx, *, arg):
     # await ctx.send('{} Poll started by {}: '.format(ctx.message.guild.roles[0], ctx.author.mention))
+    await ctx.channel.purge(limit = 1)
     await ctx.send('Poll started by {}: '.format(ctx.author.mention))
     m = await ctx.send('`{}`'.format(arg))
     await m.add_reaction('👍')
