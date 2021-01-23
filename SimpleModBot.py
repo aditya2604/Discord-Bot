@@ -1,5 +1,7 @@
 import json
 import random
+import logging
+import aiohttp
 from random import randrange
 from datetime import datetime
 from discord.ext import commands
@@ -35,6 +37,15 @@ async def clear(ctx, amount : int):
 async def say(ctx, arg1, *, arg):
     channel = bot.get_channel(config[arg1])
     await channel.send(arg)
+
+@bot.command()
+async def poll(ctx, *, arg):
+    # await ctx.send('{} Poll started by {}: '.format(ctx.message.guild.roles[0], ctx.author.mention))
+    await ctx.send('Poll started by {}: '.format(ctx.author.mention))
+    m = await ctx.send('`{}`'.format(arg))
+    await m.add_reaction('👍')
+    await m.add_reaction('👎')
+    await m.add_reaction('🤷')
 
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓', '👲', '🥜']
 
