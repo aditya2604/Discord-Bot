@@ -5,6 +5,7 @@ import aiohttp
 from random import randrange
 from datetime import datetime
 from discord.ext import commands
+from discord.ext.commands import has_permissions, MissingPermissions
 try:
     import discord
 except ImportError:
@@ -28,21 +29,22 @@ Simple moderation bot.
 bot = commands.Bot(command_prefix=',')
 
 # clear command
-@bot.command()
+@bot.command(brief="clears the entered amount of messages", description="clears the entered amount of messages(needs 'manage messages' perms to work")
 async def clear(ctx, amount : int):
     await ctx.channel.purge(limit = amount)
 
 # text-through command
-@bot.command()
+@bot.command(brief="private command", description="not accessible to users")
 async def say(ctx, arg1, *, arg):
     channel = bot.get_channel(config[arg1])
     await channel.send(arg)
 
 # poll command
-@bot.command()
+@bot.command(brief="sets up a poll", description="sets up a poll")
 async def poll(ctx, *, arg):
     # await ctx.send('{} Poll started by {}: '.format(ctx.message.guild.roles[0], ctx.author.mention))
-    await ctx.channel.purge(limit = 1)
+    if (ctx.channel.guild.me.guild_permissions.manage_messages):
+        await ctx.channel.purge(limit = 1)
     await ctx.send('Poll started by {}: '.format(ctx.author.mention))
     m = await ctx.send('`{}`'.format(arg))
     await m.add_reaction('👍')
