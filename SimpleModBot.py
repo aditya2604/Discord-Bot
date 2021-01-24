@@ -51,6 +51,17 @@ async def poll(ctx, *, arg):
     await m.add_reaction('👎')
     await m.add_reaction('🤷')
 
+# join vc command
+@bot.command()
+async def join(ctx):
+    voice_channel = ctx.author.voice.channel
+    await voice_channel.connect()
+
+# leave vc command
+@bot.command()
+async def leave(ctx):
+    await ctx.voice_client.disconnect()
+
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓', '👲']
 
 @bot.event
@@ -75,6 +86,12 @@ async def on_message(message: discord.Message):
     if mention in message.content:
         await channel.send("https://tenor.com/view/kermit-the-frog-drive-driving-gif-3965525")
     await bot.process_commands(message)
+
+# missing arguments function
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Please pass in all required arguments.')
 
 @bot.event
 async def on_ready():
