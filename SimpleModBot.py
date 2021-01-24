@@ -52,13 +52,13 @@ async def poll(ctx, *, arg):
     await m.add_reaction('🤷')
 
 # join vc command
-@bot.command()
+@bot.command(brief="joins current voice channel", description="joins current voice channel")
 async def join(ctx):
     voice_channel = ctx.author.voice.channel
     await voice_channel.connect()
 
 # leave vc command
-@bot.command()
+@bot.command(brief="leaves current voice channel", description="leaves current voice channel")
 async def leave(ctx):
     await ctx.voice_client.disconnect()
 
