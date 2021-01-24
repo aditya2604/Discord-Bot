@@ -66,9 +66,9 @@ async def on_message(message: discord.Message):
     last_emote = emoji
     if (emoji == last_emote):
         emoji = random.choice(emojis)
-    if (randrange(7) == 1):
+    if (randrange(10) == 1):
         await message.add_reaction(emoji)
-        if (randrange(4) == 1):
+        if (randrange(6) == 1):
             emoji = random.choice(emojis)
             await message.add_reaction(emoji)
     mention = f'<@!{bot.user.id}>'
