@@ -51,7 +51,7 @@ async def poll(ctx, *, arg):
     await m.add_reaction('👎')
     await m.add_reaction('🤷')
 
-emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓', '👲', '🥜']
+emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓', '👲']
 
 @bot.event
 async def on_message(message: discord.Message):
