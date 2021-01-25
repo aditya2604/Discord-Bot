@@ -82,7 +82,7 @@ async def on_message(message: discord.Message):
         if (randrange(6) == 1):
             emoji = random.choice(emojis)
             await message.add_reaction(emoji)
-    mention = f'<@!{bot.user.id}>'
+    # mention = f'<@!{bot.user.id}>'
     #if mention in message.content:
         #await channel.send("https://tenor.com/view/kermit-the-frog-drive-driving-gif-3965525")
     await bot.process_commands(message)
