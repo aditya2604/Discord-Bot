@@ -28,6 +28,14 @@ Simple moderation bot.
 
 bot = commands.Bot(command_prefix=',')
 
+# link command
+@bot.command(brief="link to invite bot into servers", description="link to invite bot into servers")
+async def link(ctx):
+    app_info = await bot.application_info()
+    perms = discord.Permissions.none()
+    url = discord.utils.oauth_url(app_info.id, perms)
+    await ctx.send('To invite me to a server, use this link:\n{}'.format(url))
+
 # clear command
 @bot.command(brief="clears the entered amount of messages", description="clears the entered amount of messages(needs 'manage messages' perms to work")
 async def clear(ctx, amount : int):
