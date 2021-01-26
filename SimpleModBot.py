@@ -62,6 +62,11 @@ async def join(ctx):
 async def leave(ctx):
     await ctx.voice_client.disconnect()
 
+# speak command
+@bot.command(brief="text to speech", description="speaks out the entered argument")
+async def speak(ctx, *, arg):
+    await ctx.send(arg, tts=True)
+
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓', '👲']
 
 @bot.event
