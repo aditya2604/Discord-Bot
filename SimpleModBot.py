@@ -120,21 +120,17 @@ async def on_ready():
     url = discord.utils.oauth_url(app_info.id, perms)
     print('To invite me to a server, use this link\n{}'.format(url))
 
-    #GAMEactivity
-    # game = discord.Game(name="wit joe mum", state="In Game")
-    # await bot.change_presence(activity=game, status=discord.Status.dnd)
+    # Setting `Playing ` status
+    # await bot.change_presence(activity=discord.Game(name="with Elmo"))
 
-    #STREAMactivity
-    # stream = discord.Streaming(platform="YouTube", name="My Drip - Dixie D'Amelio", url="https://youtu.be/k6Kysmn0AO4", details="My Drip - Dixie D'Amelio") 
-    # await bot.change_presence(activity=stream, status=discord.Status.idle)
+    # Setting `Streaming ` status
+    await bot.change_presence(activity=discord.Streaming(name="My Drip - Dixie D'Amelio", url="https://www.youtube.com/watch?v=k6Kysmn0AO4"))
 
-    #WATCHactivity
-    #watch = discord.Activity(type=discord.ActivityType.watching, name="video")
-    #await client.change_presence(activity=watch, status=discord.Status.idle)
+    # Setting `Listening ` status
+    # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="a song"))
 
-    #LISTENINGactivity
-    listen = discord.Activity(type=discord.ActivityType.listening, name="My Drip - Dixie D'Amelio")
-    await bot.change_presence(activity=listen, status=discord.Status.online)
+    # Setting `Watching ` status
+    # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"))
 
 if __name__ == '__main__':
     try:
