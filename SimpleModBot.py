@@ -36,6 +36,10 @@ async def clear(ctx, amount : int):
 # text-through command
 @bot.command(brief="private command", description="not accessible to users")
 async def say(ctx, arg1, *, arg):
+    _id = ctx.author.id
+    if (_id != config['my_id']):
+        await ctx.send("This is a private command!")
+        return
     channel = bot.get_channel(config[arg1])
     await channel.send(arg)
 
@@ -63,13 +67,14 @@ async def leave(ctx):
     await ctx.voice_client.disconnect()
 
 # speak command
-@bot.command(brief="text to speech", description="speaks out the entered argument")
+@bot.command(brief="private command", description="text to speech, speaks out the entered argument")
 async def speak(ctx, *, arg):
     _id = ctx.author.id
-    if (_id != config['my_id'] or _id != config['lyra_id'] or _id != config['minsui_id']):
-        return
-    else:
+    if ((_id == config['my_id']) or (_id == config['lyra_id']) or (_id == config['minsui_id'])):
         await ctx.send(arg, tts=True)
+    else:
+        await ctx.send("This is a private command!")
+        return
 
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓', '👲']
 
