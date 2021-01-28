@@ -65,7 +65,8 @@ async def leave(ctx):
 # speak command
 @bot.command(brief="text to speech", description="speaks out the entered argument")
 async def speak(ctx, *, arg):
-    if (ctx.author.id != config['my_id']):
+    _id = ctx.author.id
+    if (_id != config['my_id'] or _id != config['lyra_id'] or _id != config['minsui_id']):
         return
     else:
         await ctx.send(arg, tts=True)
