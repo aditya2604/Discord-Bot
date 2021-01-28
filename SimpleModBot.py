@@ -71,9 +71,12 @@ async def leave(ctx):
     await ctx.voice_client.disconnect()
 
 # speak command
-# @bot.command(brief="text to speech", description="speaks out the entered argument")
-# async def speak(ctx, *, arg):
-#     await ctx.send(arg, tts=True)
+@bot.command(brief="text to speech", description="speaks out the entered argument")
+async def speak(ctx, *, arg):
+    if (ctx.author.id != config['my_id']):
+        return
+    else:
+        await ctx.send(arg, tts=True)
 
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓', '👲']
 
