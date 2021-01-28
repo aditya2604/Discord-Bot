@@ -121,16 +121,16 @@ async def on_ready():
     print('To invite me to a server, use this link\n{}'.format(url))
 
     # Setting `Playing ` status
-    # await bot.change_presence(activity=discord.Game(name="with Elmo"))
+    # await bot.change_presence(activity=discord.Game(name="with Elmo"), status=discord.Status.dnd)
 
     # Setting `Streaming ` status
     await bot.change_presence(activity=discord.Streaming(name="My Drip - Dixie D'Amelio", url="https://www.youtube.com/watch?v=k6Kysmn0AO4"))
 
     # Setting `Listening ` status
-    # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="a song"))
+    # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="a song"), status=discord.Status.dnd)
 
     # Setting `Watching ` status
-    # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"))
+    # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"), status=discord.Status.dnd)
 
 if __name__ == '__main__':
     try:
