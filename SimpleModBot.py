@@ -31,7 +31,13 @@ bot = commands.Bot(command_prefix=',')
 # clear command
 @bot.command(brief="clears the entered amount of messages", description="clears the entered amount of messages(needs 'manage messages' perms to work")
 async def clear(ctx, amount : int):
-    await ctx.channel.purge(limit = amount)
+    _id = ctx.author.id
+    mention = mention = f'<@!{366117920960675843}>'
+    if (_id == config['my_id']):
+        await ctx.channel.purge(limit = amount)
+    else:
+        await ctx.send("Sorry, only " + mention + " can use this command.")
+        return
 
 # text-through command
 @bot.command(brief="private command", description="not accessible to users")
