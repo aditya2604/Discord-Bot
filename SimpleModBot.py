@@ -49,6 +49,17 @@ async def say(ctx, arg1, *, arg):
     channel = bot.get_channel(config[arg1])
     await channel.send(arg)
 
+# reply command
+@bot.command(brief="private command", description="not accessible to users")
+async def reply(ctx, arg1, *, arg):
+    _id = ctx.author.id
+    if (_id != config['my_id']):
+        await ctx.send("This is a private command!")
+    else:
+        user_id = config[arg1]
+        user = await bot.fetch_user(user_id)
+        await user.send(arg)
+
 # poll command
 @bot.command(brief="sets up a poll", description="sets up a poll")
 async def poll(ctx, *, arg):
@@ -76,7 +87,7 @@ async def leave(ctx):
 @bot.command(brief="private command", description="text to speech, speaks out the entered argument")
 async def speak(ctx, *, arg):
     _id = ctx.author.id
-    if ((_id == config['my_id']) or (_id == config['lyra_id']) or (_id == config['minsui_id'])):
+    if ((_id == config['my_id']) or (_id == config['lyra']) or (_id == config['minsui'])):
         await ctx.send(arg, tts=True)
     else:
         await ctx.send("This is a private command!")
@@ -97,7 +108,7 @@ async def on_message(message: discord.Message):
     last_emote = emoji
     if (emoji == last_emote):
         emoji = random.choice(emojis)
-    if (randrange(10) == 1):
+    if (randrange(15) == 1):
         await message.add_reaction(emoji)
         if (randrange(6) == 1):
             emoji = random.choice(emojis)
@@ -106,6 +117,10 @@ async def on_message(message: discord.Message):
     if mention in message.content:
         if (random.randint(0,1) == 1):
             await channel.send("https://tenor.com/view/kermit-the-frog-drive-driving-gif-3965525")
+
+    channel = bot.get_channel(config['bot_testing_channel'])
+    if message.guild is None and message.author != bot.user:
+        await channel.send(f'{message.author}: {message.content}')
     await bot.process_commands(message)
 
 # missing arguments function
