@@ -110,6 +110,14 @@ async def speak(ctx, *, arg):
         await ctx.send("This is a private command!")
         return
 
+# provides invite link
+@bot.command
+async def link(ctx):
+    app_info = await bot.application_info()
+    perms = discord.Permissions.none()
+    url = discord.utils.oauth_url(app_info.id, perms)
+    await ctx.send('To invite me to a server, use this link\n{}'.format(url))
+
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓', '👲']
 
 @bot.event
@@ -140,7 +148,7 @@ async def on_message(message: discord.Message):
         await channel.send(f'{message.author}: {message.content}')
     await bot.process_commands(message)
 
-# missing arguments function
+# missing arguments event
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
