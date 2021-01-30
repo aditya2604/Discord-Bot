@@ -112,6 +112,10 @@ async def speak(ctx, *, arg):
 
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓', '👲']
 
+@bot.command()
+async def test(ctx):
+    await ctx.send('test')
+
 @bot.event
 async def on_message(message: discord.Message):
     channel = message.channel
