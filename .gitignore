@@ -88,8 +88,8 @@ ENV/
 # Rope project settings
 .ropeproject
 
-# patch file
-patch.txt
+# config file
+config.json
 
 # token file
 token.txt
