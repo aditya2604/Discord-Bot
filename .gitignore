@@ -87,3 +87,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# token file
+token.txt
+
+# config file
+config.json
