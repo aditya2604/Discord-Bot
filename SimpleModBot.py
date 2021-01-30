@@ -170,9 +170,12 @@ async def on_ready():
     # Setting `Watching ` status
     # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"), status=discord.Status.dnd)
 
+with open('token.txt') as f:
+    token = f.readline()
+
 if __name__ == '__main__':
     try:
-        bot.run(config['discord_token'])
+        bot.run(token)
     except KeyError:
         print("config not yet filled out.")
     except discord.errors.LoginFailure as e:
