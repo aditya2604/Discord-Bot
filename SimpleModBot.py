@@ -170,8 +170,7 @@ async def on_ready():
     # Setting `Watching ` status
     # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"), status=discord.Status.dnd)
 
-with open('token.txt') as f:
-    token = f.readline()
+token = ''
 
 if __name__ == '__main__':
     try:
