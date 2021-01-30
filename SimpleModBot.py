@@ -111,7 +111,7 @@ async def speak(ctx, *, arg):
         return
 
 # provides invite link
-@bot.command
+@bot.command(brief='provides link to invite Kermit into a server', description='provides link to invite Kermit into a server')
 async def link(ctx):
     app_info = await bot.application_info()
     perms = discord.Permissions.none()
