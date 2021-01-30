@@ -26,13 +26,27 @@ desc = """
 Simple moderation bot.
 """
 
-bot = commands.Bot(command_prefix=',')
+bot = commands.Bot(command_prefix=',', help_command=None)
+
+# help command
+@bot.command(brief="shows this message", description="shows this message")
+async def help(ctx):
+    embed = discord.Embed(
+        title="Kermit's commands", color=discord.Color.purple()
+    )
+    embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+    for command in bot.commands:
+        if (command != say and command != reply and command != speak):
+            embed.add_field(name=command, value=command.description, inline=False)
+    embed.set_thumbnail(url=config['thumbnail_url'])
+    embed.set_footer(text="Information requested by: {}".format(ctx.author.display_name))
+    await ctx.send(embed=embed)
 
 # clear command
-@bot.command(brief="clears the entered amount of messages", description="clears the entered amount of messages(needs 'manage messages' perms to work")
+@bot.command(brief="clears the entered amount of messages", description="clears the entered amount of messages")
 async def clear(ctx, amount : int):
     _id = ctx.author.id
-    mention = mention = f'<@!{366117920960675843}>'
+    mention = mention = f'<@!{366117920960675843}>' # RoastSea8
     if (_id == config['my_id']):
         await ctx.channel.purge(limit = amount)
     else:
@@ -40,7 +54,7 @@ async def clear(ctx, amount : int):
         return
 
 # text-through command
-@bot.command(brief="private command", description="not accessible to users")
+@bot.command()
 async def say(ctx, arg1, *, arg):
     _id = ctx.author.id
     if (_id != config['my_id']):
@@ -50,7 +64,7 @@ async def say(ctx, arg1, *, arg):
     await channel.send(arg)
 
 # reply command
-@bot.command(brief="private command", description="not accessible to users")
+@bot.command()
 async def reply(ctx, arg1, *, arg):
     _id = ctx.author.id
     if (_id != config['my_id']):
@@ -75,6 +89,9 @@ async def poll(ctx, *, arg):
 # join vc command
 @bot.command(brief="joins current voice channel", description="joins current voice channel")
 async def join(ctx):
+    # if ctx.member.voice.channel is None:
+    #     await ctx.send('You need to be in a voice channel to use this command')
+    # else:
     voice_channel = ctx.author.voice.channel
     await voice_channel.connect()
 
@@ -84,7 +101,7 @@ async def leave(ctx):
     await ctx.voice_client.disconnect()
 
 # speak command
-@bot.command(brief="private command", description="text to speech, speaks out the entered argument")
+@bot.command()
 async def speak(ctx, *, arg):
     _id = ctx.author.id
     if ((_id == config['my_id']) or (_id == config['lyra']) or (_id == config['minsui'])):
