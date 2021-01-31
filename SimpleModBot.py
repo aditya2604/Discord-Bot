@@ -38,7 +38,7 @@ async def help(ctx):
     for command in bot.commands:
         if (command != say and command != reply and command != speak):
             embed.add_field(name=command, value=command.description, inline=False)
-        embed.add_field(name="try to DM me!", inline=False)
+    embed.add_field(name="try to DM me!", inline=False)
     embed.set_thumbnail(url=config['thumbnail_url'])
     embed.set_footer(text="Information requested by: {}".format(ctx.author.display_name))
     await ctx.send(embed=embed)
