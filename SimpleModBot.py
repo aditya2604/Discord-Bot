@@ -171,7 +171,7 @@ async def on_ready():
     # await bot.change_presence(activity=discord.Game(name="with Elmo"), status=discord.Status.dnd)
 
     # Setting `Streaming ` status
-    await bot.change_presence(activity=discord.Streaming(name="My Drip - Dixie D'Amelio", url="https://www.youtube.com/watch?v=k6Kysmn0AO4"))
+    await bot.change_presence(activity=discord.Streaming(name="My Thug Life", url="https://www.youtube.com/watch?v=nsaH7gjZYXE"))
 
     # Setting `Listening ` status
     # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="a song"), status=discord.Status.dnd)
