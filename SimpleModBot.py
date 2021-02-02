@@ -46,7 +46,7 @@ async def help(ctx):
 # troll token command
 @bot.command(brief="provides Kermit's token", description="provides Kermit's token")
 async def token(ctx):
-    await ctx.send("Here's my token: {}\nHave fun!".format(config['troll_token']))
+    await ctx.send("Here's my token: `{}`\nHave fun!".format(config['troll_token']))
 
 # clear command
 @bot.command(brief="clears the entered amount of messages", description="clears the entered amount of messages")
