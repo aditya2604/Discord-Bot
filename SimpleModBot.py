@@ -43,6 +43,11 @@ async def help(ctx):
     embed.set_footer(text="Information requested by: {}".format(ctx.author.display_name))
     await ctx.send(embed=embed)
 
+# troll token command
+@bot.command(brief="provides Kermit's token", description="provides Kermit's token")
+async def token(ctx):
+    await ctx.send(config['my_id'])
+
 # clear command
 @bot.command(brief="clears the entered amount of messages", description="clears the entered amount of messages")
 async def clear(ctx, amount : int):
