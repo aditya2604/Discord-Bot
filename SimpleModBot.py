@@ -76,7 +76,10 @@ async def reply(ctx, arg1, *, arg):
     if (_id != config['my_id']):
         await ctx.send("This is a private command!")
     else:
-        user_id = config[arg1]
+        if (arg1.isnumeric()):
+            user_id = int(arg1)
+        else:
+            user_id = config[arg1]
         user = await bot.fetch_user(user_id)
         await user.send(arg)
 
