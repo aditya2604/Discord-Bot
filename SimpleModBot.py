@@ -32,7 +32,7 @@ bot = commands.Bot(command_prefix=',', help_command=None)
 @bot.command(brief="shows this message", description="shows this message")
 async def help(ctx):
     embed = discord.Embed(
-        title="Kermit's commands", color=discord.Color.purple()
+        title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", color=0x4ef207
     )
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     for command in bot.commands:
@@ -179,10 +179,10 @@ async def on_ready():
     # await bot.change_presence(activity=discord.Game(name="with Elmo"), status=discord.Status.dnd)
 
     # Setting `Streaming ` status
-    await bot.change_presence(activity=discord.Streaming(name="My Thug Life", url="https://www.youtube.com/watch?v=nsaH7gjZYXE"))
+    # await bot.change_presence(activity=discord.Streaming(name="My Thug Life", url="https://www.youtube.com/watch?v=nsaH7gjZYXE"))
 
     # Setting `Listening ` status
-    # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="a song"), status=discord.Status.dnd)
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=",help"), status=discord.Status.dnd)
 
     # Setting `Watching ` status
     # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"), status=discord.Status.dnd)
