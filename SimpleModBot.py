@@ -31,8 +31,8 @@ bot = commands.Bot(command_prefix=',', help_command=None)
 # help command
 @bot.command(brief="shows this message", description="shows this message")
 async def help(ctx):
-    colors = [0x4ef207, 0x6f5df0, 0x40ffcf, 0xa640ff, 0xe00d6c, 0xb2e835]
-    _color = random.colors()
+    # colors = [0x4ef207, 0x6f5df0, 0x40ffcf, 0xa640ff, 0xe00d6c, 0xb2e835]
+    # _color = random.colors()
     embed = discord.Embed(
         title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", color=0x40ffcf
     )
