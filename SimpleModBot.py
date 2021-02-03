@@ -34,7 +34,7 @@ async def help(ctx):
     colors = [0x4ef207, 0x6f5df0, 0x40ffcf, 0xa640ff, 0xe00d6c, 0xb2e835]
     _color = random.colors()
     embed = discord.Embed(
-        title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", color=_color
+        title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", color=0x40ffcf
     )
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     for command in bot.commands:
