@@ -68,7 +68,12 @@ async def say(ctx, arg1, *, arg):
     if (_id != config['my_id']):
         await ctx.send("This is a private command!")
         return
-    channel = bot.get_channel(config[arg1])
+    else:
+        if (arg1.isnumeric()):
+            arg1 = int(arg1)
+        else:
+            arg1 = config[arg1]
+    channel = bot.get_channel(arg1)
     await channel.send(arg)
 
 # reply command
@@ -77,6 +82,7 @@ async def reply(ctx, arg1, *, arg):
     _id = ctx.author.id
     if (_id != config['my_id']):
         await ctx.send("This is a private command!")
+        return
     else:
         if (arg1.isnumeric()):
             user_id = int(arg1)
