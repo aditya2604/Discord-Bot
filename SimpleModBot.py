@@ -38,27 +38,22 @@ async def help(ctx):
     )
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     for command in bot.commands:
-        if (command != say and command != reply and command != speak):
+        if (command != clear and command != say and command != reply and command != speak):
             embed.add_field(name=command, value=command.description, inline=True)
     embed.add_field(name="DM feature", value="try to DM me!", inline=True)
     embed.set_thumbnail(url=config['thumbnail_url'])
     embed.set_footer(text="Information requested by: {}".format(ctx.author.display_name))
     await ctx.send(embed=embed)
 
-# troll token command
-@bot.command(brief="provides Kermit's token", description="provides Kermit's token")
-async def token(ctx):
-    await ctx.send("Here's my token: `{}`\nHave fun!".format(config['troll_token']))
-
 # clear command
-@bot.command(brief="clears the entered amount of messages", description="clears the entered amount of messages")
+@bot.command(brief="clears entered amount of messages", description="clears entered amount of messages")
 async def clear(ctx, amount : int):
     _id = ctx.author.id
     mention = mention = f'<@!{366117920960675843}>' # RoastSea8
-    if (_id == config['my_id']):
+    if (_id == config['my_id'] or ctx.author.guild_permissions.administrator):
         await ctx.channel.purge(limit = amount)
     else:
-        await ctx.send("Sorry, only " + mention + " can use this command.")
+        await ctx.send("Sorry, only admins can use this command.")
         return
 
 # text-through command
@@ -113,6 +108,17 @@ async def poll(ctx, *, arg):
     await m.add_reaction('👎')
     await m.add_reaction('🤷')
 
+# suggests command
+@bot.command(brief="sends feature suggestions to Kermit", description="sends feature suggestions to Kermit")
+async def suggest(ctx, *, suggestion):
+    channel = bot.get_channel(config['suggestions_channel'])
+    await channel.send(f'{ctx.author} suggests: {suggestion}')
+
+# troll token command
+@bot.command(brief="provides Kermit's token", description="provides Kermit's token")
+async def token(ctx):
+    await ctx.send("Here's my token: `{}`\nHave fun!".format(config['troll_token']))
+
 # join vc command
 @bot.command(brief="joins current voice channel", description="joins current voice channel")
 async def join(ctx):
@@ -126,12 +132,6 @@ async def join(ctx):
 @bot.command(brief="leaves current voice channel", description="leaves current voice channel")
 async def leave(ctx):
     await ctx.voice_client.disconnect()
-
-# suggests command
-@bot.command(brief="sends feature suggestions to Kermit", description="sends feature suggestions to Kermit")
-async def suggest(ctx, *, suggestion):
-    channel = bot.get_channel(config['suggestions_channel'])
-    await channel.send(f'{ctx.author} suggests: {suggestion}')
 
 # provides invite link
 @bot.command(brief='provides link to invite Kermit into a server', description='provides link to invite Kermit into a server')
