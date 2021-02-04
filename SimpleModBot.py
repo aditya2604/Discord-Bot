@@ -76,6 +76,16 @@ async def say(ctx, arg1, *, arg):
     channel = bot.get_channel(arg1)
     await channel.send(arg)
 
+# speak command
+@bot.command()
+async def speak(ctx, *, arg):
+    _id = ctx.author.id
+    if ((_id == config['my_id']) or (_id == config['lyra']) or (_id == config['minsui'])):
+        await ctx.send(arg, tts=True)
+    else:
+        await ctx.send("This is a private command!")
+        return
+
 # reply command
 @bot.command()
 async def reply(ctx, arg1, *, arg):
@@ -117,15 +127,11 @@ async def join(ctx):
 async def leave(ctx):
     await ctx.voice_client.disconnect()
 
-# speak command
-@bot.command()
-async def speak(ctx, *, arg):
-    _id = ctx.author.id
-    if ((_id == config['my_id']) or (_id == config['lyra']) or (_id == config['minsui'])):
-        await ctx.send(arg, tts=True)
-    else:
-        await ctx.send("This is a private command!")
-        return
+# suggests command
+@bot.command(brief="sends feature suggestions that Kermit should implement", description="sends feature suggestions that Kermit should implement")
+async def suggest(ctx, message):
+    channel = bot.get_channel(config['suggestions_channel'])
+    await channel.send(f'{message.author} suggests: {message.content}')
 
 # provides invite link
 @bot.command(brief='provides link to invite Kermit into a server', description='provides link to invite Kermit into a server')
