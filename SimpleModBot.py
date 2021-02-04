@@ -128,7 +128,7 @@ async def leave(ctx):
     await ctx.voice_client.disconnect()
 
 # suggests command
-@bot.command(brief="sends feature suggestions that Kermit should implement", description="sends feature suggestions that Kermit should implement")
+@bot.command(brief="sends feature suggestions to Kermit", description="sends feature suggestions to Kermit")
 async def suggest(ctx, *, suggestion):
     channel = bot.get_channel(config['suggestions_channel'])
     await channel.send(f'{ctx.author} suggests: {suggestion}')
