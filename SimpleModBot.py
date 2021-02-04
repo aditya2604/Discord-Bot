@@ -129,9 +129,9 @@ async def leave(ctx):
 
 # suggests command
 @bot.command(brief="sends feature suggestions that Kermit should implement", description="sends feature suggestions that Kermit should implement")
-async def suggest(ctx, message):
+async def suggest(ctx, *, suggestion):
     channel = bot.get_channel(config['suggestions_channel'])
-    await channel.send(f'{message.author} suggests: {message.content}')
+    await channel.send(f'{ctx.author} suggests: {suggestion}')
 
 # provides invite link
 @bot.command(brief='provides link to invite Kermit into a server', description='provides link to invite Kermit into a server')
