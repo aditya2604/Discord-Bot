@@ -125,9 +125,9 @@ async def token(ctx):
 # join vc command
 @bot.command(brief="joins current voice channel", description="joins current voice channel")
 async def join(ctx):
-    # if ctx.member.voice.channel is None:
-    #     await ctx.send('You need to be in a voice channel to use this command')
-    # else:
+    voice_state = ctx.author.voice
+    if voice_state is None:
+        await ctx.send('You need to be in a voice channel to use this command')
     voice_channel = ctx.author.voice.channel
     await voice_channel.connect()
 
