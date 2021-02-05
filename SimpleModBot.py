@@ -127,7 +127,7 @@ async def token(ctx):
 async def join(ctx):
     voice_state = ctx.author.voice
     if voice_state is None:
-        await ctx.send('You need to be in a voice channel to use this command')
+        await ctx.send('You need to be in a voice channel to use this command!')
     voice_channel = ctx.author.voice.channel
     await voice_channel.connect()
 
