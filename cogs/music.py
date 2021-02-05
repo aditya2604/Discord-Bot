@@ -77,7 +77,10 @@ class Music(commands.Cog):
     
     @commands.command(description="pauses music")
     async def pause(self, ctx):
-        ctx.voice_client.pause()
+        if not ctx.voice_state.is_playing and ctx.voice_state.voice.is_playing():
+            ctx.voice_state.voice.pause()
+            await ctx.message.add_reaction('⏯')
+        # ctx.voice_client.pause()
     
     @commands.command(description="resumes music")
     async def resume(self, ctx):
