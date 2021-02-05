@@ -68,12 +68,20 @@ class Music(commands.Cog):
             await ctx.voice_client.move_to(voice_channel)
             vc = ctx.voice_client
 
-    @commands.command(description="streams from a url")
+    @commands.command(description="streams music")
     async def play(self, ctx, *, url):
         async with ctx.typing():
             player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
         await ctx.send('Now playing: {}'.format(player.title))
+    
+    @commands.command(description="pauses music")
+    async def pause(self, ctx):
+        ctx.voice_client.pause()
+    
+    @commands.command(description="resumes music")
+    async def resume(self, ctx):
+        ctx.voice_client.resume()
 
     @commands.command(description="stops and disconnects the bot from voice")
     async def leave(self, ctx):
