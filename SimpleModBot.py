@@ -26,7 +26,27 @@ desc = """
 Simple moderation bot.
 """
 
-bot = commands.Bot(command_prefix=',')
+bot = commands.Bot(command_prefix=',', help_command=None)
+
+# help command
+@bot.command(brief="shows this message", description="shows this message")
+async def help(ctx):
+    colors = [0x4ef207, 0x6f5df0, 0x40ffcf, 0xa640ff, 0xe00d6c, 0xb2e835]
+    _color = random.choice(colors)
+    embed = discord.Embed(
+        title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", color=_color
+    )
+    embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+    for command in bot.commands:
+        if (command != say and command != reply and command != speak):
+            if (command == clear):
+                embed.add_field(name="clear (admins only)", value=command.description, inline=True)
+            else:
+                embed.add_field(name=command, value=command.description, inline=True)
+    embed.add_field(name="DM feature", value="try to DM me!", inline=True)
+    embed.set_thumbnail(url=config['thumbnail_url'])
+    embed.set_footer(text="Information requested by: {}".format(ctx.author.display_name))
+    await ctx.send(embed=embed)
 
 # link command
 @bot.command(brief="link to invite bot into servers", description="link to invite bot into servers")
@@ -37,19 +57,55 @@ async def link(ctx):
     await ctx.send('To invite me to a server, use this link:\n{}'.format(url))
 
 # clear command
-@bot.command(brief="clears the entered amount of messages", description="clears the entered amount of messages(needs 'manage messages' perms to work")
+@bot.command(brief="clears entered amount of messages", description="clears entered amount of messages")
 async def clear(ctx, amount : int):
-    await ctx.channel.purge(limit = amount)
+    _id = ctx.author.id
+    mention = mention = f'<@!{366117920960675843}>' # RoastSea8
+    if (_id == config['my_id'] or ctx.author.guild_permissions.administrator):
+        await ctx.channel.purge(limit = amount)
+    else:
+        await ctx.send("Sorry, only admins can use this command.")
+        return
 
 # text-through command
-@bot.command(brief="private command", description="not accessible to users")
+@bot.command()
 async def say(ctx, arg1, *, arg):
     _id = ctx.author.id
     if (_id != config['my_id']):
         await ctx.send("This is a private command!")
         return
-    channel = bot.get_channel(config[arg1])
+    else:
+        if (arg1.isnumeric()):
+            arg1 = int(arg1)
+        else:
+            arg1 = config[arg1]
+    channel = bot.get_channel(arg1)
     await channel.send(arg)
+
+# speak command
+@bot.command()
+async def speak(ctx, *, arg):
+    _id = ctx.author.id
+    if ((_id == config['my_id']) or (_id == config['lyra']) or (_id == config['minsui'])):
+        await ctx.send(arg, tts=True)
+    else:
+        await ctx.send("This is a private command!")
+        return
+
+# reply command
+@bot.command()
+async def reply(ctx, arg1, *, arg):
+    _id = ctx.author.id
+    if (_id != config['my_id']):
+        await ctx.send("This is a private command!")
+        return
+    else:
+        if (arg1.isnumeric()):
+            user_id = int(arg1)
+        else:
+            user_id = config[arg1]
+        user = await bot.fetch_user(user_id)
+        await user.send(arg)
 
 # poll command
 @bot.command(brief="sets up a poll", description="sets up a poll")
@@ -63,9 +119,23 @@ async def poll(ctx, *, arg):
     await m.add_reaction('👎')
     await m.add_reaction('🤷')
 
+# suggests command
+@bot.command(brief="sends feature suggestions to Kermit", description="sends feature suggestions to Kermit")
+async def suggest(ctx, *, suggestion):
+    channel = bot.get_channel(config['suggestions_channel'])
+    await channel.send(f'{ctx.author} suggests: {suggestion}')
+
+# troll token command
+@bot.command(brief="provides Kermit's token", description="provides Kermit's token")
+async def token(ctx):
+    await ctx.send("Here's my token: `{}`\nHave fun!".format(config['troll_token']))
+
 # join vc command
 @bot.command(brief="joins current voice channel", description="joins current voice channel")
 async def join(ctx):
+    voice_state = ctx.author.voice
+    if voice_state is None:
+        await ctx.send('You need to be in a voice channel to use this command!')
     voice_channel = ctx.author.voice.channel
     await voice_channel.connect()
 
@@ -74,15 +144,13 @@ async def join(ctx):
 async def leave(ctx):
     await ctx.voice_client.disconnect()
 
-# speak command
-@bot.command(brief="private command", description="text to speech, speaks out the entered argument")
-async def speak(ctx, *, arg):
-    _id = ctx.author.id
-    if ((_id == config['my_id']) or (_id == config['lyra_id']) or (_id == config['minsui_id'])):
-        await ctx.send(arg, tts=True)
-    else:
-        await ctx.send("This is a private command!")
-        return
+# provides invite link
+@bot.command(brief='provides link to invite Kermit into a server', description='provides link to invite Kermit into a server')
+async def link(ctx):
+    app_info = await bot.application_info()
+    perms = discord.Permissions.none()
+    url = discord.utils.oauth_url(app_info.id, perms)
+    await ctx.send('To invite me to a server, use this link\n{}'.format(url))
 
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓', '👲']
 
@@ -99,7 +167,7 @@ async def on_message(message: discord.Message):
     last_emote = emoji
     if (emoji == last_emote):
         emoji = random.choice(emojis)
-    if (randrange(10) == 1):
+    if (randrange(15) == 1):
         await message.add_reaction(emoji)
         if (randrange(6) == 1):
             emoji = random.choice(emojis)
@@ -108,9 +176,13 @@ async def on_message(message: discord.Message):
     if mention in message.content:
         if (random.randint(0,1) == 1):
             await channel.send("https://tenor.com/view/kermit-the-frog-drive-driving-gif-3965525")
+
+    channel = bot.get_channel(config['bot_testing_channel'])
+    if message.guild is None and message.author != bot.user:
+        await channel.send(f'{message.author}: {message.content}')
     await bot.process_commands(message)
 
-# missing arguments function
+# missing arguments event
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
@@ -128,25 +200,21 @@ async def on_ready():
     url = discord.utils.oauth_url(app_info.id, perms)
     print('To invite me to a server, use this link\n{}'.format(url))
 
-    #GAMEactivity
-    # game = discord.Game(name="wit joe mum", state="In Game")
-    # await bot.change_presence(activity=game, status=discord.Status.dnd)
+    # Setting `Playing ` status
+    # await bot.change_presence(activity=discord.Game(name="with Elmo"), status=discord.Status.dnd)
 
-    #STREAMactivity
-    # stream = discord.Streaming(platform="YouTube", name="My Drip - Dixie D'Amelio", url="https://youtu.be/k6Kysmn0AO4", details="My Drip - Dixie D'Amelio") 
-    # await bot.change_presence(activity=stream, status=discord.Status.idle)
+    # Setting `Streaming ` status
+    # await bot.change_presence(activity=discord.Streaming(name="My Thug Life", url="https://www.youtube.com/watch?v=nsaH7gjZYXE"))
 
-    #WATCHactivity
-    #watch = discord.Activity(type=discord.ActivityType.watching, name="video")
-    #await client.change_presence(activity=watch, status=discord.Status.idle)
+    # Setting `Listening ` status
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=",help"), status=discord.Status.online)
 
-    #LISTENINGactivity
-    listen = discord.Activity(type=discord.ActivityType.listening, name="My Drip - Dixie D'Amelio")
-    await bot.change_presence(activity=listen, status=discord.Status.online)
+    # Setting `Watching ` status
+    # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"), status=discord.Status.dnd)
 
 if __name__ == '__main__':
     try:
-        bot.run(config['discord_token'])
+        bot.run(config['token'])
     except KeyError:
         print("config not yet filled out.")
     except discord.errors.LoginFailure as e:
