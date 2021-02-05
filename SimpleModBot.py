@@ -1,4 +1,5 @@
 import json
+import os
 import random
 import logging
 import aiohttp
@@ -193,7 +194,7 @@ async def on_ready():
 
 if __name__ == '__main__':
     try:
-        bot.run(config['token'])
+        bot.run(os.environ['token'])
     except KeyError:
         print("config not yet filled out.")
     except discord.errors.LoginFailure as e:
