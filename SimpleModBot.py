@@ -26,7 +26,7 @@ desc = """
 Simple moderation bot.
 """
 
-bot = commands.Bot(command_prefix=',', help_command=None)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(","), help_command=None)
 
 # help command
 @bot.command(brief="shows this message", description="shows this message")
@@ -47,14 +47,6 @@ async def help(ctx):
     embed.set_thumbnail(url=config['thumbnail_url'])
     embed.set_footer(text="Information requested by: {}".format(ctx.author.display_name))
     await ctx.send(embed=embed)
-
-# link command
-@bot.command(brief="link to invite bot into servers", description="link to invite bot into servers")
-async def link(ctx):
-    app_info = await bot.application_info()
-    perms = discord.Permissions.none()
-    url = discord.utils.oauth_url(app_info.id, perms)
-    await ctx.send('To invite me to a server, use this link:\n{}'.format(url))
 
 # clear command
 @bot.command(brief="clears entered amount of messages", description="clears entered amount of messages")
@@ -130,20 +122,6 @@ async def suggest(ctx, *, suggestion):
 async def token(ctx):
     await ctx.send("Here's my token: `{}`\nHave fun!".format(config['troll_token']))
 
-# join vc command
-@bot.command(brief="joins current voice channel", description="joins current voice channel")
-async def join(ctx):
-    voice_state = ctx.author.voice
-    if voice_state is None:
-        await ctx.send('You need to be in a voice channel to use this command!')
-    voice_channel = ctx.author.voice.channel
-    await voice_channel.connect()
-
-# leave vc command
-@bot.command(brief="leaves current voice channel", description="leaves current voice channel")
-async def leave(ctx):
-    await ctx.voice_client.disconnect()
-
 # provides invite link
 @bot.command(brief='provides link to invite Kermit into a server', description='provides link to invite Kermit into a server')
 async def link(ctx):
@@ -190,6 +168,7 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_ready():
+    bot.load_extension("cogs.music")
     app_info = await bot.application_info()
     bot.owner = app_info.owner
     print('Bot: {0.name}:{0.id}'.format(bot.user))
