@@ -119,7 +119,7 @@ async def suggest(ctx, *, suggestion):
     await channel.send(f'{ctx.author} suggests: {suggestion}')
     _id = ctx.author.id
     user = await bot.fetch_user(_id)
-    await user.send('Suggestion sent!')
+    await user.send('Your suggestion has been received!')
 
 # troll token command
 @bot.command(brief="provides Kermit's token", description="provides Kermit's token")
