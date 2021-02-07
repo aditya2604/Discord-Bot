@@ -117,6 +117,7 @@ async def poll(ctx, *, arg):
 async def suggest(ctx, *, suggestion):
     channel = bot.get_channel(config['suggestions_channel'])
     await channel.send(f'{ctx.author} suggests: {suggestion}')
+    await ctx.send('Suggestion sent!')
 
 # troll token command
 @bot.command(brief="provides Kermit's token", description="provides Kermit's token")
