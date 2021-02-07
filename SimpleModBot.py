@@ -55,7 +55,7 @@ async def clear(ctx, amount : int):
     _id = ctx.author.id
     mention = mention = f'<@!{366117920960675843}>' # RoastSea8
     if (_id == config['my_id'] or ctx.author.guild_permissions.administrator):
-        await ctx.channel.purge(limit = amount)
+        await ctx.channel.purge(limit = amount + 1)
     else:
         await ctx.send("Sorry, only admins can use this command.")
         return
