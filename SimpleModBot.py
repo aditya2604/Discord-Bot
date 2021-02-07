@@ -134,7 +134,7 @@ async def link(ctx):
     url = discord.utils.oauth_url(app_info.id, perms)
     await ctx.send('To invite me to a server, use this link\n{}'.format(url))
 
-emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓', '👲']
+emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓']
 
 @bot.event
 async def on_message(message: discord.Message):
