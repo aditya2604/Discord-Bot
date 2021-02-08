@@ -162,6 +162,10 @@ async def on_message(message: discord.Message):
     channel = bot.get_channel(config['bot_testing_channel'])
     if message.guild is None and message.author != bot.user:
         await channel.send(f'{message.author}: {message.content}')
+        try:
+            await channel.send(message.attachments[0].url)
+        except IndexError:
+            pass
     await bot.process_commands(message)
 
 # missing arguments event
