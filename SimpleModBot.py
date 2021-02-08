@@ -117,6 +117,10 @@ async def poll(ctx, *, arg):
 async def suggest(ctx, *, suggestion):
     channel = bot.get_channel(config['suggestions_channel'])
     await channel.send(f'{ctx.author} suggests: {suggestion}')
+    try:
+        await channel.send(ctx.message.attachments[0].url)
+    except IndexError:
+        pass
     _id = ctx.author.id
     user = await bot.fetch_user(_id)
     await user.send('Your suggestion has been received!')
