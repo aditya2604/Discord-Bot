@@ -148,7 +148,7 @@ async def servers(ctx):
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓']
 
 @bot.event
-async def on_message(message: discord.Message):
+async def on_message(message):
     channel = message.channel
     username = message.author.name
     user_id = message.author.id
@@ -180,6 +180,7 @@ async def on_message(message: discord.Message):
             pass
     
     servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Abandoned Musical Train Station', 'my dog is life <3']
+    channel.send(config['bot_testing_server'])
     _guild = bot.get_guild(config['bot_testing_server'])
     for server in servers:
         if (str(message.guild.name) == server):
