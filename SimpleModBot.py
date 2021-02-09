@@ -28,13 +28,12 @@ desc = """
 Simple moderation bot.
 """
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(","))
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(","), help_command=None)
 
-
+colors = [0x4ef207, 0x6f5df0, 0x40ffcf, 0xa640ff, 0xe00d6c, 0xb2e835]
 # help command
 @bot.command(brief="shows this message", description="shows this message")
 async def _help(ctx):
-    colors = [0x4ef207, 0x6f5df0, 0x40ffcf, 0xa640ff, 0xe00d6c, 0xb2e835]
     _color = random.choice(colors)
     embed = discord.Embed(
         title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", color=_color
@@ -182,7 +181,7 @@ async def on_message(message: discord.Message):
         except IndexError:
             pass
     
-    _guild = bot.get_guild(706428221432004629)
+    _guild = bot.get_guild(config['bot_testing_server'])
     for server in servers:
         if (str(message.guild.name) == server):
             return
