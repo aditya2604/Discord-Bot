@@ -33,7 +33,7 @@ bot = commands.Bot(command_prefix=commands.when_mentioned_or(","), help_command=
 colors = [0x4ef207, 0x6f5df0, 0x40ffcf, 0xa640ff, 0xe00d6c, 0xb2e835]
 # help command
 @bot.command(brief="shows this message", description="shows this message")
-async def _help(ctx):
+async def help(ctx):
     _color = random.choice(colors)
     embed = discord.Embed(
         title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", color=_color
@@ -149,7 +149,7 @@ emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '�
 servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Abandoned Musical Train Station', 'my dog is life <3']
 
 @bot.event
-async def on_message(message: discord.Message):
+async def on_message(message):
     await bot.process_commands(message)
     channel = message.channel
     username = message.author.name
