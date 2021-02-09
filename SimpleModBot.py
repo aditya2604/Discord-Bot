@@ -179,17 +179,17 @@ async def on_message(message: discord.Message):
         except IndexError:
             pass
     
-    servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Abandoned Musical Train Station', 'my dog is life <3']
-    _guild = bot.get_guild(706428221432004629)
-    for server in servers:
-        if (str(message.guild.name) == server):
-            return
-        server_channel = get(_guild.text_channels, name=(str(message.guild.name)).lower())
-        await server_channel.send(f'`{(str(message.author)[:-5])}` in `{message.channel}`: {message.content}')
-        try:
-            await server_channel.send(message.attachments[0].url)
-        except IndexError:
-            pass
+    # servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Abandoned Musical Train Station', 'my dog is life <3']
+    # _guild = bot.get_guild(706428221432004629)
+    # for server in servers:
+    #     if (str(message.guild.name) == server):
+    #         return
+    #     server_channel = get(_guild.text_channels, name=(str(message.guild.name)).lower())
+    #     await server_channel.send(f'`{(str(message.author)[:-5])}` in `{message.channel}`: {message.content}')
+    #     try:
+    #         await server_channel.send(message.attachments[0].url)
+    #     except IndexError:
+    #         pass
     await bot.process_commands(message)
 
 # missing arguments event
