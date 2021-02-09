@@ -177,9 +177,13 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please pass in all required arguments.')
 
+# loading all cogs
+for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+        bot.load_extension(f'cogs.{filename[:-3]}')
+
 @bot.event
 async def on_ready():
-    bot.load_extension("cogs.music")
     app_info = await bot.application_info()
     bot.owner = app_info.owner
     print('Bot: {0.name}:{0.id}'.format(bot.user))
