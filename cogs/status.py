@@ -7,7 +7,7 @@ class status(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @tasks.loop(seconds=10.0)
+    @tasks.loop(seconds=3.0)
     async def change_status(self):
         await self.bot.change_presence(activity=(next(self.activity)))
         
