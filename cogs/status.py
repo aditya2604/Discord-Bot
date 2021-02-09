@@ -14,9 +14,10 @@ class status(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         await self.bot.wait_until_ready()
-        self.members = [x for x in self.bot.get_all_members()]
-        self.total_members = len(self.members)
-        self.status = [f"on {len(self.bot.guilds)} servers", ',help', f"{self.total_members} people"]
+        total_members = 0
+        for guild in self.bot.guilds:
+            total_members += guild.member_count
+        self.status = [f"on {len(self.bot.guilds)} servers", ',help', f"{total_members} people"]
 
         self.activity = cycle([discord.Game(name=self.status[0]), discord.Activity(type=discord.ActivityType.listening, 
         name=(self.status[1])), discord.Activity(type=discord.ActivityType.watching, name=(self.status[2]))])
