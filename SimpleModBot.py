@@ -57,7 +57,7 @@ async def clear(ctx, amount : int):
     if (_id == config['my_id'] or ctx.author.guild_permissions.administrator):
         await ctx.channel.purge(limit = amount + 1)
     else:
-        await ctx.send("Sorry, only admins can use this command.")
+        await ctx.send("Sorry, only admins and the creator of Kermit can use this command.")
         return
 
 # text-through command
