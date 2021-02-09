@@ -28,11 +28,12 @@ desc = """
 Simple moderation bot.
 """
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(","), help_command=None)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(","))
+
 
 # help command
 @bot.command(brief="shows this message", description="shows this message")
-async def help(ctx):
+async def _help(ctx):
     colors = [0x4ef207, 0x6f5df0, 0x40ffcf, 0xa640ff, 0xe00d6c, 0xb2e835]
     _color = random.choice(colors)
     embed = discord.Embed(
