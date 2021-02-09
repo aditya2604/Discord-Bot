@@ -153,7 +153,7 @@ async def on_message(message):
     username = message.author.name
     user_id = message.author.id
 
-    if (user_id == config['bot_id']):
+    if message.author == bot.user:
         return
         
     emoji = random.choice(emojis)
@@ -180,7 +180,7 @@ async def on_message(message):
             pass
     
     servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Abandoned Musical Train Station', 'my dog is life <3']
-    channel.send(config['bot_testing_server'])
+    message.channel.send(config['bot_testing_server'])
     _guild = bot.get_guild(config['bot_testing_server'])
     for server in servers:
         if (str(message.guild.name) == server):
