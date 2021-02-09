@@ -104,8 +104,7 @@ async def reply(ctx, arg1, *, arg):
 @bot.command(brief="sets up a poll", description="sets up a poll")
 async def poll(ctx, *, arg):
     # await ctx.send('{} Poll started by {}: '.format(ctx.message.guild.roles[0], ctx.author.mention))
-    if (ctx.channel.guild.me.guild_permissions.manage_messages):
-        await ctx.channel.purge(limit = 1)
+    await ctx.message.delete()
     await ctx.send('Poll started by {}: '.format(ctx.author.mention))
     m = await ctx.send('`{}`'.format(arg))
     await m.add_reaction('👍')
@@ -198,7 +197,7 @@ async def on_ready():
     # await bot.change_presence(activity=discord.Streaming(name="My Thug Life", url="https://www.youtube.com/watch?v=nsaH7gjZYXE"))
 
     # Setting `Listening ` status
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=",help"), status=discord.Status.online)
+    # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=",help"), status=discord.Status.online)
 
     # Setting `Watching ` status
     # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"), status=discord.Status.dnd)
