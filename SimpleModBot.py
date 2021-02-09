@@ -7,6 +7,7 @@ from random import randrange
 from datetime import datetime
 from discord.ext import commands
 from discord.ext.commands import has_permissions, MissingPermissions
+from discord.utils import get
 try:
     import discord
 except ImportError:
@@ -115,7 +116,7 @@ async def poll(ctx, *, arg):
 @bot.command(brief="sends feature suggestions to Kermit", description="sends feature suggestions to Kermit")
 async def suggest(ctx, *, suggestion):
     channel = bot.get_channel(config['suggestions_channel'])
-    await channel.send(f'{ctx.author} suggests: {suggestion}')
+    await channel.send(f'`{(str(ctx.author)[:-5])} suggests`: {suggestion}')
     try:
         await channel.send(ctx.message.attachments[0].url)
     except IndexError:
@@ -164,6 +165,7 @@ async def on_message(message: discord.Message):
         if (randrange(6) == 1):
             emoji = random.choice(emojis)
             await message.add_reaction(emoji)
+
     mention = f'<@!{bot.user.id}>'
     if mention in message.content:
         if (random.randint(0,1) == 1):
@@ -171,11 +173,24 @@ async def on_message(message: discord.Message):
 
     channel = bot.get_channel(config['bot_testing_channel'])
     if message.guild is None and message.author != bot.user:
-        await channel.send(f'{message.author}: {message.content}')
+        await channel.send(f'`{(str(message.author)[:-5])}`: {message.content}')
         try:
             await channel.send(message.attachments[0].url)
         except IndexError:
             pass
+    
+    servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Abandoned Musical Train Station', 'my dog is life <3']
+    _guild = bot.get_guild(config['bot_testing_server'])
+    for server in servers:
+        if (str(message.guild.name) == server):
+            return
+        server_channel = get(_guild.text_channels, name=(str(message.guild.name)).lower())
+        await server_channel.send(f'`{(str(message.author)[:-5])}` in `{message.channel}`: {message.content}')
+        try:
+            await server_channel.send(message.attachments[0].url)
+        except IndexError:
+            pass
+
     await bot.process_commands(message)
 
 # missing arguments event
@@ -187,8 +202,13 @@ async def on_command_error(ctx, error):
 # prints out if bot has been added into another server
 @bot.event
 async def on_guild_join(guild):
-    channel = bot.get_channel(808573833341698048)
+    channel = bot.get_channel(config['server_invites_channel'])
     await channel.send(f'Bot has been added to: {guild}')
+
+    _guild = bot.get_guild(config['bot_testing_server'])
+
+    category = discord.utils.get(_guild.categories, name="servers")
+    await _guild.create_text_channel(str(guild.name), category=category)
 
 # loading all cogs
 for filename in os.listdir('./cogs'):
