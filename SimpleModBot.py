@@ -39,7 +39,7 @@ async def help(ctx):
     )
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     for command in bot.commands:
-        if (command != say and command != reply and command != speak):
+        if (command != say and command != reply and command != speak and command != servers):
             if (command == clear):
                 embed.add_field(name="clear (admins only)", value=command.description, inline=True)
             else:
@@ -136,6 +136,13 @@ async def link(ctx):
     perms = discord.Permissions.none()
     url = discord.utils.oauth_url(app_info.id, perms)
     await ctx.send('To invite me to a server, use this link\n{}'.format(url))
+
+# get names of servers that bot belongs to
+@bot.command
+async def servers(ctx):
+    ctx.send('Servers connected to:')
+    for guild in bot.guilds:
+        ctx.send(guild.name)
 
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓']
 
