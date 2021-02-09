@@ -148,7 +148,7 @@ async def servers(ctx):
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓']
 
 @bot.event
-async def on_message(message):
+async def on_message(message: discord.Message):
     channel = message.channel
     username = message.author.name
     user_id = message.author.id
@@ -180,8 +180,7 @@ async def on_message(message):
             pass
     
     servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Abandoned Musical Train Station', 'my dog is life <3']
-    message.channel.send(config['bot_testing_server'])
-    _guild = bot.get_guild(config['bot_testing_server'])
+    _guild = bot.get_guild(706428221432004629)
     for server in servers:
         if (str(message.guild.name) == server):
             return
@@ -191,7 +190,6 @@ async def on_message(message):
             await server_channel.send(message.attachments[0].url)
         except IndexError:
             pass
-
     await bot.process_commands(message)
 
 # missing arguments event
@@ -199,11 +197,13 @@ async def on_message(message):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please pass in all required arguments.')
+    if isinstance(error, commands.BotMissingPermissions):
+        await ctx.send('Bot is missing permissions.')
 
 # prints out if bot has been added into another server
 @bot.event
 async def on_guild_join(guild):
-    channel = bot.get_channel(config['server_invites_channel'])
+    channel = bot.get_channel(808573833341698048)
     await channel.send(f'Bot has been added to: {guild}')
 
     _guild = bot.get_guild(config['bot_testing_server'])
