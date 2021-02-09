@@ -138,11 +138,11 @@ async def link(ctx):
     await ctx.send('To invite me to a server, use this link\n{}'.format(url))
 
 # get names of servers that bot belongs to
-@bot.command
+@bot.command()
 async def servers(ctx):
-    ctx.send('Servers connected to:')
+    await ctx.send('Servers connected to:')
     for guild in bot.guilds:
-        ctx.send(guild.name)
+        await ctx.send(guild.name)
 
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓']
 
