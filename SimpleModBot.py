@@ -150,14 +150,13 @@ servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Ab
 
 @bot.event
 async def on_message(message: discord.Message):
+    await bot.process_commands(message)
     channel = message.channel
     username = message.author.name
     user_id = message.author.id
 
     if message.author == bot.user:
         return
-
-    await bot.process_commands(message)
         
     emoji = random.choice(emojis)
     last_emote = emoji
