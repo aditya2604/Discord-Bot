@@ -184,6 +184,12 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please pass in all required arguments.')
 
+# prints out if bot has been added into another server
+@bot.event
+async def on_guild_join(guild):
+    channel = bot.get_channel(808573833341698048)
+    await channel.send(f'Bot has been added to: {guild}')
+
 # loading all cogs
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
