@@ -146,6 +146,7 @@ async def servers(ctx):
         await ctx.send(guild.name)
 
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓']
+servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Abandoned Musical Train Station', 'my dog is life <3']
 
 @bot.event
 async def on_message(message: discord.Message):
@@ -155,6 +156,8 @@ async def on_message(message: discord.Message):
 
     if message.author == bot.user:
         return
+
+    await bot.process_commands(message)
         
     emoji = random.choice(emojis)
     last_emote = emoji
@@ -179,18 +182,18 @@ async def on_message(message: discord.Message):
         except IndexError:
             pass
     
-    # servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Abandoned Musical Train Station', 'my dog is life <3']
-    # _guild = bot.get_guild(706428221432004629)
-    # for server in servers:
-    #     if (str(message.guild.name) == server):
-    #         return
-    #     server_channel = get(_guild.text_channels, name=(str(message.guild.name)).lower())
-    #     await server_channel.send(f'`{(str(message.author)[:-5])}` in `{message.channel}`: {message.content}')
-    #     try:
-    #         await server_channel.send(message.attachments[0].url)
-    #     except IndexError:
-    #         pass
-    await bot.process_commands(message)
+    _guild = bot.get_guild(706428221432004629)
+    for server in servers:
+        if (str(message.guild.name) == server):
+            return
+    server_channel = get(_guild.text_channels, name=(str(message.guild.name)).lower())
+    if server_channel is None:
+        return
+    await server_channel.send(f'`{(str(message.author)[:-5])}` in `{message.channel}`: {message.content}')
+    try:
+        await server_channel.send(message.attachments[0].url)
+    except IndexError:
+        pass
 
 # missing arguments event
 @bot.event
@@ -203,7 +206,7 @@ async def on_command_error(ctx, error):
 # prints out if bot has been added into another server
 @bot.event
 async def on_guild_join(guild):
-    channel = bot.get_channel(808573833341698048)
+    channel = bot.get_channel(config['server_invites_channel'])
     await channel.send(f'Bot has been added to: {guild}')
 
     _guild = bot.get_guild(config['bot_testing_server'])
