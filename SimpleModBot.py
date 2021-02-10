@@ -30,10 +30,10 @@ Simple moderation bot.
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(","), help_command=None)
 
-colors = [0x4ef207, 0x6f5df0, 0x40ffcf, 0xa640ff, 0xe00d6c, 0xb2e835]
 # help command
 @bot.command(brief="shows this message", description="shows this message")
 async def help(ctx):
+    colors = [0x4ef207, 0x6f5df0, 0x40ffcf, 0xa640ff, 0xe00d6c, 0xb2e835]
     _color = random.choice(colors)
     embed = discord.Embed(
         title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", color=_color
@@ -150,13 +150,14 @@ servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Ab
 
 @bot.event
 async def on_message(message):
-    await bot.process_commands(message)
     channel = message.channel
     username = message.author.name
     user_id = message.author.id
 
     if message.author == bot.user:
         return
+    
+    await bot.process_commands(message)
         
     emoji = random.choice(emojis)
     last_emote = emoji
@@ -185,7 +186,9 @@ async def on_message(message):
     for server in servers:
         if (str(message.guild.name) == server):
             return
-    server_channel = get(_guild.text_channels, name=(str(message.guild.name)).lower())
+    gld_name = (str(message.guild.name)).lower()
+    gld_name = gld_name.replace(' ', '-')
+    server_channel = get(_guild.text_channels, name=gld_name)
     if server_channel is None:
         return
     await server_channel.send(f'`{(str(message.author)[:-5])}` in `{message.channel}`: {message.content}')
@@ -206,12 +209,13 @@ async def on_command_error(ctx, error):
 @bot.event
 async def on_guild_join(guild):
     channel = bot.get_channel(config['server_invites_channel'])
-    await channel.send(f'Bot has been added to: {guild}')
+    await channel.send(f'Kermit has been added to: {guild}')
 
     _guild = bot.get_guild(config['bot_testing_server'])
 
     category = discord.utils.get(_guild.categories, name="servers")
-    await _guild.create_text_channel(str(guild.name), category=category)
+    gld_name = (str(guild.name)).lower()
+    await _guild.create_text_channel(gld_name, category=category)
 
 # loading all cogs
 for filename in os.listdir('./cogs'):
