@@ -145,6 +145,19 @@ async def servers(ctx):
     for guild in bot.guilds:
         await ctx.send(guild.name)
 
+# responding to unknown servers
+@bot.command()
+async def secret(ctx, guild_name, channel_name, *, message):
+    for guild in bot.guilds:
+        if (guild_name == ((str(guild.name).lower()))):
+            try:
+                channel = get(guild.text_channels, name=channel_name)
+            except:
+                await ctx.send(f"channel not found in {guild}")
+                await ctx.send(channel.name)
+                return
+            await channel.send(message)
+
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓']
 servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Abandoned Musical Train Station', 'my dog is life <3']
 
