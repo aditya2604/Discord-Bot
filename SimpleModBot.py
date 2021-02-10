@@ -28,7 +28,8 @@ desc = """
 Simple moderation bot.
 """
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(","), help_command=None)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(","))
+bot.remove_command(help)
 
 # help command
 @bot.command(brief="shows this message", description="shows this message")
