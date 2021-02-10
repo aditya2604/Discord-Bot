@@ -34,15 +34,15 @@ bot.remove_command('help')
 # help command
 @bot.command(brief="shows this message", description="shows this message")
 async def help(ctx):
-    await ctx.send("hello")
+    await ctx.send(f'{ctx.author.mention} is a 🤡')
     colors = [0x4ef207, 0x6f5df0, 0x40ffcf, 0xa640ff, 0xe00d6c, 0xb2e835]
-    _color = random.choice(colors)
+    color = random.choice(colors)
     embed = discord.Embed(
-        title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", color=_color
+        title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", color=color
     )
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     for command in bot.commands:
-        if (command != say and command != reply and command != speak and command != servers):
+        if (command != say and command != reply and command != speak and command != servers and command != secret):
             if (command == clear):
                 embed.add_field(name="clear (admins only)", value=command.description, inline=True)
             else:
