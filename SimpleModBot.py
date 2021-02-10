@@ -49,7 +49,7 @@ async def help(ctx):
                 embed.add_field(name=command, value=command.description, inline=True)
     embed.add_field(name="DM feature", value="try to DM me!", inline=True)
     embed.set_thumbnail(url=config['thumbnail_url'])
-    embed.set_footer(text="Information requested by: {}".format(ctx.author.display_name))
+    embed.set_footer(text=f"Information requested by: {ctx.author.display_name}")
     await ctx.send(embed=embed)
 
 # clear command
