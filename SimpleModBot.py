@@ -174,15 +174,15 @@ async def on_message(message):
     
     await bot.process_commands(message)
         
-    emoji = random.choice(emojis)
-    last_emote = emoji
-    if (emoji == last_emote):
-        emoji = random.choice(emojis)
-    if (randrange(15) == 1):
-        await message.add_reaction(emoji)
-        if (randrange(6) == 1):
-            emoji = random.choice(emojis)
-            await message.add_reaction(emoji)
+    # emoji = random.choice(emojis)
+    # last_emote = emoji
+    # if (emoji == last_emote):
+    #     emoji = random.choice(emojis)
+    # if (randrange(15) == 1):
+    #     await message.add_reaction(emoji)
+    #     if (randrange(6) == 1):
+    #         emoji = random.choice(emojis)
+    #         await message.add_reaction(emoji)
 
     mention = f'<@!{bot.user.id}>'
     if mention in message.content:
