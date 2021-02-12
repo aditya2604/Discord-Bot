@@ -211,6 +211,12 @@ async def on_message(message):
         await server_channel.send(message.attachments[0].url)
     except IndexError:
         pass
+    embeds = message.embeds
+    if not embeds:
+        return
+    else:
+        embed = (message.embeds)[0]
+        await server_channel.send(embed=embed)
 
 # missing arguments event
 @bot.event
