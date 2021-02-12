@@ -206,7 +206,11 @@ async def on_message(message):
     server_channel = get(_guild.text_channels, name=gld_name)
     if server_channel is None:
         return
-    await server_channel.send(f'`{(str(message.author)[:-5])}` in `{message.channel}`: {message.content}')
+    embed = discord.Embed(
+        title=f'{message.channel}', description=f'{message.content}'
+    )
+    embed.set_author(name=message.author.display_name, icon_url=message.author.avatar_url)
+    await server_channel.send(embed=embed)
     try:
         await server_channel.send(message.attachments[0].url)
     except IndexError:
