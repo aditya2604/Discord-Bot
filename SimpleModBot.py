@@ -45,7 +45,7 @@ async def help(ctx):
     for command in bot.commands:
         if (command != say and command != reply and command != speak and command != servers and command != secret):
             if (command == clear):
-                embed.add_field(name="clear (admins only)", value=command.description, inline=True)
+                embed.add_field(name="clear (admins only)", value=command, inline=True)
             else:
                 embed.add_field(name=command, value=command.description, inline=True)
     embed.add_field(name="DM feature", value="try to DM me!", inline=True)
