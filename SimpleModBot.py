@@ -152,6 +152,7 @@ async def servers(ctx):
 @bot.command()
 async def secret(ctx, guild_name, channel_name, *, message):
     for guild in bot.guilds:
+        guild_name = guild_name.replace('-', ' ')
         if (guild_name == ((str(guild.name).lower()))):
             try:
                 channel = get(guild.text_channels, name=channel_name)
