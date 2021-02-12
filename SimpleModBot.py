@@ -8,6 +8,7 @@ from datetime import datetime
 from discord.ext import commands
 from discord.ext.commands import has_permissions, MissingPermissions
 from discord.utils import get
+from discord import Embed
 try:
     import discord
 except ImportError:
