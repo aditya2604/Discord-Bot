@@ -29,8 +29,7 @@ desc = """
 Simple moderation bot.
 """
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(','))
-bot.remove_command('help')
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(','), help_command=None)
 
 # help command
 @bot.command(brief="shows this message", description="shows this message")
@@ -45,13 +44,19 @@ async def help(ctx):
     for command in bot.commands:
         if (command != say and command != reply and command != speak and command != servers and command != secret):
             if (command == clear):
-                embed.add_field(name="clear (admins only)", value=command, inline=True)
+                embed.add_field(name="clear (admins only)", value=command.description, inline=True)
             else:
                 embed.add_field(name=command, value=command.description, inline=True)
     embed.add_field(name="DM feature", value="try to DM me!", inline=True)
     embed.set_thumbnail(url=config['thumbnail_url'])
     embed.set_footer(text=f"Information requested by: {ctx.author.display_name}")
     await ctx.send(embed=embed)
+
+@bot.command(description="prints commands and descriptions for test")
+async def comprint(ctx):
+    for command in bot.commands:
+        if (command != say and command != reply and command != speak and command != servers and command != secret):
+            await ctx.send(f'{command}: {command.description}')
 
 # clear command
 @bot.command(brief="clears entered amount of messages", description="clears entered amount of messages")
