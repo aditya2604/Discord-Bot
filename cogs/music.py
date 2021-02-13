@@ -73,7 +73,8 @@ class Music(commands.Cog):
         async with ctx.typing():
             player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-        await ctx.send('Now playing: {}'.format(player.title))
+        embed = discord.Embed(title="Now playing", description=f"[{player.title}]({player.url})")
+        # await ctx.send('Now playing: {}'.format(player.title))
     
     @commands.command(description="pauses music")
     async def pause(self, ctx):
