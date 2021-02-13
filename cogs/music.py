@@ -75,15 +75,16 @@ class Music(commands.Cog):
             ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
         embed = discord.Embed(title="Now playing", description=f"[{player.title}]({player.url})")
         await ctx.send(embed=embed)
-        # await ctx.send('Now playing: {}'.format(player.title))
     
     @commands.command(description="pauses music")
     async def pause(self, ctx):
         ctx.voice_client.pause()
+        await ctx.send("Paused ⏸️")
     
     @commands.command(description="resumes music")
     async def resume(self, ctx):
         ctx.voice_client.resume()
+        await ctx.send("Resuming ⏯️")
 
     @commands.command(description="stops and disconnects the bot from voice")
     async def leave(self, ctx):
