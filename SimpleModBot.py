@@ -42,7 +42,7 @@ async def help(ctx):
     )
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     for command in bot.commands:
-        if (command != say and command != reply and command != speak and command != servers and command != secret):
+        if (command != say and command != reply and command != speak and command != _servers and command != secret):
             if (command == clear):
                 embed.add_field(name="clear (admins only)", value=command.description, inline=True)
             else:
@@ -55,7 +55,7 @@ async def help(ctx):
 @bot.command(description="prints commands and descriptions for test")
 async def comprint(ctx):
     for command in bot.commands:
-        if (command != say and command != reply and command != speak and command != servers and command != secret):
+        if (command != say and command != reply and command != speak and command != _servers and command != secret):
             await ctx.send(f'{command}: {command.description}')
 
 # clear command
@@ -148,7 +148,7 @@ async def link(ctx):
 
 # get names of servers that bot belongs to
 @bot.command()
-async def servers(ctx):
+async def _servers(ctx):
     await ctx.send('Servers connected to:')
     for guild in bot.guilds:
         await ctx.send(guild.name)
