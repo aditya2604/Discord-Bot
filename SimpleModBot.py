@@ -52,12 +52,6 @@ async def help(ctx):
     embed.set_footer(text=f"Information requested by: {ctx.author.display_name}")
     await ctx.send(embed=embed)
 
-@bot.command(description="prints commands and descriptions for test")
-async def comprint(ctx):
-    for command in bot.commands:
-        if (command != say and command != reply and command != speak and command != _servers and command != secret):
-            await ctx.send(f'{command}: {command.description}')
-
 # clear command
 @bot.command(brief="clears entered amount of messages", description="clears entered amount of messages")
 async def clear(ctx, amount : int):
