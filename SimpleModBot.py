@@ -44,6 +44,8 @@ async def help(ctx):
         if (command != say and command != reply and command != speak and command != _servers and command != secret):
             if (command == clear):
                 embed.add_field(name="clear (admins only)", value=command.description, inline=True)
+            elif (command == proll):
+                embed.add_field(name="proll (number of options)", value=command.description, inline=True)
             else:
                 embed.add_field(name=command, value=command.description, inline=True)
     embed.add_field(name="DM feature", value="try to DM me!", inline=True)
@@ -112,6 +114,18 @@ async def poll(ctx, *, arg):
     await m.add_reaction('👍')
     await m.add_reaction('👎')
     await m.add_reaction('🤷')
+
+poll_options = ['🇦','🇧','🇨','🇩','🇪','🇫','🇬','🇭','🇮','🇯','🇰',
+'🇱','🇲','🇳','🇴','🇵','🇶','🇷','🇸','🇹','🇺','🇻','🇼','🇽','🇾','🇿']
+
+# pro poll command
+@bot.command(description="sets up a poll with entered number of options")
+async def proll(ctx, args : int, *, content):
+    await ctx.message.delete()
+    await ctx.send('Poll started by {}: '.format(ctx.author.mention))
+    m = await ctx.send('`{}`'.format(content))
+    for i in range(args):
+        await m.add_reaction(poll_options[i])
 
 # suggests command
 @bot.command(brief="sends feature suggestions to Kermit", description="sends feature suggestions to Kermit")
