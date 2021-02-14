@@ -11,7 +11,7 @@ class time(commands.Cog):
     async def on_ready(self):
         self.start_time = datetime.datetime.now().time().strftime('%H:%M:%S')
 
-    @commands.command(pass_context=True)
+    @commands.command(description="displays the amount of time Kermit has been online for")
     async def uptime(self, ctx):
         current_time = datetime.datetime.now().time().strftime('%H:%M:%S')
         tdelta = str((datetime.datetime.strptime(current_time,'%H:%M:%S') - datetime.datetime.strptime(self.start_time,'%H:%M:%S')))
