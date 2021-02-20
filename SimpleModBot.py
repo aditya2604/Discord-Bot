@@ -77,6 +77,10 @@ async def say(ctx, arg1, *, arg):
         else:
             arg1 = config[arg1]
     channel = bot.get_channel(arg1)
+    try:
+        await channel.send(ctx.message.attachments[0].url)
+    except IndexError:
+        pass
     await channel.send(arg)
 
 # speak command
