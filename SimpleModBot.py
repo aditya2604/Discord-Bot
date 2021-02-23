@@ -131,12 +131,12 @@ async def proll(ctx, args : int, *, content):
     for i in range(args):
         await m.add_reaction(poll_options[i])
 
-# math command
-@bot.command(brief="does math", description="does math so that your stupid self doesn't have to")
-async def calc(ctx, *, math):
-    await ctx.send(f'{math} = {eval(math)}')
-    if (random.randint(0, 2) == 1):
-        await ctx.send("Imagine not being able to do that 🤡")
+# # math command
+# @bot.command(brief="does math", description="does math so that your stupid self doesn't have to")
+# async def calc(ctx, *, math):
+#     await ctx.send(f'{math} = {eval(math)}')
+#     if (random.randint(0, 2) == 1):
+#         await ctx.send("Imagine not being able to do that 🤡")
 
 # suggests command
 @bot.command(brief="sends feature suggestions to Kermit", description="sends feature suggestions to Kermit")
