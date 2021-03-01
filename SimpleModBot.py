@@ -41,7 +41,7 @@ async def help(ctx):
     )
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     for command in bot.commands:
-        if (command != say and command != reply and command != speak and command != _servers and command != secret):
+        if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit):
             if (command == clear):
                 embed.add_field(name="clear (admins only)", value=command.description, inline=True)
             elif (command == proll):
@@ -82,6 +82,19 @@ async def say(ctx, arg1, *, arg):
     except IndexError:
         pass
     await channel.send(arg)
+
+# edit command
+@bot.command()
+async def edit(ctx, _channel, msg_id : int, *, edited):
+    if (ctx.author.id != config['my_id']):
+        return
+    if (_channel.isnumeric()):
+            _channel = int(_channel)
+    else:
+        _channel = config[_channel]
+    channel = bot.get_channel(_channel)
+    message = await channel.fetch_message(msg_id)
+    await message.edit(content=str(edited))
 
 # speak command
 @bot.command()
