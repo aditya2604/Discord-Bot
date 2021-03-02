@@ -41,7 +41,7 @@ async def help(ctx):
     )
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     for command in bot.commands:
-        if (command != say and command != reply and command != speak and command != servers and command != secret and command != edit and command != schedule):
+        if (command != say and command != reply and command != speak and command != servers and command != secret and command != edit and command != schedule and command != commands):
             if (command == clear):
                 embed.add_field(name="clear (admins only)", value=command.description, inline=True)
             elif (command == proll):
@@ -178,7 +178,7 @@ async def link(ctx):
     await ctx.send('To invite me to a server, use this link\n{}'.format(url))
 
 # provides school schedule pic
-@bot.command(description="sends school schedule b/g")
+@bot.command(brief="sends school schedule b/g", description="sends school schedule b/g")
 async def schedule(ctx):
     await ctx.send(file=discord.File('images/schedule.png'))
 
