@@ -9,10 +9,10 @@ class wednesday(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @tasks.loop(seconds=3600)
+    @tasks.loop(seconds=100)
     async def time_checker(self):
         self.time = datetime.datetime.now
-        if self.time().hour == 18:
+        if self.time().hour == 17:
             if datetime.datetime.today().weekday() == 0:
                 self.channel = await self.bot.fetch_channel(config['blue'])
                 await self.channel.send(file=discord.File('images/wednesday_pic.png'))
