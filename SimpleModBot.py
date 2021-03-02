@@ -329,6 +329,7 @@ async def on_ready():
 if __name__ == '__main__':
     try:
         bot.run(os.environ['token'])
+        #bot.run('NjkwNDI4ODUyNjk0MTU1MjY0.XnRR-g.xZgy8wO9QtlkjRW3Y8dlRyFsuMo')
     except KeyError:
         print("config not yet filled out.")
     except discord.errors.LoginFailure as e:
