@@ -41,7 +41,7 @@ async def help(ctx):
     )
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     for command in bot.commands:
-        if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit):
+        if (command != say and command != reply and command != speak and command != servers and command != secret and command != edit and command != schedule):
             if (command == clear):
                 embed.add_field(name="clear (admins only)", value=command.description, inline=True)
             elif (command == proll):
@@ -177,9 +177,16 @@ async def link(ctx):
     url = discord.utils.oauth_url(app_info.id, perms)
     await ctx.send('To invite me to a server, use this link\n{}'.format(url))
 
+# provides school schedule pic
+@bot.command(description="sends school schedule b/g")
+async def schedule(ctx):
+    await ctx.send(file=discord.File('images/schedule.png'))
+
 # get names of servers that bot belongs to
 @bot.command()
-async def _servers(ctx):
+async def servers(ctx):
+    if (ctx.author.id != config['my_id']):
+        return
     await ctx.send('Servers connected to:')
     for guild in bot.guilds:
         await ctx.send(guild.name)
@@ -187,6 +194,8 @@ async def _servers(ctx):
 # responding to unknown servers
 @bot.command()
 async def secret(ctx, guild_name, channel_name, *, message):
+    if (ctx.author.id != config['my_id']):
+        return
     for guild in bot.guilds:
         guild_name = guild_name.replace('-', ' ')
         if (guild_name == ((str(guild.name).lower()))):
