@@ -8,4 +8,4 @@ youtube_dl
 colorlog
 pyjokes
 howdoi
-guesslang
+git+https://github.com/yoeo/guesslang
