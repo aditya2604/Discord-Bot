@@ -9,7 +9,7 @@ class wednesday(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @tasks.loop(seconds=100)
+    @tasks.loop(seconds=30)
     async def time_checker(self):
         self.time = datetime.datetime.now
         if self.time().hour == 19:
