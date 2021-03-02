@@ -7,3 +7,5 @@ pip
 youtube_dl
 colorlog
 pyjokes
+howdoi
+subprocess
