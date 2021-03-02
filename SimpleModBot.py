@@ -191,6 +191,14 @@ async def servers(ctx):
     for guild in bot.guilds:
         await ctx.send(guild.name)
 
+# prints out all commands with descriptions
+@bot.command()
+async def commands(ctx):
+    if ctx.author.id != config['my_id']:
+        return
+    for command in bot.commands:
+        await ctx.send(f'{command}: {command.description}')
+
 # responding to unknown servers
 @bot.command()
 async def secret(ctx, guild_name, channel_name, *, message):
