@@ -15,7 +15,7 @@ class wednesday(commands.Cog):
         if self.time().hour == 18:
             if datetime.datetime.today().weekday() == 0:
                 self.channel = await self.bot.fetch_channel(config['blue'])
-                await channel.send(file=discord.File('images/wednesday_pic.png'))
+                await self.channel.send(file=discord.File('images/wednesday_pic.png'))
     
     @commands.Cog.listener()
     async def on_ready(self):
