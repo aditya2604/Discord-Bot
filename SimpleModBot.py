@@ -41,7 +41,7 @@ async def help(ctx):
     )
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     for command in bot.commands:
-        if (command != say and command != reply and command != speak and command != servers and command != secret and command != edit and command != schedule and command != commands):
+        if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit and command != schedule and command != _commands):
             if (command == clear):
                 embed.add_field(name="clear (admins only)", value=command.description, inline=True)
             elif (command == proll):
@@ -184,7 +184,7 @@ async def schedule(ctx):
 
 # get names of servers that bot belongs to
 @bot.command()
-async def servers(ctx):
+async def _servers(ctx):
     if (ctx.author.id != config['my_id']):
         return
     await ctx.send('Servers connected to:')
@@ -193,7 +193,7 @@ async def servers(ctx):
 
 # prints out all commands with descriptions
 @bot.command()
-async def commands(ctx):
+async def _commands(ctx):
     if ctx.author.id != config['my_id']:
         return
     for command in bot.commands:
