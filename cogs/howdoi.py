@@ -3,9 +3,9 @@ from discord.ext import commands
 import howdoi
 import os
 from subprocess import PIPE, run
-#from guesslang import Guess
+from guesslang import Guess
 
-#guess = Guess()
+guess = Guess()
 
 class howdoi(commands.Cog):
     def __init__(self, bot):
@@ -17,9 +17,9 @@ class howdoi(commands.Cog):
             result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True, shell=True)
             return result.stdout
         output = out("howdoi " + str(question))
-        #language = guess.language_name(output)
-        #await ctx.send(f'```{(str(language)).lower()}\n{str(output)}```')
-        await ctx.send(f'```{str(output)}```')       
+        language = guess.language_name(output)
+        await ctx.send(f'```{(str(language)).lower()}\n{str(output)}```')
+        #await ctx.send(f'```{str(output)}```')       
 
 def setup(bot):
     bot.add_cog(howdoi(bot))
