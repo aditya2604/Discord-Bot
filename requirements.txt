@@ -1,4 +1,5 @@
 git+https://github.com/Rapptz/discord.py
+tensorflow
 PyNaCl==1.3.0
 dnspython==1.16.0
 pandas
@@ -8,3 +9,4 @@ youtube_dl
 colorlog
 pyjokes
 howdoi
+guesslang
