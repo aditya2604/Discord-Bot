@@ -314,22 +314,9 @@ async def on_ready():
     url = discord.utils.oauth_url(app_info.id, perms)
     print('To invite me to a server, use this link\n{}'.format(url))
 
-    # Setting `Playing ` status
-    # await bot.change_presence(activity=discord.Game(name="with Elmo"), status=discord.Status.dnd)
-
-    # Setting `Streaming ` status
-    # await bot.change_presence(activity=discord.Streaming(name="My Thug Life", url="https://www.youtube.com/watch?v=nsaH7gjZYXE"))
-
-    # Setting `Listening ` status
-    # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=",help"), status=discord.Status.online)
-
-    # Setting `Watching ` status
-    # await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"), status=discord.Status.dnd)
-
 if __name__ == '__main__':
     try:
         bot.run(os.environ['token'])
-        #bot.run('NjkwNDI4ODUyNjk0MTU1MjY0.XnRR-g.xZgy8wO9QtlkjRW3Y8dlRyFsuMo')
     except KeyError:
         print("config not yet filled out.")
     except discord.errors.LoginFailure as e:
