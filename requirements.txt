@@ -8,4 +8,6 @@ youtube_dl
 colorlog
 pyjokes
 howdoi
+tensorflow==2.2.0
+guesslang==2.0.1
 git+https://github.com/yoeo/guesslang
