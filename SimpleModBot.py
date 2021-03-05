@@ -290,6 +290,19 @@ async def on_guild_join(guild):
     gld_name = (str(guild.name)).lower()
     await _guild.create_text_channel(gld_name, category=category)
 
+# load cog command
+@bot.command(description="loads extensions")
+async def load(ctx, extension):
+    bot.load_extension(f'cogs.{extension}')
+    await ctx.send(f'{extension} loaded successfully.')
+
+# unload cog command
+@bot.command(description="unloads extensions")
+async def unload(ctx, extension):
+    bot.unload_extension(f'cogs.{extension}')
+    channel = await bot.fetch_channel(config['blue'])
+    await channel.send(f'{extension} unloaded successfully.')
+
 # loading all cogs
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
