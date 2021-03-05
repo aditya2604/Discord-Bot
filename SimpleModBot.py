@@ -296,7 +296,8 @@ async def load(ctx, extension):
     if ctx.author.id != config['my_id']:
         return
     bot.load_extension(f'cogs.{extension}')
-    await ctx.send(f'{extension} loaded successfully.')
+    channel = await bot.fetch_channel(config['blue'])
+    await channel.send(f'{extension} loaded successfully.')
 
 # unload cog command
 @bot.command(description="unloads extensions")
