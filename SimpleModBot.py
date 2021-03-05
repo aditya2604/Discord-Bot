@@ -41,7 +41,7 @@ async def help(ctx):
     )
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     for command in bot.commands:
-        if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit and command != schedule and command != _commands):
+        if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit and command != schedule and command != _commands and command != load and command != unload):
             if (command == clear):
                 embed.add_field(name="clear (admins only)", value=command.description, inline=True)
             elif (command == proll):
@@ -293,12 +293,16 @@ async def on_guild_join(guild):
 # load cog command
 @bot.command(description="loads extensions")
 async def load(ctx, extension):
+    if ctx.author.id != config['my_id']:
+        return
     bot.load_extension(f'cogs.{extension}')
     await ctx.send(f'{extension} loaded successfully.')
 
 # unload cog command
 @bot.command(description="unloads extensions")
 async def unload(ctx, extension):
+    if ctx.author.id != config['my_id']:
+        return
     bot.unload_extension(f'cogs.{extension}')
     channel = await bot.fetch_channel(config['blue'])
     await channel.send(f'{extension} unloaded successfully.')
