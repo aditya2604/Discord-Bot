@@ -144,13 +144,6 @@ async def proll(ctx, args : int, *, content):
     for i in range(args):
         await m.add_reaction(poll_options[i])
 
-# # math command
-# @bot.command(brief="does math", description="does math so that your stupid self doesn't have to")
-# async def calc(ctx, *, math):
-#     await ctx.send(f'{math} = {eval(math)}')
-#     if (random.randint(0, 2) == 1):
-#         await ctx.send("Imagine not being able to do that 🤡")
-
 # suggests command
 @bot.command(brief="sends feature suggestions to Kermit", description="sends feature suggestions to Kermit")
 async def suggest(ctx, *, suggestion):
@@ -171,7 +164,7 @@ async def token(ctx):
 
 # provides invite link
 @bot.command(brief='provides link to invite Kermit into a server', description='provides link to invite Kermit into a server')
-async def link(ctx):
+async def invite(ctx):
     app_info = await bot.application_info()
     perms = discord.Permissions.none()
     url = discord.utils.oauth_url(app_info.id, perms)
@@ -240,7 +233,7 @@ async def on_message(message):
     #         await message.add_reaction(emoji)
 
     mention = f'<@!{bot.user.id}>'
-    if mention in message.content:
+    if message.content == mention:
         if (random.randint(0,1) == 1):
             await channel.send("https://tenor.com/view/kermit-the-frog-drive-driving-gif-3965525")
 
