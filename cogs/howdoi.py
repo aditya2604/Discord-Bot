@@ -23,7 +23,8 @@ class howdoi(commands.Cog):
             output = output.split("================================================================================")
         except:
             pass
-        await ctx.send(f'```{str(output)}```')       
+        for answer in output:
+            await ctx.send(f'```{str(output)}```')       
 
 def setup(bot):
     bot.add_cog(howdoi(bot))
