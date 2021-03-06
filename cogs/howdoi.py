@@ -16,9 +16,13 @@ class howdoi(commands.Cog):
         def out(command):
             result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True, shell=True)
             return result.stdout
-        output = out("howdoi " + str(question))
+        output = out("howdoi -a " + str(question))
         #language = guess.language_name(output)
         #await ctx.send(f'```{(str(language)).lower()}\n{str(output)}```')
+        try:
+            output = output.split("================================================================================")
+        except:
+            pass
         await ctx.send(f'```{str(output)}```')       
 
 def setup(bot):
