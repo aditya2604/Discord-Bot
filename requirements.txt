@@ -4,5 +4,5 @@ youtube_dl
 colorlog
 pyjokes
 howdoi
-guesslang==2.0.1
+#guesslang==2.0.1
 discord.py==1.6.0
