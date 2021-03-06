@@ -24,7 +24,7 @@ class howdoi(commands.Cog):
         except:
             pass
         for answer in output:
-            await ctx.send(f'```{str(output)}```')       
+            await ctx.send(f'```{answer}```')       
 
 def setup(bot):
     bot.add_cog(howdoi(bot))
