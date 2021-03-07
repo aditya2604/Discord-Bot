@@ -10,6 +10,8 @@ class define(commands.Cog):
 
     @commands.command(description="provides definitions from Urban Dictionary")
     async def define(self, ctx, *, words):
+        words = words.lower()
+        words = words.replace(' ', '%20')
         r = requests.get(f"http://www.urbandictionary.com/define.php?term={words}")
         soup = BeautifulSoup(r.content, 'lxml')
         try:
@@ -28,7 +30,7 @@ class define(commands.Cog):
             embed.set_footer(text=f"{contributor}")
             await ctx.send(embed=embed)
         except:
-            words = words.replace(' ', '')
+            words = words.replace(' ', '%20')
             url = f"http://www.urbandictionary.com/define.php?term={words}"
             embed = discord.Embed(title="", description=f"[enter a different term g]({url})")
             await ctx.send(embed=embed)
