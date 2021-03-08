@@ -176,7 +176,7 @@ async def invite(ctx):
         url=f'{url}',
         description="Kermit is a Discord bot containing a multitude of commands for entertaining and educational purposes."
     )
-    embed.set_image(url=config['invite_img_url'])
+    #embed.set_image(url=config['invite_img_url'])
     await ctx.send(embed=embed)
 
 # provides school schedule pic
