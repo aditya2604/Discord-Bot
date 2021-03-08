@@ -168,7 +168,13 @@ async def invite(ctx):
     app_info = await bot.application_info()
     perms = discord.Permissions.none()
     url = discord.utils.oauth_url(app_info.id, perms)
-    await ctx.send('To invite me to a server, use this link\n{}'.format(url))
+    embed = discord.Embed(
+        title="Discord - Invite Link",
+        url=f'{url}',
+        description="Discord is the easiest way to communicate over voice, video, and text. Chat, hang out, and stay close with your friends and communities."
+    )
+    embed.set_image(url='https://discord.com/assets/ee7c382d9257652a88c8f7b7f22a994d.png')
+    await ctx.send(embed=embed)
 
 # provides school schedule pic
 @bot.command(brief="sends school schedule b/g", description="sends school schedule b/g")
