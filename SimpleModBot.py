@@ -85,7 +85,6 @@ async def say(ctx, arg1, *, arg):
     async with channel.typing():
         await asyncio.sleep(0.8)
         await channel.send(arg)
-        return
 
 # edit command
 @bot.command()
@@ -175,9 +174,9 @@ async def invite(ctx):
     embed = discord.Embed(
         title="Discord - Invite Link",
         url=f'{url}',
-        description="Discord is the easiest way to communicate over voice, video, and text. Chat, hang out, and stay close with your friends and communities."
+        description="Kermit is a Discord bot containing a multitude of commands for entertaining and educational purposes."
     )
-    embed.set_image(url='https://discord.com/assets/ee7c382d9257652a88c8f7b7f22a994d.png')
+    embed.set_image(url=config['invite_img_url'])
     await ctx.send(embed=embed)
 
 # provides school schedule pic
@@ -219,7 +218,6 @@ async def secret(ctx, guild_name, channel_name, *, message):
             async with channel.typing():
                 await asyncio.sleep(0.8)
                 await channel.send(message)
-                return
 
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓']
 servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Abandoned Musical Train Station', 'my dog is life <3']
