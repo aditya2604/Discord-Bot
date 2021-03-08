@@ -72,6 +72,7 @@ class Music(commands.Cog):
     @commands.command(description="streams music")
     async def play(self, ctx, *, url):
         async with ctx.typing():
+            asyncio.sleep(0.5)
             player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
         embed = discord.Embed(title="Now playing", description=f"[{player.title}]({player.url}) [{ctx.author.mention}]")
