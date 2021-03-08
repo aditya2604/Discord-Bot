@@ -216,7 +216,10 @@ async def secret(ctx, guild_name, channel_name, *, message):
                 await ctx.send(f"channel not found in {guild}")
                 await ctx.send(channel.name)
                 return
-            await channel.send(message)
+            async with channel.typing():
+                await asyncio.sleep(0.8)
+                await channel.send(message)
+                return
 
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓']
 servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Abandoned Musical Train Station', 'my dog is life <3']
