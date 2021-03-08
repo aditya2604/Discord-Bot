@@ -9,6 +9,7 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions, MissingPermissions
 from discord.utils import get
 from discord import Embed
+import asyncio
 try:
     import discord
 except ImportError:
@@ -81,7 +82,10 @@ async def say(ctx, arg1, *, arg):
         await channel.send(ctx.message.attachments[0].url)
     except IndexError:
         pass
-    await channel.send(arg)
+    async with channel.typing():
+        await asyncio.sleep(0.8)
+        await channel.send(arg)
+        return
 
 # edit command
 @bot.command()
