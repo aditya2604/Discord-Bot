@@ -337,7 +337,7 @@ class Music(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command(name='now_playing', aliases=['np', 'current', 'currentsong', 'playing'], description="shows the current playing song")
+    @commands.command(name='np', aliases=['song', 'current', 'currentsong', 'playing'], description="shows the current playing song")
     async def now_playing_(self, ctx):
         """Display information about the currently playing song."""
         vc = ctx.voice_client
@@ -354,7 +354,7 @@ class Music(commands.Cog):
         embed = discord.Embed(title="", description=f"[{vc.source.title}]({vc.source.url}) [{vc.source.requester.mention}]", color=discord.Color.green())
         player.np = await ctx.send(embed=embed)
 
-    @commands.command(name='volume', aliases=['vol'], description="changes volume")
+    @commands.command(name='volume', aliases=['vol'], description="changes Kermit's volume")
     async def change_volume(self, ctx, *, vol: float):
         """Change the player volume.
         Parameters
