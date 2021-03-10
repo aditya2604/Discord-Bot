@@ -243,7 +243,7 @@ class Music(commands.Cog):
 
         await ctx.message.add_reaction('👍')
 
-    @commands.command(name='play', aliases=['sing','p'], description="streams music")
+    @commands.command(name='play', aliases=['sing','p', 'queue'], description="streams music")
     async def play_(self, ctx, *, search: str):
         """Request a song and add it to the queue.
         This command attempts to join a valid voice channel if the bot is not already in one.
@@ -316,7 +316,7 @@ class Music(commands.Cog):
         vc.stop()
 
     @commands.command(name='queue', aliases=['q', 'playlist'], description="shows the queue")
-    async def queue_info(self, ctx):
+    async def queue_info(self, ctx, song = None):
         """Retrieve a basic queue of upcoming songs."""
         vc = ctx.voice_client
 
@@ -332,7 +332,7 @@ class Music(commands.Cog):
         # Grab up to 5 entries from the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, 5))
 
-        fmt = '\n'.join(f'**`{_["title"]}`**' for _ in upcoming)
+        fmt = '\n'.join(f'**`{_["uploader"]} - {_["title"]}`**' for _ in upcoming)
         embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt, color=discord.Color.green())
 
         await ctx.send(embed=embed)
@@ -381,7 +381,7 @@ class Music(commands.Cog):
         embed = discord.Embed(title="", description=f'**`{ctx.author}`** set the volume to **{vol}%**', color=discord.Color.green())
         await ctx.send(embed=embed)
 
-    @commands.command(name='leave', aliases=["stop"], description="stops music and disconnects from voice")
+    @commands.command(name='leave', aliases=["stop", "dc", "disconnect"], description="stops music and disconnects from voice")
     async def leave_(self, ctx):
         """Stop the currently playing song and destroy the player.
         !Warning!
