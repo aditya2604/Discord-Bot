@@ -73,7 +73,7 @@ class Music(commands.Cog):
 
     @commands.command(description="streams music")
     async def play(self, ctx, *, url):
-        voice_client = ctx.voice_client
+        self.voice_client = ctx.voice_client
         async with ctx.typing():
             player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
             if len(self.queue) == 0:
@@ -89,7 +89,7 @@ class Music(commands.Cog):
         self.queue[0] = player
         i = 0
         while i < len(self.queue):
-            voice_client.play(self.queue[i], after=lambda e: print('Player error: %s' % e) if e else None)
+            self.voice_client.play(self.queue[i], after=lambda e: print('Player error: %s' % e) if e else None)
             i+=1
     
     @commands.command(description="pauses music")
