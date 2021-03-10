@@ -72,7 +72,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
             # take first item from a playlist
             data = data['entries'][0]
 
-        embed = discord.Embed(title="", description=f"[{data['title']}]({data['webpage_url']}) [{ctx.author.mention}]")
+        embed = discord.Embed(title="", description=f"Queued [{data['title']}]({data['webpage_url']}) [{ctx.author.mention}]", color=discord.Color.green())
         await ctx.send(embed=embed)
 
         if download:
@@ -147,7 +147,7 @@ class MusicPlayer:
             self.current = source
 
             self._guild.voice_client.play(source, after=lambda _: self.bot.loop.call_soon_threadsafe(self.next.set))
-            embed = discord.Embed(title="Now playing", description=f"[{source.title}]({source.web_url}) [{source.requester.mention}]")
+            embed = discord.Embed(title="Now playing", description=f"[{source.title}]({source.web_url}) [{source.requester.mention}]", color=discord.Color.green())
             self.np = await self._channel.send(embed=embed)
             await self.next.wait()
 
@@ -333,7 +333,7 @@ class Music(commands.Cog):
         upcoming = list(itertools.islice(player.queue._queue, 0, 5))
 
         fmt = '\n'.join(f'**`{_["title"]}`**' for _ in upcoming)
-        embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt)
+        embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt, color=discord.Color.green())
 
         await ctx.send(embed=embed)
 
@@ -351,7 +351,7 @@ class Music(commands.Cog):
             embed = discord.Embed(title="", description="I am currently not playing anything", color=discord.Color.green())
             return await ctx.send(embed=embed)
         
-        embed = discord.Embed(title="", description=f"[{vc.source.title}]({vc.source['webpage_url']}) [{vc.source.requester.mention}]")
+        embed = discord.Embed(title="", description=f"[{vc.source.title}]({vc.source.url}) [{vc.source.requester.mention}]", color=discord.Color.green())
         player.np = await ctx.send(embed=embed)
 
     @commands.command(name='volume', aliases=['vol'])
