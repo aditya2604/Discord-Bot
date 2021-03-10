@@ -72,7 +72,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
             # take first item from a playlist
             data = data['entries'][0]
 
-        embed = discord.Embed(title="", description=f"Queued [{data.title}]({data.webpage_url}) [{ctx.author.mention}]")
+        embed = discord.Embed(title="", description=f"Queued [{data['title']}]({data['webpage_url']}) [{ctx.author.mention}]")
         await ctx.send(embed=embed)
 
         if download:
@@ -274,8 +274,8 @@ class Music(commands.Cog):
 
         await player.queue.put(source)
 
-        embed = discord.Embed(title="Now playing", description=f"[{player.title}]({player.url}) [{ctx.author.mention}]")
-        await ctx.send(embed=embed)
+        #embed = discord.Embed(title="Now playing", description=f"[{player.title}]({player.url}) [{ctx.author.mention}]")
+        #await ctx.send(embed=embed)
 
     @commands.command(name='pause')
     async def pause_(self, ctx):
@@ -283,7 +283,7 @@ class Music(commands.Cog):
         vc = ctx.voice_client
 
         if not vc or not vc.is_playing():
-            embed = discord.Embed(title="", description="Not playing anything", color=discord.Color.green())
+            embed = discord.Embed(title="", description="I am currently not playing anything", color=discord.Color.green())
             return await ctx.send(embed=embed)
         elif vc.is_paused():
             return
@@ -297,7 +297,7 @@ class Music(commands.Cog):
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            embed = discord.Embed(title="", description="Not playing anything", color=discord.Color.green())
+            embed = discord.Embed(title="", description="I'm not connected to a voice channel", color=discord.Color.green())
             return await ctx.send(embed=embed)
         elif not vc.is_paused():
             return
@@ -311,7 +311,7 @@ class Music(commands.Cog):
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            embed = discord.Embed(title="", description="Not playing anything", color=discord.Color.green())
+            embed = discord.Embed(title="", description="I'm not connected to a voice channel", color=discord.Color.green())
             return await ctx.send(embed=embed)
 
         if vc.is_paused():
@@ -390,7 +390,7 @@ class Music(commands.Cog):
             vc.source.volume = vol / 100
 
         player.volume = vol / 100
-        embed = discord.Embed(title="", description=f'**`{ctx.author}`**: Set the volume to **{vol}%**', color=discord.Color.green())
+        embed = discord.Embed(title="", description=f'**`{ctx.author}`** set the volume to **{vol}%**', color=discord.Color.green())
         await ctx.send(embed=embed)
 
     @commands.command(name='leave', aliases=["stop"])
