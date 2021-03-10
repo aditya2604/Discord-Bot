@@ -210,7 +210,7 @@ class Music(commands.Cog):
 
         return player
 
-    @commands.command(name='connect', aliases=['join'], description="connects to voice")
+    @commands.command(name='join', aliases=['connect'], description="connects to voice")
     async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
         """Connect to voice.
         Parameters
@@ -354,7 +354,7 @@ class Music(commands.Cog):
         embed = discord.Embed(title="", description=f"[{vc.source.title}]({vc.source.url}) [{vc.source.requester.mention}]", color=discord.Color.green())
         player.np = await ctx.send(embed=embed)
 
-    @commands.command(name='volume', aliases=['vol'], description="changes Kermit's volume")
+    @commands.command(name='volume', aliases=['vol', 'v'], description="changes Kermit's volume")
     async def change_volume(self, ctx, *, vol: float):
         """Change the player volume.
         Parameters
