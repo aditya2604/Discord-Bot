@@ -243,7 +243,7 @@ class Music(commands.Cog):
 
         await ctx.message.add_reaction('👍')
 
-    @commands.command(name='play', aliases=['sing','p', 'queue'], description="streams music")
+    @commands.command(name='play', aliases=['sing','p'], description="streams music")
     async def play_(self, ctx, *, search: str):
         """Request a song and add it to the queue.
         This command attempts to join a valid voice channel if the bot is not already in one.
@@ -316,7 +316,7 @@ class Music(commands.Cog):
         vc.stop()
 
     @commands.command(name='queue', aliases=['q', 'playlist'], description="shows the queue")
-    async def queue_info(self, ctx, song = None):
+    async def queue_info(self, ctx):
         """Retrieve a basic queue of upcoming songs."""
         vc = ctx.voice_client
 
@@ -352,7 +352,7 @@ class Music(commands.Cog):
             return await ctx.send(embed=embed)
         
         embed = discord.Embed(title="", description=f"[{vc.source.title}]({vc.source.url}) [{vc.source.requester.mention}]", color=discord.Color.green())
-        player.np = await ctx.send(embed=embed)
+        await ctx.send(embed=embed)
 
     @commands.command(name='volume', aliases=['vol', 'v'], description="changes Kermit's volume")
     async def change_volume(self, ctx, *, vol: float):
