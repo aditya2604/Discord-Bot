@@ -28,7 +28,7 @@ ytdlopts = {
 }
 
 ffmpegopts = {
-    'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
+    'before_options': '-nostdin',
     'options': '-vn'
 }
 
@@ -62,10 +62,10 @@ class YTDLSource(discord.PCMVolumeTransformer):
         return self.__getattribute__(item)
 
     @classmethod
-    async def create_source(cls, ctx, search: str, *, loop, stream=False):
+    async def create_source(cls, ctx, search: str, *, loop, download=False):
         loop = loop or asyncio.get_event_loop()
 
-        to_run = partial(ytdl.extract_info, url=search, download=not stream)
+        to_run = partial(ytdl.extract_info, url=search, download=download)
         data = await loop.run_in_executor(None, to_run)
 
         if 'entries' in data:
@@ -75,7 +75,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         embed = discord.Embed(title="Now playing", description=f"[{data['title']}]({data['webpage_url']}) [{ctx.author.mention}]")
         await ctx.send(embed=embed)
 
-        if stream:
+        if download:
             source = ytdl.prepare_filename(data)
         else:
             return {'webpage_url': data['webpage_url'], 'requester': ctx.author, 'title': data['title']}
