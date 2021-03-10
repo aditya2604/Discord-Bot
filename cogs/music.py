@@ -91,7 +91,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         return cls(discord.FFmpegPCMAudio(data['url']), data=data, requester=requester)
 
 
-class MusicPlayer(commands.Cog):
+class MusicPlayer:
     """A class which is assigned to each guild using the bot for Music.
     This class implements a queue and loop, which allows for different guilds to listen to different playlists
     simultaneously.
@@ -162,7 +162,7 @@ class MusicPlayer(commands.Cog):
         return self.bot.loop.create_task(self._cog.cleanup(guild))
 
 
-class Music:
+class Music(commands.Cog):
     """Music related commands."""
 
     __slots__ = ('bot', 'players')
