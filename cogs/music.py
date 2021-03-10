@@ -28,7 +28,7 @@ ytdlopts = {
 }
 
 ffmpegopts = {
-    'before_options': '-nostdin',
+    'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
     'options': '-vn'
 }
 
@@ -72,7 +72,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
             # take first item from a playlist
             data = data['entries'][0]
 
-        embed = discord.Embed(title="", description=f"Queued [{data['title']}]({data['webpage_url']}) [{ctx.author.mention}]")
+        embed = discord.Embed(title="Now playing", description=f"Queued [{data['title']}]({data['webpage_url']}) [{ctx.author.mention}]")
         await ctx.send(embed=embed)
 
         if download:
@@ -154,12 +154,6 @@ class MusicPlayer:
             # Make sure the FFmpeg process is cleaned up.
             source.cleanup()
             self.current = None
-
-            try:
-                # We are no longer playing this song...
-                await self.np.delete()
-            except discord.HTTPException:
-                pass
 
     def destroy(self, guild):
         """Disconnect and cleanup the player."""
@@ -356,12 +350,6 @@ class Music(commands.Cog):
         if not player.current:
             embed = discord.Embed(title="", description="I am currently not playing anything", color=discord.Color.green())
             return await ctx.send(embed=embed)
-
-        try:
-            # Remove our previous now_playing message.
-            await player.np.delete()
-        except discord.HTTPException:
-            pass
         
         embed = discord.Embed(title="", description=f"[{vc.source.title}]({vc.source['webpage_url']}) [{vc.source.requester.mention}]")
         player.np = await ctx.send(embed=embed)
