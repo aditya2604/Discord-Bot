@@ -68,14 +68,28 @@ class Music(commands.Cog):
         else:
             await ctx.voice_client.move_to(voice_channel)
             vc = ctx.voice_client
+        self.queue = []
+        await ctx.message.add_reaction('👍')
 
     @commands.command(description="streams music")
     async def play(self, ctx, *, url):
+        voice_client = ctx.voice_client
         async with ctx.typing():
             player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
-            ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-        embed = discord.Embed(title="Now playing", description=f"[{player.title}]({player.url}) [{ctx.author.mention}]")
-        await ctx.send(embed=embed)
+            if len(self.queue) == 0:
+                self.start_playing(voice_client, player)    
+                embed = discord.Embed(title="Now playing", description=f"[{player.title}]({player.url}) [{ctx.author.mention}]")
+            else:
+                self.queue[len(self.queue)] = player
+                embed = discord.Embed(title="", description=f"Queued [{player.title}]({player.url}) [{ctx.author.mention}]")
+            await ctx.send(embed=embed)
+        
+    def start_playing(self, voice_client, player):
+        self.queue[0] = player
+        i = 0
+        while i < len(self.queue):
+            voice_client.play(self.queue[i], after=lambda e: print('Player error: %s' % e) if e else None)
+            i+=1
     
     @commands.command(description="pauses music")
     async def pause(self, ctx):
@@ -90,6 +104,7 @@ class Music(commands.Cog):
     @commands.command(description="stops and disconnects the bot from voice")
     async def leave(self, ctx):
         await ctx.voice_client.disconnect()
+        await ctx.message.add_reaction('👋')
 
     @play.before_invoke
     async def ensure_voice(self, ctx):
