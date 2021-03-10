@@ -72,7 +72,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
             # take first item from a playlist
             data = data['entries'][0]
 
-        embed = discord.Embed(title="Now playing", description=f"[{data['title']}]({data['webpage_url']}) [{ctx.author.mention}]")
+        embed = discord.Embed(title="", description=f"[{data['title']}]({data['webpage_url']}) [{ctx.author.mention}]")
         await ctx.send(embed=embed)
 
         if download:
@@ -147,7 +147,7 @@ class MusicPlayer:
             self.current = source
 
             self._guild.voice_client.play(source, after=lambda _: self.bot.loop.call_soon_threadsafe(self.next.set))
-            embed = discord.Embed(title="", description=f"[{source.title}]({source.web_url}) [{source.requester.mention}]")
+            embed = discord.Embed(title="Now playing", description=f"[{source.title}]({source.web_url}) [{source.requester.mention}]")
             self.np = await self._channel.send(embed=embed)
             await self.next.wait()
 
