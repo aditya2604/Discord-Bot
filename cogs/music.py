@@ -9,6 +9,8 @@ from async_timeout import timeout
 from functools import partial
 from youtube_dl import YoutubeDL
 
+# Suppress noise about console usage from errors
+youtube_dl.utils.bug_reports_message = lambda: ''
 
 ytdlopts = {
     'format': 'bestaudio/best',
@@ -69,7 +71,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
             # take first item from a playlist
             data = data['entries'][0]
 
-        embed = discord.Embed(title="", description=f"Queued [{data['title']}]({data['webpage_url']}) [{ctx.author.mention}]")
+        embed = discord.Embed(title="", description=f"Queued [{data.title}]({data.webpage_url}) [{ctx.author.mention}]")
         await ctx.send(embed=embed)
 
         if download:
@@ -144,7 +146,7 @@ class MusicPlayer:
             self.current = source
 
             self._guild.voice_client.play(source, after=lambda _: self.bot.loop.call_soon_threadsafe(self.next.set))
-            embed = discord.Embed(title="", description=f"[{source['title']}]({source['webpage_url']}) [{source.requester.mention}]")
+            embed = discord.Embed(title="", description=f"[{source.title}]({source.webpage_url}) [{source.requester.mention}]")
             self.np = await self._channel.send(embed=embed)
             await self.next.wait()
 
@@ -244,7 +246,7 @@ class Music(commands.Cog):
             except asyncio.TimeoutError:
                 raise VoiceConnectionError(f'Connecting to channel: <{channel}> timed out.')
 
-        await ctx.send(f'Connected to: **{channel}**', delete_after=20)
+        await ctx.message.add_reaction('👍')
 
     @commands.command(name='play', aliases=['sing'])
     async def play_(self, ctx, *, search: str):
@@ -271,7 +273,8 @@ class Music(commands.Cog):
 
         await player.queue.put(source)
 
-        await ctx.message.add_reaction('👍')
+        embed = discord.Embed(title="Now playing", description=f"[{player.title}]({player.url}) [{ctx.author.mention}]")
+        await ctx.send(embed=embed)
 
     @commands.command(name='pause')
     async def pause_(self, ctx):
@@ -400,6 +403,8 @@ class Music(commands.Cog):
         if not vc or not vc.is_connected():
             embed = discord.Embed(title="", description="I'm not connected to a voice channel", color=discord.Color.green())
             return await ctx.send(embed=embed)
+
+        await ctx.message.add_reaction('👋')
 
         await self.cleanup(ctx.guild)
 
