@@ -51,6 +51,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
 
         self.title = data.get('title')
         self.web_url = data.get('webpage_url')
+        self.uploader = data.get('uploader')
 
         # YTDL info dicts (data) have other useful information you might want
         # https://github.com/rg3/youtube-dl/blob/master/README.md
@@ -332,7 +333,7 @@ class Music(commands.Cog):
         # Grab up to 5 entries from the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, 5))
 
-        fmt = '\n'.join(f"**`{_['title']}` requested by {_['requester']}**" for _ in upcoming)
+        fmt = '\n'.join(f"`{_['uploader']} - {_['title']}` requested by {_['requester'].mention}" for _ in upcoming)
         embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt, color=discord.Color.green())
 
         await ctx.send(embed=embed)
