@@ -7,6 +7,7 @@ import sys
 import traceback
 from async_timeout import timeout
 from functools import partial
+import youtube_dl
 from youtube_dl import YoutubeDL
 
 # Suppress noise about console usage from errors
