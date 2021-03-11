@@ -365,7 +365,7 @@ class Music(commands.Cog):
         # Grabs the songs in the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, int(len(player.queue._queue))))
         fmt = '\n'.join(f"`{(upcoming.index(_)) + 1}.` [{_['title']}]({_['webpage_url']}) | `Requested by:` {_['requester'].mention}\n" for _ in upcoming)
-        fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | `Requested by:` {vc.source.requester}\n\n__Up Next:__\n" + fmt + f"\n**{len(upcoming)} songs in queue**"
+        fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | `Requested by:` {vc.source.requester.mention}\n\n__Up Next:__\n" + fmt + f"\n**{len(upcoming)} songs in queue**"
         embed = discord.Embed(title=f'Queue for {ctx.guild.name}', description=fmt, color=discord.Color.green())
         embed.set_footer(text=f"{ctx.author.display_name}", icon_url=ctx.author.avatar_url)
 
@@ -389,7 +389,7 @@ class Music(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(name='volume', aliases=['vol', 'v'], description="changes Kermit's volume")
-    async def change_volume(self, ctx, *, vol: float):
+    async def change_volume(self, ctx, *, vol: float=None):
         """Change the player volume.
         Parameters
         ------------
@@ -400,6 +400,10 @@ class Music(commands.Cog):
 
         if not vc or not vc.is_connected():
             embed = discord.Embed(title="", description="I am not currently connected to voice", color=discord.Color.green())
+            return await ctx.send(embed=embed)
+        
+        if not vol:
+            embed = discord.Embed(title="", description=f"🔊 **{vc.source.volume}%**", color=discord.Color.green())
             return await ctx.send(embed=embed)
 
         if not 0 < vol < 101:
