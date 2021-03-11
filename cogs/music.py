@@ -317,7 +317,7 @@ class Music(commands.Cog):
 
         vc.stop()
     
-    @commands.command(name='remove', description="removes specified song from queue")
+    @commands.command(name='remove', aliases=['rm', 'rem'], description="removes specified song from queue")
     async def remove_(self, ctx, pos : int=None):
         player = self.get_player(ctx)
         if pos == None:
@@ -347,7 +347,7 @@ class Music(commands.Cog):
             return await ctx.send(embed=embed)
 
         # Grab up to 5 entries from the queue...
-        upcoming = list(itertools.islice(player.queue._queue, 0, 20))
+        upcoming = list(itertools.islice(player.queue._queue, 0, int(len(player.queue._queue))))
         fmt = '\n'.join(f"{(upcoming.index(_)) + 1}.) [{_['title']}]({_['webpage_url']}) | `Requested by:` {_['requester'].mention}" for _ in upcoming)
         embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt, color=discord.Color.green())
 
