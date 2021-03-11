@@ -365,7 +365,7 @@ class Music(commands.Cog):
         # Grabs the songs in the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, int(len(player.queue._queue))))
         fmt = '\n'.join(f"`{(upcoming.index(_)) + 1}.` [{_['title']}]({_['webpage_url']}) | `Requested by:` {_['requester'].mention}\n" for _ in upcoming)
-        fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | `Requested by:` {vc.source.requester}`\n" + fmt + f"\n**{len(upcoming)} songs in queue**"
+        fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | `Requested by:` {vc.source.requester}\n" + fmt + f"\n**{len(upcoming)} songs in queue**"
         embed = discord.Embed(title=f'Queue for {ctx.guild.name}', description=fmt, color=discord.Color.green())
         embed.set_footer(text=f"{ctx.author.display_name}", icon_url=ctx.author.avatar_url)
 
