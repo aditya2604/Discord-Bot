@@ -327,6 +327,7 @@ class Music(commands.Cog):
     
     @commands.command(name='remove', aliases=['rm', 'rem'], description="removes specified song from queue")
     async def remove_(self, ctx, pos : int=None):
+        """Removes specified song from queue"""
         player = self.get_player(ctx)
         if pos == None:
             player.queue._queue.pop()
@@ -339,6 +340,13 @@ class Music(commands.Cog):
             except:
                 embed = discord.Embed(title="", description=f'Could not find a track for "{pos}"', color=discord.Color.green())
                 await ctx.send(embed=embed)
+    
+    @commands.command(name='clear', aliases=['clr', 'cl', 'cr'], description="clears entire queue")
+    async def clear_(self, ctx):
+        """Deletes entire queue of upcoming songs."""
+        player = self.get_player(ctx)
+        player.queue._queue.clear()
+        await ctx.send('💣 **Cleared**')
 
     @commands.command(name='queue', aliases=['q', 'playlist', 'que'], description="shows the queue")
     async def queue_info(self, ctx):
@@ -354,12 +362,12 @@ class Music(commands.Cog):
             embed = discord.Embed(title="", description="queue is empty", color=discord.Color.green())
             return await ctx.send(embed=embed)
 
-        # Grab up to 5 entries from the queue...
+        # Grabs the songs in the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, int(len(player.queue._queue))))
         fmt = '\n'.join(f"`{(upcoming.index(_)) + 1}.` [{_['title']}]({_['webpage_url']}) | `Requested by:` {_['requester'].mention}\n" for _ in upcoming)
-        fmt = fmt + f"**{len(upcoming)}** songs in queue"
+        fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | `Requested by:` {vc.source.requester}`" + fmt + f"\n**{len(upcoming)} songs in queue**"
         embed = discord.Embed(title=f'Queue for {ctx.guild.name}', description=fmt, color=discord.Color.green())
-        embed.set_footer(icon_url=ctx.author.avatar_url, text="")
+        embed.set_footer(text=f"{ctx.author.display_name}", icon_url=ctx.author.avatar_url)
 
         await ctx.send(embed=embed)
 
