@@ -315,7 +315,7 @@ class Music(commands.Cog):
 
         vc.stop()
 
-    @commands.command(name='queue', aliases=['q', 'playlist'], description="shows the queue")
+    @commands.command(name='queue', aliases=['q', 'playlist', 'que'], description="shows the queue")
     async def queue_info(self, ctx):
         """Retrieve a basic queue of upcoming songs."""
         vc = ctx.voice_client
@@ -330,9 +330,9 @@ class Music(commands.Cog):
             return await ctx.send(embed=embed)
 
         # Grab up to 5 entries from the queue...
-        upcoming = list(itertools.islice(player.queue._queue, 0, 5))
+        upcoming = list(itertools.islice(player.queue._queue, 0, 20))
 
-        fmt = '\n'.join(f"`{_['title']}` | `Requested by:` {_['requester'].mention}" for _ in upcoming)
+        fmt = '\n'.join(f"{(upcoming.index(_)) + 1}.) {_['title']} | `Requested by:` {_['requester'].mention}" for _ in upcoming)
         embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt, color=discord.Color.green())
 
         await ctx.send(embed=embed)
