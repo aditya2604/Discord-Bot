@@ -325,8 +325,8 @@ class Music(commands.Cog):
             try:
                 del player.queue._queue[pos-1]
             except:
-                await ctx.send("out of range")
-        await ctx.send(f'{player.queue._queue}')
+                embed = discord.Embed(title="", description="out of range", color=discord.Color.green())
+                await ctx.send(embed=embed)
 
     @commands.command(name='queue', aliases=['q', 'playlist', 'que'], description="shows the queue")
     async def queue_info(self, ctx):
@@ -345,7 +345,7 @@ class Music(commands.Cog):
         # Grab up to 5 entries from the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, 20))
 
-        fmt = '\n'.join(f"{(upcoming.index(_)) + 1}.) {_['title']} | `Requested by:` {_['requester'].mention}" for _ in upcoming)
+        fmt = '\n'.join(f"{(upcoming.index(_)) + 1}.) [{_['title']}]({_['webpage_url']}) | `Requested by:` {_['requester'].mention}" for _ in upcoming)
         embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt, color=discord.Color.green())
 
         await ctx.send(embed=embed)
