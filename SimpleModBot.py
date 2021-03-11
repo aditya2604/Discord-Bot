@@ -43,8 +43,8 @@ async def help(ctx):
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     for command in bot.commands:
         if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit and command != schedule and command != _commands and command != load and command != unload):
-            if (command == clear):
-                embed.add_field(name="clear (admins only)", value=command.description, inline=True)
+            if (command == delete):
+                embed.add_field(name="delete (admins only)", value=command.description, inline=True)
             elif (command == proll):
                 embed.add_field(name="proll (number of options)", value=command.description, inline=True)
             else:
@@ -55,8 +55,8 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 # clear command
-@bot.command(aliases=['delete'], brief="clears entered amount of messages", description="clears entered amount of messages")
-async def clear(ctx, amount : int):
+@bot.command(brief="clears entered amount of messages", description="clears entered amount of messages")
+async def delete(ctx, amount : int):
     _id = ctx.author.id
     mention = mention = f'<@!{366117920960675843}>' # RoastSea8
     if (_id == config['my_id'] or ctx.author.guild_permissions.administrator):
