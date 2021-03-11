@@ -403,7 +403,7 @@ class Music(commands.Cog):
             return await ctx.send(embed=embed)
         
         if not vol:
-            embed = discord.Embed(title="", description=f"🔊 **{vc.source.volume}%**", color=discord.Color.green())
+            embed = discord.Embed(title="", description=f"🔊 **{(vc.source.volume)*100}%**", color=discord.Color.green())
             return await ctx.send(embed=embed)
 
         if not 0 < vol < 101:
