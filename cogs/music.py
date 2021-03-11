@@ -332,7 +332,7 @@ class Music(commands.Cog):
         # Grab up to 5 entries from the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, 5))
 
-        fmt = '\n'.join(f"`{_.source.uploader} - {_['title']}` requested by {_['requester'].mention}" for _ in upcoming)
+        fmt = '\n'.join(f"`{_['title']}` requested by {_['requester'].mention}" for _ in upcoming)
         embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt, color=discord.Color.green())
 
         await ctx.send(embed=embed)
@@ -351,10 +351,8 @@ class Music(commands.Cog):
             embed = discord.Embed(title="", description="I am currently not playing anything", color=discord.Color.green())
             return await ctx.send(embed=embed)
         
-        await ctx.send(f'{vc.source.title}')
-
-        #embed = discord.Embed(title="", description=f"[{vc.source.title}]({vc.source.url}) [{vc.source.requester.mention}]", color=discord.Color.green())
-        #await ctx.send(embed=embed)
+        embed = discord.Embed(title="", description=f"[{vc.source.title}]({vc.source.url}) [{vc.source.requester.mention}]", color=discord.Color.green())
+        await ctx.send(embed=embed)
 
     @commands.command(name='volume', aliases=['vol', 'v'], description="changes Kermit's volume")
     async def change_volume(self, ctx, *, vol: float):
