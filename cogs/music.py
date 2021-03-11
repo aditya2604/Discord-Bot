@@ -324,9 +324,11 @@ class Music(commands.Cog):
             player.queue._queue.pop()
         else:
             try:
+                s = player.queue._queue[pos-1]
                 del player.queue._queue[pos-1]
+                embed = discord.Embed(title="", description=f"Removed [{s['title']}]({s['webpage_url']}) [{s['requester'].mention}]")
             except:
-                embed = discord.Embed(title="", description="out of range", color=discord.Color.green())
+                embed = discord.Embed(title="", description=f'Could not find a track for "{pos}"', color=discord.Color.green())
                 await ctx.send(embed=embed)
 
     @commands.command(name='queue', aliases=['q', 'playlist', 'que'], description="shows the queue")
