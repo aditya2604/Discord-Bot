@@ -55,7 +55,7 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 # clear command
-@bot.command(brief="clears entered amount of messages", description="clears entered amount of messages")
+@bot.command(aliases=['delete'], brief="clears entered amount of messages", description="clears entered amount of messages")
 async def clear(ctx, amount : int):
     _id = ctx.author.id
     mention = mention = f'<@!{366117920960675843}>' # RoastSea8
