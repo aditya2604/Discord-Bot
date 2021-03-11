@@ -319,8 +319,14 @@ class Music(commands.Cog):
     @commands.command(name='remove', description="removes specified song from queue")
     async def remove_(self, ctx, pos : int=None):
         player = self.get_player(ctx)
-        upcoming = list(itertools.islice(player.queue._queue, 0, 20))
-        await ctx.send(f'{upcoming}')
+        if pos == None:
+            player.queue._queue.pop()
+        else:
+            try:
+                del player.queue._queue[pos-1]
+            except:
+                await ctx.send("out of range")
+        await ctx.send(f'{player.queue._queue}')
 
     @commands.command(name='queue', aliases=['q', 'playlist', 'que'], description="shows the queue")
     async def queue_info(self, ctx):
