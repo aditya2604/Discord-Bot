@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-
+import random
 import asyncio
 import itertools
 import sys
@@ -210,7 +210,7 @@ class Music(commands.Cog):
 
         return player
 
-    @commands.command(name='join', aliases=['connect'], description="connects to voice")
+    @commands.command(name='join', aliases=['connect', 'j'], description="connects to voice")
     async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
         """Connect to voice.
         Parameters
@@ -240,8 +240,9 @@ class Music(commands.Cog):
                 await channel.connect()
             except asyncio.TimeoutError:
                 raise VoiceConnectionError(f'Connecting to channel: <{channel}> timed out.')
-
-        await ctx.message.add_reaction('👍')
+        if (random.randint(0, 1) == 0):
+            await ctx.message.add_reaction('👍')
+        await ctx.send(f'🥒 **Joined `{channel}`**')
 
     @commands.command(name='play', aliases=['sing','p'], description="streams music")
     async def play_(self, ctx, *, search: str):
@@ -381,7 +382,7 @@ class Music(commands.Cog):
         embed = discord.Embed(title="", description=f'**`{ctx.author}`** set the volume to **{vol}%**', color=discord.Color.green())
         await ctx.send(embed=embed)
 
-    @commands.command(name='leave', aliases=["stop", "dc", "disconnect"], description="stops music and disconnects from voice")
+    @commands.command(name='leave', aliases=["stop", "dc", "disconnect", "bye"], description="stops music and disconnects from voice")
     async def leave_(self, ctx):
         """Stop the currently playing song and destroy the player.
         !Warning!
@@ -393,7 +394,9 @@ class Music(commands.Cog):
             embed = discord.Embed(title="", description="I'm not connected to a voice channel", color=discord.Color.green())
             return await ctx.send(embed=embed)
 
-        await ctx.message.add_reaction('👋')
+        if (random.randint(0, 1) == 0):
+            await ctx.message.add_reaction('👋')
+        await ctx.send('🐢 **Successfully dipped**')
 
         await self.cleanup(ctx.guild)
 
