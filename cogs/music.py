@@ -319,8 +319,8 @@ class Music(commands.Cog):
     @commands.command(name='remove', description="removes specified song from queue")
     async def remove_(self, ctx, pos : int=None):
         player = self.get_player(ctx)
-        await ctx.send(f'{player.queue}\n')
-        await ctx.send(f'{player.queue._queue}')
+        upcoming = list(itertools.islice(player.queue._queue, 0, 20))
+        await ctx.send(f'{upcoming}')
 
     @commands.command(name='queue', aliases=['q', 'playlist', 'que'], description="shows the queue")
     async def queue_info(self, ctx):
