@@ -351,7 +351,7 @@ class Music(commands.Cog):
             embed = discord.Embed(title="", description="I am currently not playing anything", color=discord.Color.green())
             return await ctx.send(embed=embed)
         
-        embed = discord.Embed(title="", description=f"{vc.source.title}", color=discord.Color.green())
+        embed = discord.Embed(title="", description=f"[{vc.source.title}]({vc.source.url})]", color=discord.Color.green())
         await ctx.send(embed=embed)
 
     @commands.command(name='volume', aliases=['vol', 'v'], description="changes Kermit's volume")
