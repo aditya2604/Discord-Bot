@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import random
+import json
 import asyncio
 import itertools
 import sys
@@ -9,6 +10,9 @@ from async_timeout import timeout
 from functools import partial
 import youtube_dl
 from youtube_dl import YoutubeDL
+
+with open('config.json') as f:
+    config = json.load(f)
 
 # Suppress noise about console usage from errors
 youtube_dl.utils.bug_reports_message = lambda: ''
@@ -225,7 +229,11 @@ class Music(commands.Cog):
             try:
                 channel = ctx.author.voice.channel
             except AttributeError:
+                embed = discord.Embed(title="", description="No channel to join. Please call `,join` from a voice channel.", color=discord.Color.green())
+                await ctx.send(embed=embed)
                 raise InvalidVoiceChannel('No channel to join. Please either specify a valid channel or join one.')
+        elif (channel and (ctx.author.id != config['my_id'])):
+            return
 
         vc = ctx.voice_client
 
