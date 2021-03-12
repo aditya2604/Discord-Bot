@@ -56,7 +56,6 @@ class YTDLSource(discord.PCMVolumeTransformer):
         self.title = data.get('title')
         self.web_url = data.get('webpage_url')
         self.duration = data.get('duration')
-        print(self.duration)
 
         # YTDL info dicts (data) have other useful information you might want
         # https://github.com/rg3/youtube-dl/blob/master/README.md
@@ -387,6 +386,7 @@ class Music(commands.Cog):
             return await ctx.send(embed=embed)
         
         embed = discord.Embed(title="", description=f"[{vc.source.title}]({vc.source.web_url}) [{vc.source.requester.mention}]", color=discord.Color.green())
+        embed.set_author(icon_url=self.bot.user.avatar_url, name=f"**Now Playing** 🎶")
         await ctx.send(embed=embed)
 
     @commands.command(name='volume', aliases=['vol', 'v'], description="changes Kermit's volume")
