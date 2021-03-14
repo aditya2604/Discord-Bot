@@ -328,6 +328,13 @@ class Music(commands.Cog):
     @commands.command(name='remove', aliases=['rm', 'rem'], description="removes specified song from queue")
     async def remove_(self, ctx, pos : int=None):
         """Removes specified song from queue"""
+
+        vc = ctx.voice_client
+
+        if not vc or not vc.is_connected():
+            embed = discord.Embed(title="", description="I'm not connected to a voice channel", color=discord.Color.green())
+            return await ctx.send(embed=embed)
+
         player = self.get_player(ctx)
         if pos == None:
             player.queue._queue.pop()
@@ -344,6 +351,13 @@ class Music(commands.Cog):
     @commands.command(name='clear', aliases=['clr', 'cl', 'cr'], description="clears entire queue")
     async def clear_(self, ctx):
         """Deletes entire queue of upcoming songs."""
+
+        vc = ctx.voice_client
+
+        if not vc or not vc.is_connected():
+            embed = discord.Embed(title="", description="I'm not connected to a voice channel", color=discord.Color.green())
+            return await ctx.send(embed=embed)
+
         player = self.get_player(ctx)
         player.queue._queue.clear()
         await ctx.send('💣 **Cleared**')
@@ -362,10 +376,20 @@ class Music(commands.Cog):
             embed = discord.Embed(title="", description="queue is empty", color=discord.Color.green())
             return await ctx.send(embed=embed)
 
+        seconds = vc.source.duration % (24 * 3600) 
+        hour = seconds // 3600
+        seconds %= 3600
+        minutes = seconds // 60
+        seconds %= 60
+        if hour > 0:
+            duration = "%dh %02dm %02ds" % (hour, minutes, seconds)
+        else:
+            duration = "%02dm %02ds" % (minutes, seconds)
+
         # Grabs the songs in the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, int(len(player.queue._queue))))
-        fmt = '\n'.join(f"`{(upcoming.index(_)) + 1}.` [{_['title']}]({_['webpage_url']}) | `Requested by:` {_['requester'].mention}\n" for _ in upcoming)
-        fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | `Requested by:` {vc.source.requester.mention}\n\n__Up Next:__\n" + fmt + f"\n**{len(upcoming)} songs in queue**"
+        fmt = '\n'.join(f"`{(upcoming.index(_)) + 1}.` [{_['title']}]({_['webpage_url']}) | ` {duration} Requested by: {_['requester']}`\n" for _ in upcoming)
+        fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | ` {duration} Requested by: {vc.source.requester}`\n\n__Up Next:__\n" + fmt + f"\n**{len(upcoming)} songs in queue**"
         embed = discord.Embed(title=f'Queue for {ctx.guild.name}', description=fmt, color=discord.Color.green())
         embed.set_footer(text=f"{ctx.author.display_name}", icon_url=ctx.author.avatar_url)
 
@@ -391,9 +415,9 @@ class Music(commands.Cog):
         minutes = seconds // 60
         seconds %= 60
         if hour > 0:
-            duration = "%d:%02d:%02d" % (hour, minutes, seconds)
+            duration = "%dh %02dm %02ds" % (hour, minutes, seconds)
         else:
-            duration = "%02d:%02d" % (minutes, seconds)
+            duration = "%02dm %02ds" % (minutes, seconds)
 
         embed = discord.Embed(title="", description=f"[{vc.source.title}]({vc.source.web_url}) [{vc.source.requester.mention}] | `{duration}`", color=discord.Color.green())
         embed.set_author(icon_url=self.bot.user.avatar_url, name=f"Now Playing 🎶")
