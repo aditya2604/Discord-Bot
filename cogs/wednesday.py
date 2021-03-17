@@ -16,7 +16,7 @@ class wednesday(commands.Cog):
         self.channel_2 = await self.bot.fetch_channel(config['ag'])
         self.time = datetime.datetime.now
         if self.time().hour == 12:
-            if datetime.datetime.today().weekday() == 3:
+            if datetime.datetime.today().weekday() == 2:
                 await self.channel.send(file=discord.File('images/wednesday_pic.png'))
                 await self.channel_1.send(file=discord.File('images/wednesday_pic.png'))
                 await self.channel_2.send(file=discord.File('images/wednesday_pic.png'))
