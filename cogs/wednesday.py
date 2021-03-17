@@ -20,8 +20,8 @@ class wednesday(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         await self.bot.wait_until_ready()
-        print("day: " + datetime.datetime.today().weekday())
-        print("hour: " + self.time().hour) 
+        print("day: " + str(datetime.datetime.today().weekday()))
+        print("hour: " + str(self.time().hour)) 
         self.time_checker.start()
 
 def setup(bot):
