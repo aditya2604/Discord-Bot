@@ -9,7 +9,7 @@ class wednesday(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @tasks.loop(hours=1)
+    @tasks.loop(seconds=10)
     async def time_checker(self):
         self.channel = await self.bot.fetch_channel(config['blue'])
         self.time = datetime.datetime.now
@@ -20,6 +20,7 @@ class wednesday(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         await self.bot.wait_until_ready()
+        print(datetime.datetime.today().weekday())
         self.time_checker.start()
 
 def setup(bot):
