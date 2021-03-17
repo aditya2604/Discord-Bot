@@ -9,12 +9,12 @@ class wednesday(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @tasks.loop(seconds=10)
+    @tasks.loop(hours=1)
     async def time_checker(self):
         self.channel = await self.bot.fetch_channel(config['blue'])
         self.time = datetime.datetime.now
-        if self.time().hour == 4:
-            if datetime.datetime.today().weekday() == 2:
+        if self.time().hour == 12:
+            if datetime.datetime.today().weekday() == 3:
                 await self.channel.send(file=discord.File('images/wednesday_pic.png'))
     
     @commands.Cog.listener()
