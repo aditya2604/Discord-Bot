@@ -21,7 +21,7 @@ class wednesday(commands.Cog):
     async def on_ready(self):
         await self.bot.wait_until_ready()
         print("day: " + str(datetime.datetime.today().weekday()))
-        print("hour: " + str(self.time().hour)) 
+        print("hour: " + str(datetime.datetime.now().hour)) 
         self.time_checker.start()
 
 def setup(bot):
