@@ -11,7 +11,7 @@ class wednesday(commands.Cog):
     
     @tasks.loop(hours=1)
     async def time_checker(self):
-        self.channel = await self.bot.fetch_channel(config['g'])
+        self.channel = await self.bot.fetch_channel(config['blue'])
         self.time = datetime.datetime.now
         if self.time().hour == 3:
             if datetime.datetime.today().weekday() == 1:
