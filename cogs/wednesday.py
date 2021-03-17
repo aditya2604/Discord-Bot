@@ -13,8 +13,8 @@ class wednesday(commands.Cog):
     async def time_checker(self):
         self.channel = await self.bot.fetch_channel(config['blue'])
         self.time = datetime.datetime.now
-        if self.time().hour == 3:
-            if datetime.datetime.today().weekday() == 1:
+        if self.time().hour == 4:
+            if datetime.datetime.today().weekday() == 2:
                 await self.channel.send(file=discord.File('images/wednesday_pic.png'))
     
     @commands.Cog.listener()
