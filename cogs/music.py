@@ -278,9 +278,6 @@ class Music(commands.Cog):
 
         await player.queue.put(source)
 
-        #embed = discord.Embed(title="Now playing", description=f"[{player.title}]({player.url}) [{ctx.author.mention}]")
-        #await ctx.send(embed=embed)
-
     @commands.command(name='pause', description="pauses music")
     async def pause_(self, ctx):
         """Pause the currently playing song."""
