@@ -21,13 +21,15 @@ class define(commands.Cog):
                 br.replace_with("\n")
             example = (soup.find("div",attrs={"class":"example"}).text)
             contributor = (soup.find("div",attrs={"class":"contributor"}).text)
+            up_votes = (soup.find("a",attrs={"class":"up"}).text)
+            down_votes = (soup.find("a",attrs={"class":"down"}).text)
             embed = discord.Embed(
                 title=f"{def_header}", 
                 url=f"http://www.urbandictionary.com/define.php?term={words}",
-                description=f'**Definition**: {meaning}\n\n**Example**:\n*{example}*'
+                description=f'**Definition**: {meaning}\n\n**Example**:\n*{example}*\n\n{contributor}'
             )
             embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
-            embed.set_footer(text=f"{contributor}")
+            embed.set_footer(text=f"👍 {up_votes} | 👎 {down_votes}")
             await ctx.send(embed=embed)
         except:
             words = words.replace(' ', '%20')
