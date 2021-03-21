@@ -275,8 +275,6 @@ class Music(commands.Cog):
 
         player = self.get_player(ctx)
 
-        await ctx.trigger_typing()
-
         # If download is False, source will be a dict which will be used later to regather the stream.
         # If download is True, source will be a discord.FFmpegPCMAudio with a VolumeTransformer.
         source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop, download=False)
@@ -379,7 +377,6 @@ class Music(commands.Cog):
             if ctx.author.voice == None:
                 embed = discord.Embed(title="", description="You need to be in a voice channel to queue songs", color=discord.Color.green())
                 return await ctx.send(embed=embed)
-            await ctx.trigger_typing()
             source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop, download=False)
             await player.queue.put(source)
         else:
