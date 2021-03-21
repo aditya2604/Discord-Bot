@@ -263,14 +263,19 @@ class Music(commands.Cog):
         search: str [Required]
             The song to search and retrieve using YTDL. This could be a simple search, an ID or URL.
         """
-        await ctx.trigger_typing()
 
         vc = ctx.voice_client
+
+        if ctx.author.voice == None and ctx.author.id != config['my_id']:
+            embed = discord.Embed(title="", description="You need to be in a voice channel to play songs", color=discord.Color.green())
+            return await ctx.send(embed=embed)
 
         if not vc:
             await ctx.invoke(self.connect_)
 
         player = self.get_player(ctx)
+
+        await ctx.trigger_typing()
 
         # If download is False, source will be a dict which will be used later to regather the stream.
         # If download is True, source will be a discord.FFmpegPCMAudio with a VolumeTransformer.
@@ -359,8 +364,8 @@ class Music(commands.Cog):
         player.queue._queue.clear()
         await ctx.send('💣 **Cleared**')
 
-    @commands.command(name='queue', aliases=['q', 'playlist', 'que'], description="shows the queue")
-    async def queue_info(self, ctx):
+    @commands.command(name='queue', aliases=['q', 'playlist', 'que'], description="queues songs and shows the queue")
+    async def queue_info(self, ctx, *, search:str=None):
         """Retrieve a basic queue of upcoming songs."""
         vc = ctx.voice_client
 
@@ -369,24 +374,47 @@ class Music(commands.Cog):
             return await ctx.send(embed=embed)
 
         player = self.get_player(ctx)
-        if player.queue.empty():
+
+        if search is not None:
+            if ctx.author.voice == None:
+                embed = discord.Embed(title="", description="You need to be in a voice channel to queue songs", color=discord.Color.green())
+                return await ctx.send(embed=embed)
+            await ctx.trigger_typing()
+            source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop, download=False)
+            await player.queue.put(source)
+        else:
+            pass
+
+        try:
+            seconds = vc.source.duration % (24 * 3600) 
+            hour = seconds // 3600
+            seconds %= 3600
+            minutes = seconds // 60
+            seconds %= 60
+            if hour > 0:
+                duration = "%dh %02dm %02ds" % (hour, minutes, seconds)
+            else:
+                duration = "%02dm %02ds" % (minutes, seconds)
+        except:
+            pass
+
+        if player.queue.empty() and vc.is_playing():
+            fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | ` {duration} Requested by: {vc.source.requester}`\n\n**0 songs in queue**"
+            embed = discord.Embed(title=f'Queue for {ctx.guild.name}', description=fmt, color=discord.Color.green())
+            embed.set_footer(text=f"{ctx.author.display_name}", icon_url=ctx.author.avatar_url)
+            return await ctx.send(embed=embed)
+        elif player.queue.empty() and not vc.is_playing():
             embed = discord.Embed(title="", description="queue is empty", color=discord.Color.green())
             return await ctx.send(embed=embed)
-
-        seconds = vc.source.duration % (24 * 3600) 
-        hour = seconds // 3600
-        seconds %= 3600
-        minutes = seconds // 60
-        seconds %= 60
-        if hour > 0:
-            duration = "%dh %02dm %02ds" % (hour, minutes, seconds)
-        else:
-            duration = "%02dm %02ds" % (minutes, seconds)
 
         # Grabs the songs in the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, int(len(player.queue._queue))))
         fmt = '\n'.join(f"`{(upcoming.index(_)) + 1}.` [{_['title']}]({_['webpage_url']}) | ` {duration} Requested by: {_['requester']}`\n" for _ in upcoming)
-        fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | ` {duration} Requested by: {vc.source.requester}`\n\n__Up Next:__\n" + fmt + f"\n**{len(upcoming)} songs in queue**"
+        if len(upcoming) == 1:
+            song = 'song'
+        else:
+            song = 'songs'
+        fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | ` {duration} Requested by: {vc.source.requester}`\n\n__Up Next:__\n" + fmt + f"\n**{len(upcoming)} {song} in queue**"
         embed = discord.Embed(title=f'Queue for {ctx.guild.name}', description=fmt, color=discord.Color.green())
         embed.set_footer(text=f"{ctx.author.display_name}", icon_url=ctx.author.avatar_url)
 
