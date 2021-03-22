@@ -66,6 +66,18 @@ async def help(ctx):
     await help_cmd.add_reaction('🤔')
     await help_cmd.add_reaction('🦦')
 
+used_commands = []
+for command in define.__cog_commands__:
+    used_commands.append(command)
+for command in howdoi.__cog_commands__:
+    used_commands.append(command)
+for command in jokes.__cog_commands__:
+    used_commands.append(command)
+for command in meme.__cog_commands__:
+    used_commands.append(command)
+for command in Music.__cog_commands__:
+    used_commands.append(command)
+
 # help event
 @bot.event
 async def on_reaction_add(reaction, user):
@@ -110,12 +122,13 @@ async def on_reaction_add(reaction, user):
                         embed.add_field(name=command, value=command.description, inline=True)
                     for command in bot.commands:
                         if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit and command != schedule and command != _commands and command != load and command != unload):
-                            if (command == delete):
-                                embed.add_field(name="delete (admins only)", value=command.description, inline=True)
-                            elif (command == proll):
-                                embed.add_field(name="proll (number of options)", value=command.description, inline=True)
-                            else:
-                                embed.add_field(name=command, value=command.description, inline=True)
+                            if command not in used_commands:
+                                if (command == delete):
+                                    embed.add_field(name="delete (admins only)", value=command.description, inline=True)
+                                elif (command == proll):
+                                    embed.add_field(name="proll (number of options)", value=command.description, inline=True)
+                                else:
+                                    embed.add_field(name=command, value=command.description, inline=True)
                 embed.set_author(name=user.display_name, icon_url=user.avatar_url)
                 embed.set_footer(text=f"Information requested by: {user.display_name}")
                 await help_msg.edit(embed=embed)
