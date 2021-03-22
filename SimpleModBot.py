@@ -94,9 +94,9 @@ async def on_reaction_add(reaction, user):
                 elif reaction.emoji == '🤡':
                     embed = discord.Embed(title="Kermit's commands 🤡", description=f"__{len(meme.__cog_commands__)} Meme Commands__", color=help_msg.embeds[0].color)
                     for command in meme.__cog_commands__:
-                        embed.add_field(name=command, value=command.description, inline=True)
+                        embed.add_field(name=command, value=command.description, inline=False)
                     for command in jokes.__cog_commands__:
-                        embed.add_field(name=command, value=command.description, inline=True)
+                        embed.add_field(name=command, value=command.description, inline=False)
                 elif reaction.emoji == '🤔':
                     length = len(define.__cog_commands__) + len(howdoi.__cog_commands__)
                     embed = discord.Embed(title="Kermit's commands 🤔", description=f"__{length} Intellectual Commands__", color=help_msg.embeds[0].color)
@@ -105,7 +105,7 @@ async def on_reaction_add(reaction, user):
                     for command in howdoi.__cog_commands__:
                         embed.add_field(name=command, value=command.description, inline=True)
                 elif reaction.emoji == '🦦':
-                    embed = discord.Embed(title="Kermit's commands 🦦", description=f"__{len(bot.commands)} Other Commands__", color=help_msg.embeds[0].color)
+                    embed = discord.Embed(title="Kermit's commands 🦦", description=f"__{len(bot.commands) - 10} Other Commands__", color=help_msg.embeds[0].color)
                     for command in time.__cog_commands__:
                         embed.add_field(name=command, value=command.description, inline=True)
                     for command in bot.commands:
