@@ -266,10 +266,9 @@ async def schedule(ctx):
     await ctx.send(file=discord.File('images/schedule.png'))
 
 # get names of servers that bot belongs to
-@bot.command()
+@bot.command(name="servers")
+@commands.is_owner()
 async def _servers(ctx):
-    if (ctx.author.id != config['my_id']):
-        return
     await ctx.send('Servers connected to:')
     for guild in bot.guilds:
         await ctx.send(guild.name)
