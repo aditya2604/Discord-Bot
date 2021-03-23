@@ -364,7 +364,18 @@ class Music(commands.Cog):
         player.queue._queue.clear()
         await ctx.send('💣 **Cleared**')
 
-    @commands.command(name='queue', aliases=['q', 'playlist', 'que'], description="queues songs and shows the queue")
+    def convert(self, seconds):
+        hour = seconds // 3600
+        seconds %= 3600
+        minutes = seconds // 60
+        seconds %= 60
+        if hour > 0:
+            duration = "%dh %02dm %02ds" % (hour, minutes, seconds)
+        else:
+            duration = "%02dm %02ds" % (minutes, seconds)
+        return duration
+
+    @commands.command(name='queue', aliases=['q', 'playlist', 'que'], description="queues song and shows the queue")
     async def queue_info(self, ctx, *, search:str=None):
         """Retrieve a basic queue of upcoming songs."""
         vc = ctx.voice_client
@@ -385,21 +396,8 @@ class Music(commands.Cog):
         else:
             pass
 
-        try:
-            seconds = vc.source.duration % (24 * 3600) 
-            hour = seconds // 3600
-            seconds %= 3600
-            minutes = seconds // 60
-            seconds %= 60
-            if hour > 0:
-                duration = "%dh %02dm %02ds" % (hour, minutes, seconds)
-            else:
-                duration = "%02dm %02ds" % (minutes, seconds)
-        except:
-            pass
-
         if player.queue.empty() and vc.is_playing():
-            fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | ` {duration} Requested by: {vc.source.requester}`\n\n**0 songs in queue**"
+            fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | ` {self.convert(vc.source.duration % (24*3600))} Requested by: {vc.source.requester}`\n\n**0 songs in queue**"
             embed = discord.Embed(title=f'Queue for {ctx.guild.name}', description=fmt, color=discord.Color.green())
             embed.set_footer(text=f"{ctx.author.display_name}", icon_url=ctx.author.avatar_url)
             return await ctx.send(embed=embed)
@@ -409,12 +407,12 @@ class Music(commands.Cog):
 
         # Grabs the songs in the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, int(len(player.queue._queue))))
-        fmt = '\n'.join(f"`{(upcoming.index(_)) + 1}.` [{_['title']}]({_['webpage_url']}) | ` {duration} Requested by: {_['requester']}`\n" for _ in upcoming)
+        fmt = '\n'.join(f"`{(upcoming.index(_)) + 1}.` [{_['title']}]({_['webpage_url']}) | ` {self.convert(_['duration'] % (24*3600))} Requested by: {_['requester']}`\n" for _ in upcoming)
         if len(upcoming) == 1:
             song = 'song'
         else:
             song = 'songs'
-        fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | ` {duration} Requested by: {vc.source.requester}`\n\n__Up Next:__\n" + fmt + f"\n**{len(upcoming)} {song} in queue**"
+        fmt = f"\n__Now Playing__:\n[{vc.source.title}]({vc.source.web_url}) | ` {self.convert(vc.source.duration % (24*3600))} Requested by: {vc.source.requester}`\n\n__Up Next:__\n" + fmt + f"\n**{len(upcoming)} {song} in queue**"
         embed = discord.Embed(title=f'Queue for {ctx.guild.name}', description=fmt, color=discord.Color.green())
         embed.set_footer(text=f"{ctx.author.display_name}", icon_url=ctx.author.avatar_url)
 
