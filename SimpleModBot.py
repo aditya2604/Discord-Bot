@@ -163,9 +163,8 @@ async def say(ctx, arg1, *, arg):
         await channel.send(ctx.message.attachments[0].url)
     except IndexError:
         pass
-    async with channel.typing():
-        await asyncio.sleep(0.8)
-        await channel.send(arg)
+    await channel.trigger_typing()
+    await channel.send(arg)
 
 # edit command
 @bot.command()
