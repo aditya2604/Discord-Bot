@@ -10,6 +10,13 @@ from async_timeout import timeout
 from functools import partial
 import youtube_dl
 from youtube_dl import YoutubeDL
+from paginator import Pag
+import re
+import lyricsgenius
+from youtube_title_parse import get_artist_title
+
+token = "niXRSH49z_ZjzIv544sX6jB2zME5BHXA3_GwA7pdDzkd1PB_t97Pi-N_RGi6h-N0"
+genius = lyricsgenius.Genius(token)
 
 with open('config.json') as f:
     config = json.load(f)
@@ -282,6 +289,40 @@ class Music(commands.Cog):
         source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop, download=False)
 
         await player.queue.put(source)
+    
+    @commands.command(name='lyrics', aliases=['lyric', 'lyrs', 'ly', 'liric', 'lirics', 'lrc', 'lr'], description="shows lyrics for current song")
+    async def lyrics_(self, ctx):
+        vc = ctx.voice_client
+
+        if not vc or not vc.is_connected():
+            embed = discord.Embed(title="", description="I'm not connected to a voice channel", color=discord.Color.green())
+            return await ctx.send(embed=embed)
+        
+        if not vc.is_playing():
+            embed = discord.Embed(title="", description="I am currently not playing anything", color=discord.Color.green())
+            return await ctx.send(embed=embed)
+
+        title = str(vc.source.title)
+        title = re.sub('[(].*[)]', '', title)
+        title = re.sub('[[].*[]]', '', title)
+
+        try:
+            artist, creator = get_artist_title(title)
+            lyric = genius.search_song(creator, artist)
+            print(lyric.lyrics)
+            lyrics = lyric.lyrics
+            pages = [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]
+            pager = Pag(
+                title=f"Lyrics - {vc.source.title}",
+                timeout=100,
+                use_defaults=True,
+                entries=pages,
+                length=1
+            )
+            await pager.start(ctx)
+        except:
+            embed = discord.Embed(title="", description="lyrics not found", color=discord.Color.green())
+            await ctx.send(embed=embed)
 
     @commands.command(name='pause', description="pauses music")
     async def pause_(self, ctx):
