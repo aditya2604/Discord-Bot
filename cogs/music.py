@@ -309,7 +309,6 @@ class Music(commands.Cog):
         try:
             artist, creator = get_artist_title(title)
             lyric = genius.search_song(creator, artist)
-            print(lyric.lyrics)
             lyrics = lyric.lyrics
             pages = [lyrics[i:i+2000] for i in range(0, len(lyrics), 2000)]
             pager = Pag(
