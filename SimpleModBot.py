@@ -146,7 +146,7 @@ def owner_or_admin():
 
 # clear command
 @bot.command(brief="clears entered amount of messages", description="clears entered amount of messages")
-@owner_or_admin
+@owner_or_admin()
 async def delete(ctx, amount : int):
     await ctx.channel.purge(limit = amount + 1)
     
