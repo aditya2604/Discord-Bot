@@ -312,10 +312,12 @@ class Music(commands.Cog):
 
         try:
             title = title.replace('$', 's')
+        except:
+            pass
+        try:
             print(title)
         except:
             pass
-
         try:
             artist, creator = get_artist_title(title)
             lyric = genius.search_song(creator, artist)
