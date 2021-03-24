@@ -121,7 +121,7 @@ async def on_reaction_add(reaction, user):
                     for command in time.__cog_commands__:
                         embed.add_field(name=command, value=command.description, inline=True)
                     for command in bot.commands:
-                        if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit and command != schedule and command != _commands and command != load and command != unload):
+                        if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit and command != schedule and command != _commands and command != load and command != unload and command):
                             if command not in used_commands:
                                 if (command == delete):
                                     embed.add_field(name="delete (admins only)", value=command.description, inline=True)
@@ -137,27 +137,19 @@ async def on_reaction_add(reaction, user):
 
 # clear command
 @bot.command(brief="clears entered amount of messages", description="clears entered amount of messages")
+@commands.is_owner()
+@commands.has_permissions(administrator=True)
 async def delete(ctx, amount : int):
-    _id = ctx.author.id
-    mention = mention = f'<@!{366117920960675843}>' # RoastSea8
-    if (_id == config['my_id'] or ctx.author.guild_permissions.administrator):
-        await ctx.channel.purge(limit = amount + 1)
-    else:
-        await ctx.send("Sorry, only admins and the creator of Kermit can use this command.")
-        return
-
+    await ctx.channel.purge(limit = amount + 1)
+    
 # text-through command
 @bot.command()
+@commands.is_owner()
 async def say(ctx, arg1, *, arg):
-    _id = ctx.author.id
-    if (_id != config['my_id']):
-        await ctx.send("This is a private command!")
-        return
+    if (arg1.isnumeric()):
+        arg1 = int(arg1)
     else:
-        if (arg1.isnumeric()):
-            arg1 = int(arg1)
-        else:
-            arg1 = config[arg1]
+        arg1 = config[arg1]
     channel = bot.get_channel(arg1)
     try:
         await channel.send(ctx.message.attachments[0].url)
@@ -168,9 +160,8 @@ async def say(ctx, arg1, *, arg):
 
 # edit command
 @bot.command()
+@commands.is_owner()
 async def edit(ctx, _channel, msg_id : int, *, edited):
-    if (ctx.author.id != config['my_id']):
-        return
     if (_channel.isnumeric()):
             _channel = int(_channel)
     else:
@@ -191,18 +182,14 @@ async def speak(ctx, *, arg):
 
 # reply command
 @bot.command()
+@commands.is_owner()
 async def reply(ctx, arg1, *, arg):
-    _id = ctx.author.id
-    if (_id != config['my_id']):
-        await ctx.send("This is a private command!")
-        return
+    if (arg1.isnumeric()):
+        user_id = int(arg1)
     else:
-        if (arg1.isnumeric()):
-            user_id = int(arg1)
-        else:
-            user_id = config[arg1]
-        user = await bot.fetch_user(user_id)
-        await user.send(arg)
+        user_id = config[arg1]
+    user = await bot.fetch_user(user_id)
+    await user.send(arg)
 
 # poll command
 @bot.command(brief="sets up a poll", description="sets up a poll")
@@ -265,26 +252,24 @@ async def schedule(ctx):
     await ctx.send(file=discord.File('images/schedule.png'))
 
 # get names of servers that bot belongs to
-@bot.command(name="servers")
+@bot.command()
 @commands.is_owner()
 async def _servers(ctx):
     await ctx.send('Servers connected to:')
     for guild in bot.guilds:
-        await ctx.send(guild.name)
+        await ctx.send(f"{guild.name} - {guild.owner.name}")
 
 # prints out all commands with descriptions
 @bot.command()
+@commands.is_owner()
 async def _commands(ctx):
-    if ctx.author.id != config['my_id']:
-        return
     for command in bot.commands:
         await ctx.send(f'{command}: {command.description}')
 
 # responding to unknown servers
 @bot.command()
+@commands.is_owner()
 async def secret(ctx, guild_name, channel_name, *, message):
-    if (ctx.author.id != config['my_id']):
-        return
     for guild in bot.guilds:
         guild_name = guild_name.replace('-', ' ')
         if (guild_name == ((str(guild.name).lower()))):
@@ -324,7 +309,8 @@ async def on_message(message):
 
     mention = f'<@!{bot.user.id}>'
     if message.content == mention:
-        if (random.randint(0,1) == 1):
+        await channel.send("My prefix is **,**")
+        if (random.randint(0,3) == 1):
             await channel.send("https://tenor.com/view/kermit-the-frog-drive-driving-gif-3965525")
 
     channel = bot.get_channel(config['bot_testing_channel'])
@@ -367,6 +353,10 @@ async def on_command_error(ctx, error):
         await ctx.send('Please pass in all required arguments.')
     if isinstance(error, commands.BotMissingPermissions):
         await ctx.send('Bot is missing permissions.')
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send('Sorry, you do not have the role permissions to use this command!')
+    if isinstance(error, commands.NotOwner):
+        await ctx.send('Sorry, only the owner of Kermit has access to this command.')
 
 # prints out if bot has been added into another server
 @bot.event
@@ -380,20 +370,37 @@ async def on_guild_join(guild):
     gld_name = (str(guild.name)).lower()
     await _guild.create_text_channel(gld_name, category=category)
 
+@bot.event
+async def on_guild_remove(guild):
+    channel = bot.get_channel(config['server_invites_channel'])
+    await channel.send(f'Kermit has been kicked from: {guild} - {guild.owner.name}')
+
+@bot.event
+async def on_guild_update(before, after):
+    channel = await bot.fetch_channel(config['server_invites_channel'])
+    if before.name != after.name:
+        await channel.send(f'{before.name} was changed to {after.name}')
+
 # load cog command
 @bot.command(description="loads extensions")
+@commands.is_owner()
 async def load(ctx, extension):
-    if ctx.author.id != config['my_id']:
-        return
     bot.load_extension(f'cogs.{extension}')
     channel = await bot.fetch_channel(config['blue'])
     await channel.send(f'{extension} loaded successfully.')
 
+# load cog command
+@bot.command(description="reloads extensions")
+@commands.is_owner()
+async def reload(ctx, extension):
+    bot.reload_extension(f'cogs.{extension}')
+    channel = await bot.fetch_channel(config['blue'])
+    await channel.send(f'{extension} reload successfully.')
+
 # unload cog command
 @bot.command(description="unloads extensions")
+@commands.is_owner()
 async def unload(ctx, extension):
-    if ctx.author.id != config['my_id']:
-        return
     bot.unload_extension(f'cogs.{extension}')
     channel = await bot.fetch_channel(config['blue'])
     await channel.send(f'{extension} unloaded successfully.')
