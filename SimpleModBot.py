@@ -139,8 +139,8 @@ async def on_reaction_add(reaction, user):
 
 # clear command
 @bot.command(brief="clears entered amount of messages", description="clears entered amount of messages")
-@commands.is_owner()
 @commands.has_permissions(administrator=True)
+@commands.is_owner()
 async def delete(ctx, amount : int):
     await ctx.channel.purge(limit = amount + 1)
     
