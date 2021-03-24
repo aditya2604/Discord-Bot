@@ -139,9 +139,9 @@ async def on_reaction_add(reaction, user):
 
 def owner_or_admin():
     def predicate(ctx):
-        owner = True
+        owner = False
         perms = False
-        if owner == bot.owner_id:
+        if ctx.author.id == bot.owner_id:
             owner = True
         if ctx.author.guild_permissions.administrator:
             perms = True 
@@ -319,8 +319,7 @@ async def on_message(message):
     #         emoji = random.choice(emojis)
     #         await message.add_reaction(emoji)
 
-    mention = f'<@!{bot.user.id}>'
-    if message.content == mention:
+    if bot.user.mentioned_in(message):
         ctx = await bot.get_context(message)
         await ctx.invoke(help)
 
