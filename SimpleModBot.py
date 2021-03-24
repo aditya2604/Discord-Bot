@@ -139,7 +139,8 @@ async def on_reaction_add(reaction, user):
 
 def owner_or_admin():
     def predicate(ctx):
-        owner, perms = False
+        owner = False
+        perms = False
         if ctx.author.id == config['my_id']:
             owner = True
         if ctx.author.guild_permissions.administrator:
