@@ -104,7 +104,7 @@ async def on_reaction_add(reaction, user):
                     for command in Music.__cog_commands__:
                         embed.add_field(name=command, value=command.description, inline=True)
                 elif reaction.emoji == '🤡':
-                    embed = discord.Embed(title="Kermit's commands 🤡", description=f"__{len(meme.__cog_commands__)} Meme Commands__", color=help_msg.embeds[0].color)
+                    embed = discord.Embed(title="Kermit's commands 🤡", description=f"__{len(meme.__cog_commands__) + len(jokes.__cog_commands__)} Meme Commands__", color=help_msg.embeds[0].color)
                     for command in meme.__cog_commands__:
                         embed.add_field(name=command, value=command.description, inline=False)
                     for command in jokes.__cog_commands__:
