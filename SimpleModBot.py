@@ -139,8 +139,10 @@ async def on_reaction_add(reaction, user):
 
 def owner_or_admin():
     def predicate(ctx):
+        perms = False
         owner = ctx.author.id == bot.owner_id
-        perms = ctx.author.guild_permissions.administrator
+        if ctx.author.guild_permissions.administrator:
+            perms = True 
         return owner or perms
     return commands.check(predicate)
 
