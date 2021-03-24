@@ -302,9 +302,19 @@ class Music(commands.Cog):
             embed = discord.Embed(title="", description="I am currently not playing anything", color=discord.Color.green())
             return await ctx.send(embed=embed)
 
-        title = str(vc.source.title)
-        title = re.sub('[(].*[)]', '', title)
-        title = re.sub('[[].*[]]', '', title)
+        artist = vc.source.artist
+        track = vc.source.track
+        artist = re.sub('[(].*[)]', '', artist)
+        artist = re.sub('[[].*[]]', '', artist)
+        track = re.sub('[(].*[)]', '', track)
+        track = re.sub('[[].*[]]', '', track)
+        title = f"{artist} - {track}"
+
+        try:
+            title = title.replace('$', 's')
+            print(title)
+        except:
+            pass
 
         try:
             artist, creator = get_artist_title(title)
