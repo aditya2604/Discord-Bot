@@ -137,10 +137,16 @@ async def on_reaction_add(reaction, user):
         else:
             return
 
+def owner_or_admin():
+    def predicate(ctx):
+        owner = ctx.author.id == bot.owner_id # Comparing the author of the message with the owner of the bot
+        perms = ctx.author.guild_permissions.administrator # Checking for admin perms
+        return owner or perms
+    return commands.check(predicate)
+
 # clear command
 @bot.command(brief="clears entered amount of messages", description="clears entered amount of messages")
-@commands.has_permissions(administrator=True)
-@commands.is_owner()
+@owner_or_admin
 async def delete(ctx, amount : int):
     await ctx.channel.purge(limit = amount + 1)
     
@@ -311,9 +317,8 @@ async def on_message(message):
 
     mention = f'<@!{bot.user.id}>'
     if message.content == mention:
-        await channel.send("My prefix is **,**")
-        if (random.randint(0,3) == 1):
-            await channel.send("https://tenor.com/view/kermit-the-frog-drive-driving-gif-3965525")
+        ctx = await bot.get_context(message)
+        await ctx.invoke(help)
 
     channel = bot.get_channel(config['bot_testing_channel'])
     if message.guild is None and message.author != bot.user:
