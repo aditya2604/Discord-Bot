@@ -87,53 +87,54 @@ async def on_reaction_add(reaction, user):
     if user != bot.user:
         help_msg = await channel.fetch_message(reaction.message.id)
         if help_msg.embeds:
-            if "Kermit's commands" == help_msg.embeds[0].title[:17]: 
-                if reaction.emoji == '🏠':
-                    embed = discord.Embed(
-                    title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", 
-                    description="React with the following emojis to see their respective commands", 
-                    color=help_msg.embeds[0].color
-                    )
-                    embed.add_field(name="Home Page", value="🏠", inline=False)
-                    embed.add_field(name="Music", value="🎵", inline=False)
-                    embed.add_field(name="Memes and Stupidities", value="🤡", inline=False)
-                    embed.add_field(name="Intellectual Tools", value="🤔", inline=False)
-                    embed.add_field(name="Others", value="🦦", inline=False)
-                    embed.add_field(name="DM feature", value="try to DM me!", inline=True)
-                    embed.set_thumbnail(url=config['thumbnail_url'])
-                elif reaction.emoji == '🎵':
-                    embed = discord.Embed(title="Kermit's commands 🎵", description=f"__{len(Music.__cog_commands__)} Music Commands__", color=help_msg.embeds[0].color)
-                    for command in Music.__cog_commands__:
-                        embed.add_field(name=command, value=command.description, inline=True)
-                elif reaction.emoji == '🤡':
-                    embed = discord.Embed(title="Kermit's commands 🤡", description=f"__{len(meme.__cog_commands__) + len(jokes.__cog_commands__)} Meme Commands__", color=help_msg.embeds[0].color)
-                    for command in meme.__cog_commands__:
-                        embed.add_field(name=command, value=command.description, inline=False)
-                    for command in jokes.__cog_commands__:
-                        embed.add_field(name=command, value=command.description, inline=False)
-                elif reaction.emoji == '🤔':
-                    length = len(define.__cog_commands__) + len(howdoi.__cog_commands__)
-                    embed = discord.Embed(title="Kermit's commands 🤔", description=f"__{length} Intellectual Commands__", color=help_msg.embeds[0].color)
-                    for command in define.__cog_commands__:
-                        embed.add_field(name=command, value=command.description, inline=True)
-                    for command in howdoi.__cog_commands__:
-                        embed.add_field(name=command, value=command.description, inline=True)
-                elif reaction.emoji == '🦦':
-                    embed = discord.Embed(title="Kermit's commands 🦦", description=f"__{len(bot.commands) - 10} Other Commands__", color=help_msg.embeds[0].color)
-                    for command in time.__cog_commands__:
-                        embed.add_field(name=command, value=command.description, inline=True)
-                    for command in bot.commands:
-                        if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit and command != schedule and command != _commands and command != load and command != unload and command != _reload):
-                            if command not in used_commands:
-                                if (command == delete):
-                                    embed.add_field(name="delete (admins only)", value=command.description, inline=True)
-                                elif (command == proll):
-                                    embed.add_field(name="proll (number of options)", value=command.description, inline=True)
-                                else:
-                                    embed.add_field(name=command, value=command.description, inline=True)
-                embed.set_author(name=user.display_name, icon_url=user.avatar_url)
-                embed.set_footer(text=f"Information requested by: {user.display_name}")
-                await help_msg.edit(embed=embed)
+            if help_msg.embeds[0].title:
+                if "Kermit's commands" == help_msg.embeds[0].title[:17]: 
+                    if reaction.emoji == '🏠':
+                        embed = discord.Embed(
+                        title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", 
+                        description="React with the following emojis to see their respective commands", 
+                        color=help_msg.embeds[0].color
+                        )
+                        embed.add_field(name="Home Page", value="🏠", inline=False)
+                        embed.add_field(name="Music", value="🎵", inline=False)
+                        embed.add_field(name="Memes and Stupidities", value="🤡", inline=False)
+                        embed.add_field(name="Intellectual Tools", value="🤔", inline=False)
+                        embed.add_field(name="Others", value="🦦", inline=False)
+                        embed.add_field(name="DM feature", value="try to DM me!", inline=True)
+                        embed.set_thumbnail(url=config['thumbnail_url'])
+                    elif reaction.emoji == '🎵':
+                        embed = discord.Embed(title="Kermit's commands 🎵", description=f"__{len(Music.__cog_commands__)} Music Commands__", color=help_msg.embeds[0].color)
+                        for command in Music.__cog_commands__:
+                            embed.add_field(name=command, value=command.description, inline=True)
+                    elif reaction.emoji == '🤡':
+                        embed = discord.Embed(title="Kermit's commands 🤡", description=f"__{len(meme.__cog_commands__) + len(jokes.__cog_commands__)} Meme Commands__", color=help_msg.embeds[0].color)
+                        for command in meme.__cog_commands__:
+                            embed.add_field(name=command, value=command.description, inline=False)
+                        for command in jokes.__cog_commands__:
+                            embed.add_field(name=command, value=command.description, inline=False)
+                    elif reaction.emoji == '🤔':
+                        length = len(define.__cog_commands__) + len(howdoi.__cog_commands__)
+                        embed = discord.Embed(title="Kermit's commands 🤔", description=f"__{length} Intellectual Commands__", color=help_msg.embeds[0].color)
+                        for command in define.__cog_commands__:
+                            embed.add_field(name=command, value=command.description, inline=True)
+                        for command in howdoi.__cog_commands__:
+                            embed.add_field(name=command, value=command.description, inline=True)
+                    elif reaction.emoji == '🦦':
+                        embed = discord.Embed(title="Kermit's commands 🦦", description=f"__{len(bot.commands) - 10} Other Commands__", color=help_msg.embeds[0].color)
+                        for command in time.__cog_commands__:
+                            embed.add_field(name=command, value=command.description, inline=True)
+                        for command in bot.commands:
+                            if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit and command != schedule and command != _commands and command != load and command != unload and command != _reload):
+                                if command not in used_commands:
+                                    if (command == delete):
+                                        embed.add_field(name="delete (admins only)", value=command.description, inline=True)
+                                    elif (command == proll):
+                                        embed.add_field(name="proll (number of options)", value=command.description, inline=True)
+                                    else:
+                                        embed.add_field(name=command, value=command.description, inline=True)
+                    embed.set_author(name=user.display_name, icon_url=user.avatar_url)
+                    embed.set_footer(text=f"Information requested by: {user.display_name}")
+                    await help_msg.edit(embed=embed)
         else:
             return
 
