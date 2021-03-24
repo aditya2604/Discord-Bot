@@ -121,7 +121,7 @@ async def on_reaction_add(reaction, user):
                     for command in time.__cog_commands__:
                         embed.add_field(name=command, value=command.description, inline=True)
                     for command in bot.commands:
-                        if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit and command != schedule and command != _commands and command != load and command != unload and command):
+                        if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit and command != schedule and command != _commands and command != load and command != unload and command != _reload):
                             if command not in used_commands:
                                 if (command == delete):
                                     embed.add_field(name="delete (admins only)", value=command.description, inline=True)
@@ -361,7 +361,7 @@ async def on_command_error(ctx, error):
 # prints out if bot has been added into another server
 @bot.event
 async def on_guild_join(guild):
-    channel = bot.get_channel(config['server_invites_channel'])
+    channel = await bot.fetch_channel(config['server_invites_channel'])
     await channel.send(f'Kermit has been added to: {guild}')
 
     _guild = bot.get_guild(config['bot_testing_server'])
@@ -372,7 +372,7 @@ async def on_guild_join(guild):
 
 @bot.event
 async def on_guild_remove(guild):
-    channel = bot.get_channel(config['server_invites_channel'])
+    channel = await bot.fetch_channel(config['server_invites_channel'])
     await channel.send(f'Kermit has been kicked from: {guild} - {guild.owner.name}')
 
 @bot.event
@@ -391,7 +391,7 @@ async def load(ctx, extension):
 
 # load cog command
 @bot.command(description="reloads extensions")
-@commands.is_owner()
+@commands.is_owner(name="reload")
 async def reload(ctx, extension):
     bot.reload_extension(f'cogs.{extension}')
     channel = await bot.fetch_channel(config['blue'])
