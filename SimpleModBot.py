@@ -38,7 +38,9 @@ desc = """
 Simple moderation bot.
 """
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(','), help_command=None)
+intents = discord.Intents.all()
+
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(','), help_command=None, intents=intents)
 
 # help command
 @bot.command(brief="shows this message", description="shows this message")
