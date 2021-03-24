@@ -391,7 +391,7 @@ async def load(ctx, extension):
 
 # load cog command
 @bot.command(description="reloads extensions")
-@commands.is_owner(name="reload")
+@commands.is_owner()
 async def _reload(ctx, extension):
     bot.reload_extension(f'cogs.{extension}')
     channel = await bot.fetch_channel(config['blue'])
