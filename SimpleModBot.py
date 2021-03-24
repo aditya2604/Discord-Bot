@@ -331,7 +331,7 @@ async def on_message(message):
     #         emoji = random.choice(emojis)
     #         await message.add_reaction(emoji)
 
-    if bot.user.mentioned_in(message):
+    if str(bot.user.id) in message.content:
         ctx = await bot.get_context(message)
         await ctx.invoke(help)
 
