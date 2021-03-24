@@ -138,22 +138,33 @@ async def on_reaction_add(reaction, user):
         else:
             return
 
-def owner_or_admin():
-    def predicate(ctx):
-        owner = False
-        perms = False
-        if ctx.author.id == bot.owner_id:
-            owner = True
-        if ctx.author.guild_permissions.administrator:
-            perms = True 
-        return owner or perms
-    return commands.check(predicate)
+# def owner_or_admin():
+#     def predicate(ctx):
+#         owner = False
+#         perms = False
+#         if ctx.author.id == bot.owner_id:
+#             owner = True
+#         if ctx.author.guild_permissions.administrator:
+#             perms = True 
+#         return owner or perms
+#     return commands.check(predicate)
+
+# # clear command
+# @bot.command(brief="clears entered amount of messages", description="clears entered amount of messages")
+# @owner_or_admin()
+# async def delete(ctx, amount : int):
+#     await ctx.channel.purge(limit = amount + 1)
 
 # clear command
 @bot.command(brief="clears entered amount of messages", description="clears entered amount of messages")
-@owner_or_admin()
 async def delete(ctx, amount : int):
-    await ctx.channel.purge(limit = amount + 1)
+    _id = ctx.author.id
+    mention = mention = f'<@!{366117920960675843}>' # RoastSea8
+    if (_id == config['my_id'] or ctx.author.guild_permissions.administrator):
+        await ctx.channel.purge(limit = amount + 1)
+    else:
+        await ctx.send("Sorry, only admins and the creator of Kermit can use this command.")
+        return
     
 # text-through command
 @bot.command()
