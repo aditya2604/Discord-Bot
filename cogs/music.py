@@ -15,6 +15,8 @@ import re
 import lyricsgenius
 from youtube_title_parse import get_artist_title
 
+invoke = False
+
 token = "niXRSH49z_ZjzIv544sX6jB2zME5BHXA3_GwA7pdDzkd1PB_t97Pi-N_RGi6h-N0"
 genius = lyricsgenius.Genius(token)
 
@@ -258,9 +260,21 @@ class Music(commands.Cog):
                 await channel.connect()
             except asyncio.TimeoutError:
                 raise VoiceConnectionError(f'Connecting to channel: <{channel}> timed out.')
+        await ctx.invoke(self.carti)
         if (random.randint(0, 1) == 0):
             await ctx.message.add_reaction('👍')
         await ctx.send(f'🥒 **Joined `{channel}`**')
+    
+    @commands.command(description="i told dat bih")
+    async def carti(self, ctx):
+        if invoke:
+            return
+        vc = ctx.voice_client
+        if not vc.is_playing():
+            _file = random.choice('wut_it_do.mp3', 'FTC.mp3', 'stand_up.mp3', 'enter_song.mp3')
+            file_ = f"images/{_file}"
+            source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(file_))
+            vc.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
 
     @commands.command(name='play', aliases=['sing','p'], description="streams music")
     async def play_(self, ctx, *, search: str):
@@ -272,7 +286,7 @@ class Music(commands.Cog):
         search: str [Required]
             The song to search and retrieve using YTDL. This could be a simple search, an ID or URL.
         """
-
+        global invoke
         vc = ctx.voice_client
 
         if ctx.author.voice == None and ctx.author.id != config['my_id']:
@@ -280,6 +294,7 @@ class Music(commands.Cog):
             return await ctx.send(embed=embed)
 
         if not vc:
+            invoke = True
             await ctx.invoke(self.connect_)
 
         player = self.get_player(ctx)
