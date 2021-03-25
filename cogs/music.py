@@ -267,10 +267,17 @@ class Music(commands.Cog):
     
     @commands.command(description="i told dat bih")
     async def hehe(self, ctx):
+
+        vc = ctx.voice_client
+
+        if not vc or not vc.is_connected():
+            embed = discord.Embed(title="", description="You need to be in a voice channel to use this command", color=discord.Color.green())
+            return await ctx.send(embed=embed)
+
         global invoke
         if invoke:
             return
-        vc = ctx.voice_client
+
         if not vc.is_playing():
             songs = ['wut_it_do.mp3', 'FTC.mp3', 'stand_up.mp3', 'enter_song.mp3']
             _file = random.choice(songs)
