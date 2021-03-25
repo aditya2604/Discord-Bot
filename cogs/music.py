@@ -267,6 +267,7 @@ class Music(commands.Cog):
     
     @commands.command(description="i told dat bih")
     async def hehe(self, ctx):
+        global invoke
         if invoke:
             return
         vc = ctx.voice_client
