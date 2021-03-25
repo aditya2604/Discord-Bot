@@ -276,6 +276,7 @@ class Music(commands.Cog):
             file_ = f"images/{_file}"
             source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(file_))
             vc.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
+            invoke = False
 
     @commands.command(name='play', aliases=['sing','p'], description="streams music")
     async def play_(self, ctx, *, search: str):
