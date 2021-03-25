@@ -14,6 +14,7 @@ from paginator import Pag
 import re
 import lyricsgenius
 from youtube_title_parse import get_artist_title
+import os
 
 invoke = False
 passed = False
@@ -285,12 +286,13 @@ class Music(commands.Cog):
         global invoke
         if invoke:
             return
-
+        songs = []
         if not vc.is_playing():
-            songs = ['wut_it_do.mp3', 'FTC.mp3', 'stand_up.mp3', 'enter_song.mp3']
+            for filename in os.listdir('./images'):
+                if filename.endswith('.mp3'):
+                    songs.append(f'images/{filename[:-4]}.mp3')
             _file = random.choice(songs)
-            file_ = f"images/{_file}"
-            source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(file_))
+            source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(_file))
             vc.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
             invoke = False
 
