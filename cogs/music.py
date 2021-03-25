@@ -16,6 +16,7 @@ import lyricsgenius
 from youtube_title_parse import get_artist_title
 
 invoke = False
+passed = False
 
 token = "niXRSH49z_ZjzIv544sX6jB2zME5BHXA3_GwA7pdDzkd1PB_t97Pi-N_RGi6h-N0"
 genius = lyricsgenius.Genius(token)
@@ -65,8 +66,12 @@ class YTDLSource(discord.PCMVolumeTransformer):
         self.title = data.get('title')
         self.web_url = data.get('webpage_url')
         self.duration = data.get('duration')
-        self.track = data.get('track')
-        self.artist = data.get('artist')
+        try:
+            self.track = data.get('track')
+            self.artist = data.get('artist')
+            passed = True
+        except:
+            pass
 
         # YTDL info dicts (data) have other useful information you might want
         # https://github.com/rg3/youtube-dl/blob/master/README.md
@@ -94,7 +99,10 @@ class YTDLSource(discord.PCMVolumeTransformer):
         if download:
             source = ytdl.prepare_filename(data)
         else:
-            return {'webpage_url': data['webpage_url'], 'requester': ctx.author, 'title': data['title'], 'duration': data['duration'], 'track': data['track'], 'artist': data['artist']}
+            if passed:
+                return {'webpage_url': data['webpage_url'], 'requester': ctx.author, 'title': data['title'], 'duration': data['duration'], 'track': data['track'], 'artist': data['artist']}
+            else:
+                return {'webpage_url': data['webpage_url'], 'requester': ctx.author, 'title': data['title'], 'duration': data['duration']}
 
         return cls(discord.FFmpegPCMAudio(source), data=data, requester=ctx.author)
 
@@ -265,7 +273,7 @@ class Music(commands.Cog):
             await ctx.message.add_reaction('👍')
         await ctx.send(f'🥒 **Joined `{channel}`**')
     
-    @commands.command(description="i told dat bih")
+    @commands.command(description="hehe")
     async def hehe(self, ctx):
 
         vc = ctx.voice_client
