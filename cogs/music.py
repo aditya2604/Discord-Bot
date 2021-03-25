@@ -260,18 +260,19 @@ class Music(commands.Cog):
                 await channel.connect()
             except asyncio.TimeoutError:
                 raise VoiceConnectionError(f'Connecting to channel: <{channel}> timed out.')
-        await ctx.invoke(self.carti)
+        await ctx.invoke(self.hehe)
         if (random.randint(0, 1) == 0):
             await ctx.message.add_reaction('👍')
         await ctx.send(f'🥒 **Joined `{channel}`**')
     
     @commands.command(description="i told dat bih")
-    async def carti(self, ctx):
+    async def hehe(self, ctx):
         if invoke:
             return
         vc = ctx.voice_client
         if not vc.is_playing():
-            _file = random.choice('wut_it_do.mp3', 'FTC.mp3', 'stand_up.mp3', 'enter_song.mp3')
+            songs = ['wut_it_do.mp3', 'FTC.mp3', 'stand_up.mp3', 'enter_song.mp3']
+            _file = random.choice(songs)
             file_ = f"images/{_file}"
             source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(file_))
             vc.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
