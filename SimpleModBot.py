@@ -114,7 +114,7 @@ async def on_reaction_add(reaction, user):
                         for command in jokes.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=False)
                     elif reaction.emoji == '🤔':
-                        length = len(define.__cog_commands__) + len(howdoi.__cog_commands__ + len(calculus.__cog_commands__))
+                        length = len(define.__cog_commands__) + len(howdoi.__cog_commands__) + len(calculus.__cog_commands__)
                         embed = discord.Embed(title="Kermit's commands 🤔", description=f"__{length} Intellectual Commands__", color=help_msg.embeds[0].color)
                         for command in define.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=True)
