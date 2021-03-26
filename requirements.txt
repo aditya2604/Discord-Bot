@@ -11,3 +11,4 @@ praw
 buttons
 lyricsgenius
 youtube_title_parse
+selenium==3.141.0
