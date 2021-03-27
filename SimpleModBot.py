@@ -6,7 +6,7 @@ import aiohttp
 from random import randrange
 from datetime import datetime
 from discord.ext import commands
-from discord.ext.commands import has_permissions, MissingPermissions
+from discord.ext.commands import has_permissions, MissingPermissions, guild_only
 from discord.utils import get
 from discord import Embed
 import asyncio
@@ -382,6 +382,35 @@ async def on_guild_update(before, after):
     channel = await bot.fetch_channel(config['server_invites_channel'])
     if before.name != after.name:
         await channel.send(f'{before.name} was changed to {after.name}')
+
+# kick command
+@bot.command(description="kicks members: `kick <member>`")
+@guild_only()
+async def kick(ctx, member : discord.Member, *, reason=None):
+    await member.kick(reason = reason)
+    await ctx.send(f'Kicked {member.mention}')
+
+# ban command
+@bot.command(description="bans members: `ban <member> <reason>(optional)`")
+@guild_only()
+async def ban(ctx, member : discord.Member, *, reason=None):
+    await member.ban(reason = reason)
+    await ctx.send(f'Kicked {member.mention}')
+
+# unban command
+@bot.command(description="unbans members: `unban <name#discriminator>`")
+@guild_only()
+async def unban(ctx, *, member):
+    banned_users = await ctx.guild.bans()
+    member_name, member_discriminator = member.split('#')
+
+    for ban_entry in banned_users:
+        user = ban_entry.user
+
+        if (user.name, user.discriminator) == (member_name, member_discriminator):
+            await ctx.guild.unban(user)
+            await ctx.send(f'Unbanned {user.mention}')
+            return
 
 # load cog command
 @bot.command(description="loads extensions")
