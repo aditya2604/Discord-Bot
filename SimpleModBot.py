@@ -386,6 +386,7 @@ async def on_guild_update(before, after):
 # kick command
 @bot.command(description="kicks members: `kick <member>`")
 @guild_only()
+@commands.check_any(commands.has_permissions(administrator=True), commands.is_owner())
 async def kick(ctx, member : discord.Member, *, reason=None):
     await member.kick(reason = reason)
     await ctx.send(f'Kicked {member.mention}')
@@ -393,6 +394,7 @@ async def kick(ctx, member : discord.Member, *, reason=None):
 # ban command
 @bot.command(description="bans members: `ban <member> <reason>(optional)`")
 @guild_only()
+@commands.check_any(commands.has_permissions(administrator=True), commands.is_owner())
 async def ban(ctx, member : discord.Member, *, reason=None):
     await member.ban(reason = reason)
     await ctx.send(f'Kicked {member.mention}')
@@ -400,6 +402,7 @@ async def ban(ctx, member : discord.Member, *, reason=None):
 # unban command
 @bot.command(description="unbans members: `unban <name#discriminator>`")
 @guild_only()
+@commands.check_any(commands.has_permissions(administrator=True), commands.is_owner())
 async def unban(ctx, *, member):
     banned_users = await ctx.guild.bans()
     member_name, member_discriminator = member.split('#')
