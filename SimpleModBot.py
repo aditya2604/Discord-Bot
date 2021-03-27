@@ -397,7 +397,10 @@ async def kick(ctx, member : discord.Member, *, reason=None):
 @commands.check_any(commands.has_permissions(administrator=True), commands.is_owner())
 async def ban(ctx, member : discord.Member, *, reason=None):
     await member.ban(reason = reason)
-    await ctx.send(f'Kicked {member.mention}')
+    if reason == None:
+        await ctx.send(f'Banned {member.mention}')
+    else:
+        await ctx.send(f"Banned {member.mention}\nReason: {reason}")
 
 # unban command
 @bot.command(description="unbans members: `unban <name#discriminator>`")
