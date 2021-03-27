@@ -85,10 +85,10 @@ class calculus(commands.Cog):
 
             img = main.find_element_by_tag_name("img").get_attribute("src")
 
-            #link = driver.current_url
-            embed = discord.Embed(title="", description=f"integral of {problem}", color=discord.Color.green())
+            link = driver.current_url
+            embed = discord.Embed(title="", description=f"[integral of {problem}]({link})", color=discord.Color.green())
             embed.set_image(url=str(img))
-            embed.set_footer(text=f"Integral requested by {ctx.author.display_name}")
+            embed.set_footer(text=f"Integral requested by {ctx.author.display_name} | Answer from WolframAlpha")
             await ctx.send(embed=embed)
 
         except:
