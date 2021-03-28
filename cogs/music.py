@@ -236,7 +236,7 @@ class Music(commands.Cog):
         return player
 
     @commands.command(name='join', aliases=['connect', 'j'], description="connects to voice")
-    async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
+    async def connect_(self, ctx, *, channel: discord.VoiceChannel = None):
         """Connect to voice.
         Parameters
         ------------
@@ -252,7 +252,7 @@ class Music(commands.Cog):
                 embed = discord.Embed(title="", description="No channel to join. Please call `,join` from a voice channel.", color=discord.Color.green())
                 await ctx.send(embed=embed)
                 raise InvalidVoiceChannel('No channel to join. Please either specify a valid channel or join one.')
-        elif (channel and (ctx.author.id != config['my_id'])):
+        elif channel and (ctx.author.id != config['my_id']):
             return
 
         vc = ctx.voice_client
@@ -270,7 +270,7 @@ class Music(commands.Cog):
             except asyncio.TimeoutError:
                 raise VoiceConnectionError(f'Connecting to channel: <{channel}> timed out.')
         await ctx.invoke(self.hehe)
-        if (random.randint(0, 1) == 0):
+        if random.randint(0, 1) == 0:
             await ctx.message.add_reaction('👍')
         await ctx.send(f'🥒 **Joined `{channel}`**')
     
@@ -309,7 +309,7 @@ class Music(commands.Cog):
         global invoke
         vc = ctx.voice_client
 
-        if ctx.author.voice == None and ctx.author.id != config['my_id']:
+        if ctx.author.voice is None and ctx.author.id != config['my_id']:
             embed = discord.Embed(title="", description="You need to be in a voice channel to play songs", color=discord.Color.green())
             return await ctx.send(embed=embed)
 
@@ -417,7 +417,7 @@ class Music(commands.Cog):
         vc.stop()
     
     @commands.command(name='remove', aliases=['rm', 'rem'], description="removes specified song from queue")
-    async def remove_(self, ctx, pos : int=None):
+    async def remove_(self, ctx, pos : int = None):
         """Removes specified song from queue"""
 
         vc = ctx.voice_client
@@ -427,7 +427,7 @@ class Music(commands.Cog):
             return await ctx.send(embed=embed)
 
         player = self.get_player(ctx)
-        if pos == None:
+        if pos is None:
             player.queue._queue.pop()
         else:
             try:
@@ -465,7 +465,7 @@ class Music(commands.Cog):
         return duration
 
     @commands.command(name='queue', aliases=['q', 'playlist', 'que'], description="queues song and shows the queue")
-    async def queue_info(self, ctx, *, search:str=None):
+    async def queue_info(self, ctx, *, search: str = None):
         """Retrieve a basic queue of upcoming songs."""
         vc = ctx.voice_client
 
@@ -476,7 +476,7 @@ class Music(commands.Cog):
         player = self.get_player(ctx)
 
         if search is not None:
-            if ctx.author.voice == None:
+            if ctx.author.voice is None:
                 embed = discord.Embed(title="", description="You need to be in a voice channel to queue songs", color=discord.Color.green())
                 return await ctx.send(embed=embed)
             await ctx.trigger_typing()
@@ -550,7 +550,7 @@ class Music(commands.Cog):
             return await ctx.send(embed=embed)
         
         if not vol:
-            embed = discord.Embed(title="", description=f"🔊 **{(vc.source.volume)*100}%**", color=discord.Color.green())
+            embed = discord.Embed(title="", description=f"🔊 **{vc.source.volume * 100}%**", color=discord.Color.green())
             return await ctx.send(embed=embed)
 
         if not 0 < vol < 101:
@@ -578,7 +578,7 @@ class Music(commands.Cog):
             embed = discord.Embed(title="", description="I'm not connected to a voice channel", color=discord.Color.green())
             return await ctx.send(embed=embed)
 
-        if (random.randint(0, 1) == 0):
+        if random.randint(0, 1) == 0:
             await ctx.message.add_reaction('👋')
         await ctx.send('🐢 **Successfully dipped**')
 

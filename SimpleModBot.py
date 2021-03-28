@@ -8,17 +8,16 @@ from datetime import datetime
 from discord.ext import commands
 from discord.ext.commands import has_permissions, MissingPermissions, guild_only
 from discord.utils import get
-from discord import Embed
 import asyncio
 import sys
-sys.path.append(".")
-from cogs.define import define
-from cogs.howdoi import howdoi
-from cogs.jokes import jokes
-from cogs.meme import meme
+from cogs.define import Define
+from cogs.howdoi import Howdoi
+from cogs.jokes import Jokes
+from cogs.meme import Meme
 from cogs.music import Music
-from cogs.time import time
-from cogs.calculus import calculus
+from cogs.time import Time
+from cogs.calculus import Calculus
+sys.path.append(".")
 try:
     import discord
 except ImportError:
@@ -43,14 +42,15 @@ intents = discord.Intents.all()
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(','), help_command=None, intents=intents)
 
+
 # help command
-@bot.command(brief="shows this message", description="shows this message")
-async def help(ctx):
+@bot.command(name="help", brief="shows this message", description="shows this message")
+async def help_(ctx):
     colors = [0x4ef207, 0x6f5df0, 0x40ffcf, 0xa640ff, 0xe00d6c, 0xb2e835]
     color = random.choice(colors)
     embed = discord.Embed(
-        title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", 
-        description="React with the following emojis to see their respective commands", 
+        title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog",
+        description="React with the following emojis to see their respective commands",
         color=color
     )
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
@@ -70,16 +70,17 @@ async def help(ctx):
     await help_cmd.add_reaction('🦦')
 
 used_commands = []
-for command in define.__cog_commands__:
+for command in Define.__cog_commands__:
     used_commands.append(command)
-for command in howdoi.__cog_commands__:
+for command in Howdoi.__cog_commands__:
     used_commands.append(command)
-for command in jokes.__cog_commands__:
+for command in Jokes.__cog_commands__:
     used_commands.append(command)
-for command in meme.__cog_commands__:
+for command in Meme.__cog_commands__:
     used_commands.append(command)
 for command in Music.__cog_commands__:
     used_commands.append(command)
+
 
 # help event
 @bot.event
@@ -89,12 +90,12 @@ async def on_reaction_add(reaction, user):
         help_msg = await channel.fetch_message(reaction.message.id)
         if help_msg.embeds:
             if help_msg.embeds[0].title:
-                if "Kermit's commands" == help_msg.embeds[0].title[:17]: 
+                if "Kermit's commands" == help_msg.embeds[0].title[:17]:
                     if reaction.emoji == '🏠':
                         embed = discord.Embed(
-                        title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog", 
-                        description="React with the following emojis to see their respective commands", 
-                        color=help_msg.embeds[0].color
+                            title="Kermit's commands", url="https://en.wikipedia.org/wiki/Kermit_the_Frog",
+                            description="React with the following emojis to see their respective commands",
+                            color=help_msg.embeds[0].color
                         )
                         embed.add_field(name="Home Page", value="🏠", inline=False)
                         embed.add_field(name="Music", value="🎵", inline=False)
@@ -108,23 +109,23 @@ async def on_reaction_add(reaction, user):
                         for command in Music.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=True)
                     elif reaction.emoji == '🤡':
-                        embed = discord.Embed(title="Kermit's commands 🤡", description=f"__{len(meme.__cog_commands__) + len(jokes.__cog_commands__)} Meme Commands__", color=help_msg.embeds[0].color)
-                        for command in meme.__cog_commands__:
+                        embed = discord.Embed(title="Kermit's commands 🤡", description=f"__{len(Meme.__cog_commands__) + len(Jokes.__cog_commands__)} Meme Commands__", color=help_msg.embeds[0].color)
+                        for command in Meme.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=False)
-                        for command in jokes.__cog_commands__:
+                        for command in Jokes.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=False)
                     elif reaction.emoji == '🤔':
-                        length = len(define.__cog_commands__) + len(howdoi.__cog_commands__) + len(calculus.__cog_commands__)
+                        length = len(Define.__cog_commands__) + len(Howdoi.__cog_commands__) + len(Calculus.__cog_commands__)
                         embed = discord.Embed(title="Kermit's commands 🤔", description=f"__{length} Intellectual Commands__", color=help_msg.embeds[0].color)
-                        for command in define.__cog_commands__:
+                        for command in Define.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=True)
-                        for command in howdoi.__cog_commands__:
+                        for command in Howdoi.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=True)
-                        for command in calculus.__cog_commands__:
+                        for command in Calculus.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=True)
                     elif reaction.emoji == '🦦':
                         embed = discord.Embed(title="Kermit's commands 🦦", description=f"__{len(bot.commands) - 10} Other Commands__", color=help_msg.embeds[0].color)
-                        for command in time.__cog_commands__:
+                        for command in Time.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=True)
                         for command in bot.commands:
                             if (command != say and command != reply and command != speak and command != _servers and command != secret and command != edit and command != schedule and command != _commands and command != load and command != unload and command != _reload):
@@ -141,16 +142,18 @@ async def on_reaction_add(reaction, user):
         else:
             return
 
+
 @bot.command(description="clears entered amount of messages")
 @commands.check_any(commands.has_permissions(administrator=True), commands.is_owner())
 async def delete(ctx, amount: int):
     await ctx.channel.purge(limit=amount + 1)
-    
+
+
 # text-through command
 @bot.command()
 @commands.is_owner()
 async def say(ctx, arg1, *, arg):
-    if (arg1.isnumeric()):
+    if arg1.isnumeric():
         arg1 = int(arg1)
     else:
         arg1 = config[arg1]
@@ -162,11 +165,12 @@ async def say(ctx, arg1, *, arg):
     await channel.trigger_typing()
     await channel.send(arg)
 
+
 # edit command
 @bot.command()
 @commands.is_owner()
 async def edit(ctx, _channel, msg_id : int, *, edited):
-    if (_channel.isnumeric()):
+    if _channel.isnumeric():
             _channel = int(_channel)
     else:
         _channel = config[_channel]
@@ -174,26 +178,29 @@ async def edit(ctx, _channel, msg_id : int, *, edited):
     message = await channel.fetch_message(msg_id)
     await message.edit(content=str(edited))
 
+
 # speak command
 @bot.command()
 async def speak(ctx, *, arg):
     _id = ctx.author.id
-    if ((_id == config['my_id']) or (_id == config['lyra']) or (_id == config['minsui'])):
+    if (_id == config['my_id']) or (_id == config['lyra']) or (_id == config['minsui']):
         await ctx.send(arg, tts=True)
     else:
         await ctx.send("This is a private command!")
         return
 
+
 # reply command
 @bot.command()
 @commands.is_owner()
 async def reply(ctx, arg1, *, arg):
-    if (arg1.isnumeric()):
+    if arg1.isnumeric():
         user_id = int(arg1)
     else:
         user_id = config[arg1]
     user = await bot.fetch_user(user_id)
     await user.send(arg)
+
 
 # poll command
 @bot.command(brief="sets up a poll", description="sets up a poll")
@@ -206,17 +213,19 @@ async def poll(ctx, *, arg):
     await m.add_reaction('👎')
     await m.add_reaction('🤷')
 
-poll_options = ['🇦','🇧','🇨','🇩','🇪','🇫','🇬','🇭','🇮','🇯','🇰',
-'🇱','🇲','🇳','🇴','🇵','🇶','🇷','🇸','🇹','🇺','🇻','🇼','🇽','🇾','🇿']
+poll_options = ['🇦', '🇧', '🇨', '🇩', '🇪', '🇫', '🇬', '🇭', '🇮', '🇯', '🇰', '🇱', '🇲', '🇳', '🇴', '🇵', '🇶',
+                '🇷', '🇸', '🇹', '🇺', '🇻', '🇼', '🇽', '🇾', '🇿']
+
 
 # pro poll command
 @bot.command(description="sets up a poll with entered number of options")
-async def proll(ctx, args : int, *, content):
+async def proll(ctx, args: int, *, content):
     await ctx.message.delete()
     await ctx.send('Poll started by {}: '.format(ctx.author.mention))
     m = await ctx.send('`{}`'.format(content))
     for i in range(args):
         await m.add_reaction(poll_options[i])
+
 
 # suggests command
 @bot.command(brief="sends feature suggestions to Kermit", description="sends feature suggestions to Kermit")
@@ -231,10 +240,12 @@ async def suggest(ctx, *, suggestion):
     user = await bot.fetch_user(_id)
     await user.send('Your suggestion has been received!')
 
+
 # troll token command
 @bot.command(brief="provides Kermit's token", description="provides Kermit's token")
 async def token(ctx):
     await ctx.send("Here's my token: `{}`\nHave fun!".format(config['troll_token']))
+
 
 # provides invite link
 @bot.command(brief='provides link to invite Kermit into a server', description='provides link to invite Kermit into a server')
@@ -250,10 +261,12 @@ async def invite(ctx):
     embed.set_image(url=config['invite_img_url'])
     await ctx.send(embed=embed)
 
+
 # provides school schedule pic
 @bot.command(brief="sends school schedule b/g", description="sends school schedule b/g")
 async def schedule(ctx):
     await ctx.send(file=discord.File('images/schedule.png'))
+
 
 # get names of servers that bot belongs to
 @bot.command()
@@ -263,6 +276,7 @@ async def _servers(ctx):
     for guild in bot.guilds:
         await ctx.send(f"{guild.name} - {guild.owner.name}")
 
+
 # prints out all commands with descriptions
 @bot.command()
 @commands.is_owner()
@@ -270,13 +284,14 @@ async def _commands(ctx):
     for command in bot.commands:
         await ctx.send(f'{command}: {command.description}')
 
+
 # responding to unknown servers
 @bot.command()
 @commands.is_owner()
 async def secret(ctx, guild_name, channel_name, *, message):
     for guild in bot.guilds:
         guild_name = guild_name.replace('-', ' ')
-        if (guild_name == ((str(guild.name).lower()))):
+        if guild_name == (str(guild.name).lower()):
             try:
                 channel = get(guild.text_channels, name=channel_name)
             except:
@@ -288,7 +303,9 @@ async def secret(ctx, guild_name, channel_name, *, message):
                 await channel.send(message)
 
 emojis = ['🤡', '😐', '😳', '🧢', '🏳️‍🌈', '💩', '😈', '🤓']
-servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I', 'Abandoned Musical Train Station', 'my dog is life <3']
+servers = ['BotTestingServer', 'battle bus', 'FW_OUI', 'The New Boys and I',
+           'Abandoned Musical Train Station', 'my dog is life <3']
+
 
 @bot.event
 async def on_message(message):
@@ -298,9 +315,9 @@ async def on_message(message):
 
     if message.author == bot.user:
         return
-    
+
     await bot.process_commands(message)
-        
+
     # emoji = random.choice(emojis)
     # last_emote = emoji
     # if (emoji == last_emote):
@@ -322,10 +339,10 @@ async def on_message(message):
             await channel.send(message.attachments[0].url)
         except IndexError:
             pass
-    
+
     _guild = bot.get_guild(config['bot_testing_server'])
     for server in servers:
-        if (str(message.guild.name) == server):
+        if str(message.guild.name) == server:
             return
     gld_name = (str(message.guild.name)).lower()
     gld_name = gld_name.replace(' ', '-')
@@ -348,6 +365,7 @@ async def on_message(message):
         embed = (message.embeds)[0]
         await server_channel.send(embed=embed)
 
+
 # missing arguments event
 @bot.event
 async def on_command_error(ctx, error):
@@ -359,6 +377,7 @@ async def on_command_error(ctx, error):
         await ctx.send('Sorry, you do not have the role permissions to use this command!')
     if isinstance(error, commands.NotOwner):
         await ctx.send('Sorry, only the owner of Kermit has access to this command.')
+
 
 # prints out if bot has been added into another server
 @bot.event
@@ -372,16 +391,19 @@ async def on_guild_join(guild):
     gld_name = (str(guild.name)).lower()
     await _guild.create_text_channel(gld_name, category=category)
 
+
 @bot.event
 async def on_guild_remove(guild):
     channel = await bot.fetch_channel(config['server_invites_channel'])
     await channel.send(f'Kermit has been kicked from: {guild} - {guild.owner.name}')
+
 
 @bot.event
 async def on_guild_update(before, after):
     channel = await bot.fetch_channel(config['server_invites_channel'])
     if before.name != after.name:
         await channel.send(f'{before.name} was changed to {after.name}')
+
 
 # kick command
 @bot.command(description="kicks members: `kick <member>`")
@@ -391,16 +413,18 @@ async def kick(ctx, member : discord.Member, *, reason=None):
     await member.kick(reason = reason)
     await ctx.send(f'Kicked {member.mention}')
 
+
 # ban command
 @bot.command(description="bans members: `ban <member> <reason>(optional)`")
 @guild_only()
 @commands.check_any(commands.has_permissions(administrator=True), commands.is_owner())
 async def ban(ctx, member : discord.Member, *, reason=None):
     await member.ban(reason = reason)
-    if reason == None:
+    if reason is None:
         await ctx.send(f'Banned {member.mention}')
     else:
         await ctx.send(f"Banned {member.mention}\nReason: {reason}")
+
 
 # unban command
 @bot.command(description="unbans members: `unban <name#discriminator>`")
@@ -418,6 +442,7 @@ async def unban(ctx, *, member):
             await ctx.send(f'Unbanned {user.mention}')
             return
 
+
 # load cog command
 @bot.command(description="loads extensions")
 @commands.is_owner()
@@ -426,6 +451,7 @@ async def load(ctx, extension):
     channel = await bot.fetch_channel(config['blue'])
     await channel.send(f'{extension} loaded successfully.')
 
+
 # load cog command
 @bot.command(description="reloads extensions")
 @commands.is_owner()
@@ -433,6 +459,7 @@ async def _reload(ctx, extension):
     bot.reload_extension(f'cogs.{extension}')
     channel = await bot.fetch_channel(config['blue'])
     await channel.send(f'{extension} reload successfully.')
+
 
 # unload cog command
 @bot.command(description="unloads extensions")
@@ -446,6 +473,7 @@ async def unload(ctx, extension):
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         bot.load_extension(f'cogs.{filename[:-3]}')
+
 
 @bot.event
 async def on_ready():

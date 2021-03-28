@@ -3,7 +3,7 @@ from discord.ext import commands
 import requests
 from bs4 import BeautifulSoup
 
-class define(commands.Cog):
+class Define(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -15,14 +15,14 @@ class define(commands.Cog):
         r = requests.get(f"http://www.urbandictionary.com/define.php?term={words}")
         soup = BeautifulSoup(r.content, 'lxml')
         try:
-            def_header = (soup.find("div",attrs={"class":"def-header"}).text)
-            meaning = (soup.find("div",attrs={"class":"meaning"}).text)
+            def_header = soup.find("div",attrs={"class":"def-header"}).text
+            meaning = soup.find("div",attrs={"class":"meaning"}).text
             for br in soup.find_all("br"):
                 br.replace_with("\n")
-            example = (soup.find("div",attrs={"class":"example"}).text)
-            contributor = (soup.find("div",attrs={"class":"contributor"}).text)
-            up_votes = (soup.find("a",attrs={"class":"up"}).text)
-            down_votes = (soup.find("a",attrs={"class":"down"}).text)
+            example = soup.find("div",attrs={"class":"example"}).text
+            contributor = soup.find("div",attrs={"class":"contributor"}).text
+            up_votes = soup.find("a",attrs={"class":"up"}).text
+            down_votes = soup.find("a",attrs={"class":"down"}).text
             embed = discord.Embed(
                 title=f"{def_header}", 
                 url=f"http://www.urbandictionary.com/define.php?term={words}",
@@ -37,5 +37,6 @@ class define(commands.Cog):
             embed = discord.Embed(title="", description=f"[enter a different term g]({url})")
             await ctx.send(embed=embed)
 
+
 def setup(bot):
-    bot.add_cog(define(bot))
+    bot.add_cog(Define(bot))

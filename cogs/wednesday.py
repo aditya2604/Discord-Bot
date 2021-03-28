@@ -5,7 +5,8 @@ import json
 with open('config.json') as f:
     config = json.load(f)
 
-class wednesday(commands.Cog):
+
+class Wednesday(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
@@ -28,5 +29,6 @@ class wednesday(commands.Cog):
         print("hour: " + str(datetime.datetime.now().hour)) 
         self.time_checker.start()
 
+
 def setup(bot):
-    bot.add_cog(wednesday(bot))
+    bot.add_cog(Wednesday(bot))

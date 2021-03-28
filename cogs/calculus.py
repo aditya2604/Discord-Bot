@@ -6,10 +6,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
 import os
 
-class calculus(commands.Cog):
+
+class Calculus(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -98,5 +98,6 @@ class calculus(commands.Cog):
 
         driver.quit()
 
+
 def setup(bot):
-    bot.add_cog(calculus(bot))
+    bot.add_cog(Calculus(bot))

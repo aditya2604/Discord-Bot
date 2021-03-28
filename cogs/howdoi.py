@@ -3,11 +3,12 @@ from discord.ext import commands
 import howdoi
 import os
 from subprocess import PIPE, run
-#from guesslang import Guess
+# from guesslang import Guess
 
-#guess = Guess()
+# guess = Guess()
 
-class howdoi(commands.Cog):
+
+class Howdoi(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
@@ -17,14 +18,15 @@ class howdoi(commands.Cog):
             result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True, shell=True)
             return result.stdout
         output = out("howdoi -a " + str(question))
-        #language = guess.language_name(output)
+        # language = guess.language_name(output)
         try:
             output = output.split("================================================================================")
         except:
             pass
         for answer in output:
-            #await ctx.send(f'```{(language.lower())}\n{answer}```')
+            # await ctx.send(f'```{(language.lower())}\n{answer}```')
             await ctx.send(f'```{answer}```')       
 
+
 def setup(bot):
-    bot.add_cog(howdoi(bot))
+    bot.add_cog(Howdoi(bot))

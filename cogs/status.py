@@ -1,9 +1,9 @@
 import discord
-import os
 from discord.ext import commands, tasks
 from itertools import cycle
 
-class status(commands.Cog):
+
+class Status(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -19,10 +19,11 @@ class status(commands.Cog):
             total_members += guild.member_count
         self.status = [f"on {len(self.bot.guilds)} servers", ',help | @Kermit', f"{total_members * 10} toes 🦶😋"]
 
-        self.activity = cycle([discord.Game(name=self.status[0]), discord.Activity(type=discord.ActivityType.listening, 
-        name=(self.status[1])), discord.Activity(type=discord.ActivityType.watching, name=(self.status[2]))])
+        self.activity = cycle([discord.Game(name=self.status[0]), discord.Activity(type=discord.ActivityType.listening,
+                        name=(self.status[1])), discord.Activity(type=discord.ActivityType.watching, name=(self.status[2]))])
         
         self.change_status.start()
 
+
 def setup(bot):
-    bot.add_cog(status(bot))
+    bot.add_cog(Status(bot))

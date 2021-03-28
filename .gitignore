@@ -90,3 +90,12 @@ ENV/
 
 # vscode settings.json
 .vscode
+
+# intellij settings
+.idea
+
+# pycharm settings
+venv
+
+# gitignore
+.gitignore

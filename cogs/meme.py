@@ -7,7 +7,8 @@ reddit = praw.Reddit(client_id = '3tNfOi1IwsvXqw',
                      client_secret = 'DfUdiixMoyFt0b5v_XkiBqzq6f9sCQ',
                      user_agent = 'Kermit discord bot (u/RoastSea8)', check_for_async=False)
 
-class meme(commands.Cog):
+
+class Meme(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -34,5 +35,6 @@ class meme(commands.Cog):
         embed.set_footer(text=f"👍 {post.score} | 💬 {post.num_comments}")
         await ctx.send(embed=embed)
 
+
 def setup(bot):
-    bot.add_cog(meme(bot))
+    bot.add_cog(Meme(bot))

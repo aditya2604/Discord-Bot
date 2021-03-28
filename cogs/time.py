@@ -3,7 +3,8 @@ from discord.ext import commands
 
 start_time = datetime.datetime.utcnow()
 
-class time(commands.Cog):
+
+class Time(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -23,5 +24,6 @@ class time(commands.Cog):
         embed.add_field(name="uptime", value=tdelta, inline=True)
         await ctx.send(embed=embed)
 
+
 def setup(bot):
-    bot.add_cog(time(bot))
+    bot.add_cog(Time(bot))
