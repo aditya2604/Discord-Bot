@@ -288,9 +288,9 @@ class Music(commands.Cog):
             return
         songs = []
         if not vc.is_playing():
-            for filename in os.listdir('./images'):
+            for filename in os.listdir('./media'):
                 if filename.endswith('.mp3'):
-                    songs.append(f'images/{filename[:-4]}.mp3')
+                    songs.append(f'media/{filename[:-4]}.mp3')
             _file = random.choice(songs)
             source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(_file))
             vc.play(source, after=lambda e: print('Player error: %s' % e) if e else None)

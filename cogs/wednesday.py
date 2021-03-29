@@ -18,9 +18,9 @@ class Wednesday(commands.Cog):
         self.time = datetime.datetime.now
         if self.time().hour == 12:
             if datetime.datetime.today().weekday() == 2:
-                await self.channel.send(file=discord.File('images/wednesday_pic.png'))
-                await self.channel_1.send(file=discord.File('images/wednesday_pic.png'))
-                await self.channel_2.send(file=discord.File('images/wednesday_pic.png'))
+                await self.channel.send(file=discord.File('media/wednesday_pic.png'))
+                await self.channel_1.send(file=discord.File('media/wednesday_pic.png'))
+                await self.channel_2.send(file=discord.File('media/wednesday_pic.png'))
     
     @commands.Cog.listener()
     async def on_ready(self):
