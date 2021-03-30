@@ -55,9 +55,9 @@ class Hangman(commands.Cog):
         while not_finished and chances_left:
             try:
                 letter = await self.bot.wait_for('message', timeout=20.0, check=check)
-                letter = letter.content
+                letter = letter.content.lower()
             except asyncio.TimeoutError:
-                return await ctx.send('letter not picked in time')
+                return await ctx.send(f'letter not picked in time\nthe word was `{word}`')
 
             if letter not in word:
                 num_chances_left -= 1
@@ -74,7 +74,7 @@ class Hangman(commands.Cog):
             await hangman_board.edit(content=f"```{hangmen[num_chances_left]}```")
             await blanks_board.edit(content=f"```Word: {blanks}```")
         if not chances_left:
-            await hangman_board.edit(content=f"```{hangmen[num_chances_left]}\n\nWord: {blanks}```\nrip to the homie - had to die cuz of {ctx.author.mention}'s stupidity lol gg\nthe word was {word}")
+            await hangman_board.edit(content=f"```{hangmen[num_chances_left]}\n\nWord: {blanks}```\nrip to the homie - had to die cuz of {ctx.author.mention}'s stupidity lol gg\nthe word was *{word}*")
             await blanks_board.delete()
         if not not_finished:
             await hangman_board.edit(content=f"```{hangmen[num_chances_left]}\n\nWord: {blanks}```\nggs {ctx.author.mention} - you found the word")
