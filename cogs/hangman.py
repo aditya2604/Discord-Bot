@@ -35,7 +35,7 @@ class Hangman(commands.Cog):
             chances_left = True
         return chances_left
 
-    @commands.command()
+    @commands.command(aliases=['hangmen', 'hangmn', 'hang', 'hngmn', 'men'], description="hangman game")
     async def hangman(self, ctx):
         word = self.get_word()
         not_finished = True
