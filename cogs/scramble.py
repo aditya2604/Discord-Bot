@@ -56,7 +56,10 @@ class Scramble(commands.Cog):
             except asyncio.TimeoutError:
                 return await ctx.send(f'word not guessed in time\nthe word was `{word}`')
             else:
-                await message.remove_reaction(reaction, user)
+                try:
+                    await message.remove_reaction(reaction, user)
+                except:
+                    pass
                 if reaction.emoji == STOP_EMOJI:
                     not_finished = False
                     return await board.edit(content = f"```Game ended...\nThe word was {word}```")
