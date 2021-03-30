@@ -56,6 +56,7 @@ class Hangman(commands.Cog):
         while not_finished and chances_left:
             try:
                 letter = await self.bot.wait_for('message', timeout=20.0, check=check)
+                msg = letter
                 letter = letter.content.lower()
             except asyncio.TimeoutError:
                 return await ctx.send(f'letter not picked in time\nthe word was `{word}`')
@@ -73,6 +74,10 @@ class Hangman(commands.Cog):
             else:
                 for i in word:
                     if letter == i:
+                        try:
+                            await msg.delete()
+                        except:
+                            pass
                         pos = self.instances(word, letter)
                         for _ in pos:
                             blanks = blanks.replace(' ', '')
