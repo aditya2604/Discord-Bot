@@ -18,6 +18,7 @@ from cogs.music import Music
 from cogs.time import Time
 from cogs.calculus import Calculus
 from cogs.hangman import Hangman
+from cogs.scramble import Scramble
 sys.path.append(".")
 try:
     import discord
@@ -109,8 +110,10 @@ async def on_reaction_add(reaction, user):
                         embed.add_field(name="DM feature", value="try to DM me!", inline=True)
                         embed.set_thumbnail(url=config['thumbnail_url'])
                     elif reaction.emoji == '🎮':
-                        embed = discord.Embed(title="Kermit's commands 🎮", description=f"__{len(Hangman.__cog_commands__)} Game Commands__", color=help_msg.embeds[0].color)
+                        embed = discord.Embed(title="Kermit's commands 🎮", description=f"__{len(Hangman.__cog_commands__) + len(Scramble.__cog_commands__)} Game Commands__", color=help_msg.embeds[0].color)
                         for command in Hangman.__cog_commands__:
+                            embed.add_field(name=command, value=command.description, inline=True)
+                        for command in Scramble.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=True)
                     elif reaction.emoji == '🎵':
                         embed = discord.Embed(title="Kermit's commands 🎵", description=f"__{len(Music.__cog_commands__)} Music Commands__", color=help_msg.embeds[0].color)
