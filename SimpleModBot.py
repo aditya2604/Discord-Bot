@@ -17,6 +17,7 @@ from cogs.meme import Meme
 from cogs.music import Music
 from cogs.time import Time
 from cogs.calculus import Calculus
+from cogs.hangman import Hangman
 sys.path.append(".")
 try:
     import discord
@@ -56,6 +57,7 @@ async def help_(ctx):
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     embed.add_field(name="Home Page", value="🏠", inline=False)
     embed.add_field(name="Music", value="🎵", inline=False)
+    embed.add_field(name="Games", value="🎮", inline=False)
     embed.add_field(name="Memes and Stupidities", value="🤡", inline=False)
     embed.add_field(name="Intellectual Tools", value="🤔", inline=False)
     embed.add_field(name="Others", value="🦦", inline=False)
@@ -65,6 +67,7 @@ async def help_(ctx):
     help_cmd = await ctx.send(embed=embed)
     await help_cmd.add_reaction('🏠')
     await help_cmd.add_reaction('🎵')
+    await help_cmd.add_reaction('🎮')
     await help_cmd.add_reaction('🤡')
     await help_cmd.add_reaction('🤔')
     await help_cmd.add_reaction('🦦')
@@ -99,11 +102,16 @@ async def on_reaction_add(reaction, user):
                         )
                         embed.add_field(name="Home Page", value="🏠", inline=False)
                         embed.add_field(name="Music", value="🎵", inline=False)
+                        embed.add_field(name="Games", value="🎮", inline=False)
                         embed.add_field(name="Memes and Stupidities", value="🤡", inline=False)
                         embed.add_field(name="Intellectual Tools", value="🤔", inline=False)
                         embed.add_field(name="Others", value="🦦", inline=False)
                         embed.add_field(name="DM feature", value="try to DM me!", inline=True)
                         embed.set_thumbnail(url=config['thumbnail_url'])
+                    elif reaction.emoji == '🎮':
+                        embed = discord.Embed(title="Kermit's commands 🎮", description=f"__{len(Hangman.__cog_commands__)} Game Commands__", color=help_msg.embeds[0].color)
+                        for command in Hangman.__cog_commands__:
+                            embed.add_field(name=command, value=command.description, inline=True)
                     elif reaction.emoji == '🎵':
                         embed = discord.Embed(title="Kermit's commands 🎵", description=f"__{len(Music.__cog_commands__)} Music Commands__", color=help_msg.embeds[0].color)
                         for command in Music.__cog_commands__:
