@@ -150,6 +150,10 @@ async def on_reaction_add(reaction, user):
                     embed.set_author(name=user.display_name, icon_url=user.avatar_url)
                     embed.set_footer(text=f"Information requested by: {user.display_name}")
                     await help_msg.edit(embed=embed)
+                    try:
+                        await help_msg.remove_reaction(reaction, user)
+                    except:
+                        pass
         else:
             return
 
