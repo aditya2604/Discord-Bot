@@ -24,7 +24,7 @@ class Scramble(commands.Cog):
         blanks = ''
         for i in range(len(shuffled)):
             blanks += '_ '
-        board = await ctx.send(f"```Letters left: {' '.join(shuffled)}\n{blanks}```")
+        board = await ctx.send(f"Click the inbox to attempt the entire word\n```Letters left: {' '.join(shuffled)}\n{blanks}```")
         message_reactions = []
         reaction_to_word = ""
         for i in shuffled:
