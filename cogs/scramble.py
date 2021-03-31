@@ -32,8 +32,10 @@ class Scramble(commands.Cog):
             message_reactions.append(DICT_ALPHABET[i])
         await board.add_reaction(BACK_EMOJI)
         await board.add_reaction(STOP_EMOJI)
+        await board.add_reaction(WORD_EMOJI)
         message_reactions.append(BACK_EMOJI)
         message_reactions.append(STOP_EMOJI)
+        message_reactions.append(WORD_EMOJI)
         not_finished = True
         not_wrong_guess = True
         self.bot.loop.create_task(self.scramble_loop(ctx, word, not_finished, message_reactions, reaction_to_word, blanks, board, shuffled, not_wrong_guess))
@@ -63,6 +65,20 @@ class Scramble(commands.Cog):
                 if reaction.emoji == STOP_EMOJI:
                     not_finished = False
                     return await board.edit(content = f"```Game ended...\nThe word was {word}```")
+                if reaction.emoji == WORD_EMOJI:
+                    await board.edit(content = f"```Letters left: {' '.join(shuffled)}\nYou have 5 seconds to guess the word:```")
+                    def check(m):
+                        return m.author == ctx.author and m.channel == ctx.channel
+                    try:
+                        guess = await self.bot.wait_for('message', timeout=5.0, check=check)
+                        if guess.content.lower() == word:
+                            not_finished = False
+                            blanks = " ".join(word)
+                            break
+                        else:
+                            await ctx.send(f"Incorrect guess! You can try again by clicking {WORD_EMOJI} or you can just guess by reactions", delete_after=3.2)
+                    except:
+                        await ctx.send(f"You didn't guess in time! You can try again by clicking {WORD_EMOJI} or you can just guess by reactions", delete_after=3.2)
                 for char, emote in DICT_ALPHABET.items():
                     if char in shuffled:
                         if reaction.emoji == emote:

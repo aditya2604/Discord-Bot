@@ -79,3 +79,4 @@ DICT_ALPHABET = {'a': '🇦', 'b': '🇧', 'c': '🇨', 'd': '🇩', 'e': '🇪'
 
 STOP_EMOJI = "❌"
 BACK_EMOJI = "◀️"
+WORD_EMOJI = "📥"
