@@ -54,7 +54,7 @@ class Scramble(commands.Cog):
                 reaction, user = await self.bot.wait_for('reaction_add', timeout=60.0, check=check)
                 message = reaction.message
             except asyncio.TimeoutError:
-                return await ctx.send(f"{user.mention}'s word was not guessed in time\nthe word was `{word}`")
+                return await ctx.send(f"{ctx.author.mention}'s word was not guessed in time\nthe word was `{word}`")
             else:
                 try:
                     await message.remove_reaction(reaction, user)
