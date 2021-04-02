@@ -70,7 +70,7 @@ class Hangman(commands.Cog):
                     previous_guesses = f"{previous_guesses} time"
                 else:
                     previous_guesses = f"{previous_guesses} times"
-                await ctx.send(f"you've already attempted this letter {previous_guesses}...")
+                await ctx.send(f"you've already attempted this letter {previous_guesses}...", delete_after=2.5)
             else:
                 for i in word:
                     if letter == i:
