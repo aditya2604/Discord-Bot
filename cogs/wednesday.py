@@ -20,14 +20,29 @@ class Wednesday(commands.Cog):
         self.time = datetime.datetime.now
         if self.time().hour == 12:
             if datetime.datetime.today().weekday() == 2:
-                self.channel = await self.bot.fetch_channel(config['g'])
-                self.channel_1 = await self.bot.fetch_channel(config['fg'])
-                self.channel_2 = await self.bot.fetch_channel(config['ag'])
-                self.channel_3 = await self.bot.fetch_channel(config['blue'])
-                await self.channel.send(file=discord.File('media/wednesday_pic.png'))
-                await self.channel_1.send(file=discord.File('media/wednesday_pic.png'))
-                await self.channel_2.send(file=discord.File('media/wednesday_pic.png'))
-                await self.channel_3.send(file=discord.File('media/wednesday_pic.png'))
+                try:
+                    self.channel = await self.bot.fetch_channel(config['g'])
+                    await self.channel.send(file=discord.File('media/wednesday_pic.png'))
+                except:
+                    pass
+
+                try:
+                    self.channel = await self.bot.fetch_channel(config['fg'])
+                    await self.channel.send(file=discord.File('media/wednesday_pic.png'))
+                except:
+                    pass
+
+                try:
+                    self.channel = await self.bot.fetch_channel(config['ag'])
+                    await self.channel.send(file=discord.File('media/wednesday_pic.png'))
+                except:
+                    pass
+
+                try:
+                    self.channel = await self.bot.fetch_channel(config['blue'])
+                    await self.channel.send(file=discord.File('media/wednesday_pic.png'))
+                except:
+                    pass
     
     @commands.Cog.listener()
     async def on_ready(self):
