@@ -39,6 +39,12 @@ class Wednesday(commands.Cog):
                     pass
 
                 try:
+                    self.channel = await self.bot.fetch_channel(config['dg'])
+                    await self.channel.send(file=discord.File('media/wednesday_pic.png'))
+                except:
+                    pass
+
+                try:
                     self.channel = await self.bot.fetch_channel(config['blue'])
                     await self.channel.send(file=discord.File('media/wednesday_pic.png'))
                 except:
