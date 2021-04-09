@@ -17,7 +17,7 @@ class Scramble(commands.Cog):
         print(word)
         return word
 
-    @commands.command(aliases=['scrmble', 'scrm', 'scrim', 'scram', 'scramb', 'scrambl', 'scr'], description="scramble game")
+    @commands.command(aliases=['scrmble', 'scrm', 'scrim', 'scram', 'scramb', 'scrambl', 'scr', 'scrabble'], description= "scramble game")
     async def scramble(self, ctx):
         word = self.get_word()
         shuffled = ''.join(random.sample(word, len(word)))
