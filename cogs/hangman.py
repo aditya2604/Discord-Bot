@@ -58,6 +58,10 @@ class Hangman(commands.Cog):
                 letter = await self.bot.wait_for('message', timeout=20.0, check=check)
                 msg = letter
                 letter = letter.content.lower()
+                try:
+                    await msg.delete()
+                except:
+                    pass
             except asyncio.TimeoutError:
                 return await ctx.send(f'letter not picked in time\nthe word was `{word}`')
 
@@ -74,21 +78,19 @@ class Hangman(commands.Cog):
             else:
                 for i in word:
                     if letter == i:
-                        try:
-                            await msg.delete()
-                        except:
-                            pass
                         pos = self.instances(word, letter)
                         for _ in pos:
                             blanks = blanks.replace(' ', '')
                             blanks = blanks[:_] + letter + blanks[_ + 1:]
                             blanks = " ".join(blanks)
                         not_finished = self.check_finished(blanks, word, not_finished)
-            await hangman_board.edit(content=f"```{hangmen[num_chances_left]}```")
-            await blanks_board.edit(content=f"```Word: {blanks}```")
             letters_guessed.append(letter)
+            wrong_letters_guessed = [i for i in letters_guessed if i not in word]
+            wrong_letters_guessed = list(dict.fromkeys(wrong_letters_guessed))
+            await hangman_board.edit(content=f"```{hangmen[num_chances_left]} {'[%s]' % ', '.join(map(str, wrong_letters_guessed))}```")
+            await blanks_board.edit(content=f"```Word: {blanks}```")
         if not chances_left:
-            await hangman_board.edit(content=f"```{hangmen[num_chances_left]}\n\nWord: {blanks}```\nrip to the homie - had to die cuz of {ctx.author.mention}'s stupidity lol gg\nthe word was `{word}`")
+            await hangman_board.edit(content=f"```{hangmen[num_chances_left]} {'[%s]' % ', '.join(map(str, wrong_letters_guessed))}\n\nWord: {blanks}```\nrip to the homie - had to die cuz of {ctx.author.mention}'s stupidity lol gg\nthe word was `{word}`")
             await blanks_board.delete()
         if not not_finished:
             await hangman_board.edit(content=f"```{hangmen[num_chances_left]}\n\nWord: {blanks}```\nggs {ctx.author.mention} - you found the word")
