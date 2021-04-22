@@ -280,7 +280,7 @@ async def invite(ctx):
 # provides school schedule pic
 @bot.command(brief="sends school schedule b/g", description="sends school schedule b/g")
 async def schedule(ctx):
-    await ctx.send(file=discord.File('media/schedule.png'))
+    await ctx.send(file=discord.File('media/schedule2.png'))
 
 
 # get names of servers that bot belongs to
