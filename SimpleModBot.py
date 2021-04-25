@@ -15,10 +15,11 @@ from cogs.howdoi import Howdoi
 from cogs.jokes import Jokes
 from cogs.meme import Meme
 from cogs.music import Music
-from cogs.time import Time
+from cogs.uptime import Time
 from cogs.calculus import Calculus
 from cogs.hangman import Hangman
 from cogs.scramble import Scramble
+from cogs.sfhs_cal import Calendar
 sys.path.append(".")
 try:
     import discord
@@ -126,13 +127,15 @@ async def on_reaction_add(reaction, user):
                         for command in Jokes.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=False)
                     elif reaction.emoji == '🤔':
-                        length = len(Define.__cog_commands__) + len(Howdoi.__cog_commands__) + len(Calculus.__cog_commands__)
+                        length = len(Define.__cog_commands__) + len(Howdoi.__cog_commands__) + len(Calculus.__cog_commands__) + len(Calendar.__cog_commands__)
                         embed = discord.Embed(title="Kermit's commands 🤔", description=f"__{length} Intellectual Commands__", color=help_msg.embeds[0].color)
                         for command in Define.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=True)
                         for command in Howdoi.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=True)
                         for command in Calculus.__cog_commands__:
+                            embed.add_field(name=command, value=command.description, inline=True)
+                        for command in Calendar.__cog_commands__:
                             embed.add_field(name=command, value=command.description, inline=True)
                     elif reaction.emoji == '🦦':
                         embed = discord.Embed(title="Kermit's commands 🦦", description=f"__{len(bot.commands) - 10} Other Commands__", color=help_msg.embeds[0].color)
