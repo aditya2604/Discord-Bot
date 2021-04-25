@@ -53,12 +53,13 @@ class Calendar(commands.Cog):
 
         GOOGLE_CHROME_PATH = os.environ['GOOGLE_CHROME_BIN']
         CHROMEDRIVER_PATH = os.environ['CHROMEDRIVER_PATH']
+        # CHROMEDRIVER_PATH = "/Users/adityatomar/Downloads/chromedriver"
 
         chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
-        chrome_options.add_argument("window-size=1920,1175")
+        chrome_options.add_argument("window-size=1400,800")
         chrome_options.binary_location = GOOGLE_CHROME_PATH
         driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
         driver.maximize_window()
@@ -81,7 +82,7 @@ class Calendar(commands.Cog):
 
         html = driver.find_element_by_tag_name("html")
 
-        for i in range(25):
+        for i in range(10):
             html.send_keys(Keys.ARROW_DOWN)
 
         driver.save_screenshot("media/screenshot.png")
