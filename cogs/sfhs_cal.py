@@ -82,7 +82,7 @@ class Calendar(commands.Cog):
 
         html = driver.find_element_by_tag_name("html")
 
-        for i in range(8):
+        for i in range(9):
             html.send_keys(Keys.ARROW_DOWN)
 
         driver.save_screenshot("media/screenshot.png")
