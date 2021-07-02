@@ -199,13 +199,12 @@ async def edit(ctx, _channel, msg_id : int, *, edited):
 
 # speak command
 @bot.command()
+@commands.is_owner()
 async def speak(ctx, *, arg):
-    _id = ctx.author.id
-    if (_id == config['my_id']) or (_id == config['lyra']) or (_id == config['minsui']):
+    try:
         await ctx.send(arg, tts=True)
-    else:
-        await ctx.send("This is a private command!")
-        return
+    except:
+        pass
 
 
 # reply command
@@ -274,7 +273,7 @@ async def invite(ctx):
     embed = discord.Embed(
         title="Discord - Invite Link",
         url=f'{url}',
-        description="Kermit is a Discord bot containing a multitude of commands for entertaining and educational purposes."
+        description="Kermit is a Discord bot containing a multitude of commands for entertainment and educational purposes."
     )
     embed.set_image(url=config['invite_img_url'])
     await ctx.send(embed=embed)
@@ -507,7 +506,6 @@ async def on_ready():
 if __name__ == '__main__':
     try:
         bot.run(os.environ['token'])
-        # bot.run(config['token'])
     except KeyError:
         print("config not yet filled out.")
     except discord.errors.LoginFailure as e:
