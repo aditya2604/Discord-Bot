@@ -302,7 +302,7 @@ async def _commands(ctx):
         await ctx.send(f'{command}: {command.description}')
 
 
-# responding to unknown servers
+# responding to servers
 @bot.command()
 @commands.is_owner()
 async def secret(ctx, guild_name, channel_name, *, message):
